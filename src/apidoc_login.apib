@@ -1,0 +1,36 @@
+### Login [POST]
+
+Login request for user authentication. Default response is 200. 
+
+ - `device_id` je ID vygenerováno firebase službou od Google inc. Pokud systém obrdží tento parametr,
+ umožní přes tento login posílat SMS zprávy a systém počítá s tím, že se jedná o mobilní aplikaci.
+- `device_name` je pouze označení daného api spojení. Pod tímto názvem ho pak uživatel uvidí v Recruitisu. Jednou,
+jak se device_name zapíše, nelze přes API volání změnit. Lze změnit pouze v systému Recruitis.
+
+
++ Request 
+
+        {
+            "password":"heslo",
+            "username":"user@test.cz",
+            "device_id": "efee4554959cecejo",
+            "device_name": "Samsung S8",
+            
+        }
+        
++ Response 200 (application/json)
+
+        :[](json/apidoc_login_put.json)
+  
++ Response 404 (application/json)
+
+        {
+            "payload": null,
+            "meta": {
+                "duration": "139.58",
+                "total_duration": 440,
+                "code": 404,
+                "message": "Login failed (#4000)",
+                "message_localized": "Vložené údaje nesouhlasí"
+            }
+        }

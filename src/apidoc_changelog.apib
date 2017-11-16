@@ -1,0 +1,56 @@
+##1.1.1
+ - Moved to Github. yeah.
+
+##1.1.0
+ - Přidáno volání `GET` jobs/{id}/customflow pro testování inzerátů s dynamickým flow
+ - Přidáno volání `GET` jobs/customflow pro testování inzerátů s dynamickým flow 
+    
+##0.9.9 beta 3
+ - U volání `GET` `answers/` přibyly tyto parametry: `agreement_status` a `agreement_reason`
+
+##0.9.9 beta 2
+ - Přidáno volání `GET` `answers/{id}/questionnaire`
+ - Odstraněno volání `GET` `candidates/{candidate_id}/questionnaire`
+
+##0.9.9 beta
+ - Bylo přidáno volání `interview/`
+ - U volání `interview` změněna položka `interview_date` na `date_from`
+    - Přidána položka `date_to`
+    - Přidána položka `answer_id`
+ - Volání `email/send` bylo přejmenováno na `messages/send/email` 
+ - Volání `email/template/{id}` bylo přejmenováno na `messages/template/email/{id}` 
+ - Bylo přidáno volání `messages/send/sms` 
+ - Bylo přidáno volání `messages/template/sms` 
+ - Bylo přidáno volání `answers/{id}/flow/{value}` 
+ - Bylo přidáno volání `answers/{id}/rating/{value}` 
+ - Odstraněno volání `candidates/{candidate_id}/comments` , namísto něj použivat `comments/`
+
+##0.9.8 beta
+ - Přidáno volání `comments/` (GET,POST,PUT)
+ - Přidáno volání `email/templates/`
+ - Do `GET` `jobs/` byl přidán parametr `flow_answers` 
+ - Do `GET` `answers/` byl přidán parametr `flowid` 
+ - Upravena historie pro kandidáta: Nyní to je `newsfeed/{?candidateid,limit,page}`
+ - Změny u historie kandidáta: 
+    - `date_time` : nyní je `date_created`
+    - `action_type` : nyní je `icon`
+    - Celé pole `history` bylo dáno o řád výše - přímo do `payload`.
+    - `candidate_id`, které bylo ihned v `payload` vedle `history` pole se nyní vztahuje ke každému prvku v `payload`
+
+##0.4
+ - U volání `/newsfeed` byla zrušen parametr "source_site" a "type". 
+ Parametr "date_time" upraven na "date_created",
+ parametr "personalist" změněn na "author" a přidán atribut "author_id"
+
+##0.3
+ - Přidán "channel" element do api callu "jobs"
+ - candidates{candidate_id} přejmenováno na answers/id
+ - U answers/{id} a answers/ byl prvek "first_response_date" přejmenován na date_response
+ - U answers/{id} byl cv_path změněn na attachments
+
+##0.2
+ - GET `jobs/` byl změnen element `created_date` na `date_created`
+ - Přidáno volání `email/send`
+
+##0.1
+ - Počáteční verze

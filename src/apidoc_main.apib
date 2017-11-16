@@ -10,62 +10,7 @@ There are 4 groups with own actions - candidates, jobs, interviews and newsfeed.
 fejoe  
 
 #CHANGELOG
-##1.1.1
- - Moved to Github. yeah.
-
-##1.1.0
- - Přidáno volání `GET` jobs/{id}/customflow pro testování inzerátů s dynamickým flow
- - Přidáno volání `GET` jobs/customflow pro testování inzerátů s dynamickým flow 
-    
-##0.9.9 beta 3
- - U volání `GET` `answers/` přibyly tyto parametry: `agreement_status` a `agreement_reason`
-
-##0.9.9 beta 2
- - Přidáno volání `GET` `answers/{id}/questionnaire`
- - Odstraněno volání `GET` `candidates/{candidate_id}/questionnaire`
-
-##0.9.9 beta
- - Bylo přidáno volání `interview/`
- - U volání `interview` změněna položka `interview_date` na `date_from`
-    - Přidána položka `date_to`
-    - Přidána položka `answer_id`
- - Volání `email/send` bylo přejmenováno na `messages/send/email` 
- - Volání `email/template/{id}` bylo přejmenováno na `messages/template/email/{id}` 
- - Bylo přidáno volání `messages/send/sms` 
- - Bylo přidáno volání `messages/template/sms` 
- - Bylo přidáno volání `answers/{id}/flow/{value}` 
- - Bylo přidáno volání `answers/{id}/rating/{value}` 
- - Odstraněno volání `candidates/{candidate_id}/comments` , namísto něj použivat `comments/`
-
-##0.9.8 beta
- - Přidáno volání `comments/` (GET,POST,PUT)
- - Přidáno volání `email/templates/`
- - Do `GET` `jobs/` byl přidán parametr `flow_answers` 
- - Do `GET` `answers/` byl přidán parametr `flowid` 
- - Upravena historie pro kandidáta: Nyní to je `newsfeed/{?candidateid,limit,page}`
- - Změny u historie kandidáta: 
-    - `date_time` : nyní je `date_created`
-    - `action_type` : nyní je `icon`
-    - Celé pole `history` bylo dáno o řád výše - přímo do `payload`.
-    - `candidate_id`, které bylo ihned v `payload` vedle `history` pole se nyní vztahuje ke každému prvku v `payload`
-
-##0.4
- - U volání `/newsfeed` byla zrušen parametr "source_site" a "type". 
- Parametr "date_time" upraven na "date_created",
- parametr "personalist" změněn na "author" a přidán atribut "author_id"
-
-##0.3
- - Přidán "channel" element do api callu "jobs"
- - candidates{candidate_id} přejmenováno na answers/id
- - U answers/{id} a answers/ byl prvek "first_response_date" přejmenován na date_response
- - U answers/{id} byl cv_path změněn na attachments
-
-##0.2
- - GET `jobs/` byl změnen element `created_date` na `date_created`
- - Přidáno volání `email/send`
-
-##0.1
- - Počáteční verze
+:[changelog](apidoc_changelog.apib)
 
 
 #TODO
@@ -81,55 +26,7 @@ dodělat tyto API:
 
 ## Login [/login]
 
-### Login [POST]
-
-Login request for user authentication. Default response is 200. 
-
- - `device_id` je ID vygenerováno firebase službou od Google inc. Pokud systém obrdží tento parametr,
- umožní přes tento login posílat SMS zprávy a systém počítá s tím, že se jedná o mobilní aplikaci.
-- `device_name` je pouze označení daného api spojení. Pod tímto názvem ho pak uživatel uvidí v Recruitisu. Jednou,
-jak se device_name zapíše, nelze přes API volání změnit. Lze změnit pouze v systému Recruitis.
-
-
-+ Request 
-
-        {
-            "password":"heslo",
-            "username":"user@test.cz",
-            "device_id": "efee4554959cecejo",
-            "device_name": "Samsung S8",
-            
-        }
-        
-+ Response 200 (application/json)
-
-        {
-          "payload": {
-            "token": "68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac",
-            "device_id": "x56sj64uzr4we64rtb489uzjj186drgv13e",
-            "device_name": "restapiklient"
-          },
-          "meta": {
-            "duration": "2259.39",
-            "total_duration": 2300,
-            "code": 200,
-            "message": "",
-            "message_localized": "Přihlášení proběhlo v pořádku"
-          }
-        }
-  
-+ Response 404 (application/json)
-
-        {
-            "payload": null,
-            "meta": {
-                "duration": "139.58",
-                "total_duration": 440,
-                "code": 404,
-                "message": "Login failed (#4000)",
-                "message_localized": "Vložené údaje nesouhlasí"
-            }
-        }
+:[](apidoc_login.apib)
         
 #Group Me
 
