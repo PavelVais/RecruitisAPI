@@ -1,2 +1,6 @@
 # RecruitisAPI
-API for HR software Recruitis.io created by Český Trh Práce s.r.o.
+Dokumentace k API pro službu Recruitis.io vytvořená společností Český Trh Práce.
+API je popsáno v adobe APIARY službě.
+
+# Odkazy
+[Dokumentace v APIARY](https://jsapi.apiary.io/previews/ceskytrhpracesro/reference)
