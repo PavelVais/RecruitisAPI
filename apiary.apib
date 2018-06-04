@@ -1,8 +1,7 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-FORMAT: 1A
-HOST: https://pracevcr.cz/api2/
+**Momentálně je k dispozici pouze mock server**
 
 # Recruitis.io
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
@@ -831,21 +830,34 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
           "payload": [
             {
               "id": 1,
-              "name": "Pozice v Recruitisu (interní pozice)"
+              "label": "Neznámý",
+              "type": "unknown"
             },
             {
               "id": 2,
-              "name": "Kariérní stránky"
+              "label": "pracevhradci.cz",
+              "type": "portal"
             },
             {
-              "id": 54,
-              "name": "XML export \"JobSite\""
+              "id": 3,
+              "label": "pracevpraze.cz",
+              "type": "portal"
+            },
+            {
+              "id": 32,
+              "label": "XML \"JobSite\"",
+              "type": "xml"
+            },
+            {
+              "id": 1063,
+              "label": "Osobní předání",
+              "type": "manual"
             }
           ],
           "meta": {
             "duration": 2259,
             "code": "api.ok",
-            "message_localized": "Publikační kanály byly nalezeny."
+            "message_localized": "Zdroje byly nalezeny."
           }
         }
 
