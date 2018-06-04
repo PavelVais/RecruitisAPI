@@ -4,11 +4,6 @@ API volání, které se vstahuje k aktivním inzerátům
 
 ## Jobs Lists [/jobs{?limit,page,workfields,region}]
 
-+ Request
-    + Headers
-    
-        Authorization: Bearer :[](apidoc_bearer_token.txt)
-
 + Parameters
     + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
@@ -19,6 +14,11 @@ API volání, které se vstahuje k aktivním inzerátům
 ### Get All Jobs [GET]
 
 Získání všech inzerátů. Dle zahrnutých 
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
 
 #### Requirements
 
@@ -37,15 +37,15 @@ Získání všech inzerátů. Dle zahrnutých
 
 ## Job Detail [/jobs/{id}]
 
-+ Request
-    + Headers
-    
-        Authorization: Bearer :[](apidoc_bearer_token.txt)
-
 + Parameters
     + id (number, `1`) - Job id
    
 ### Get Jobs Detail [GET]
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
 
 #### Requirements
 
