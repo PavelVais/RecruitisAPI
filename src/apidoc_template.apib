@@ -1,0 +1,106 @@
+#Group Me
+
+## My account information [/me]
+
+### Me [GET]
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+
+#### Zobrazení parametru závisících na druhu tokenu
+
+| Parametr | token          | Poznámka |
+|:-------|----------------------|----------------------|
+| `stats`    | `full_access`          |
+
+####Vysvětlění flow hodnot
+
+| Flow ID | Vysvětlení          | Poznámka |
+|:-------|----------------------|----------------------|
+| `0`    | Status "Nový"          |
+| `1`    | Status "Nepřiřazený"   |
+| `2`    | Status "Další kolo"    | Toto ID se momentálně nepoužívá |
+| `3`    | Status "Telefon"        |
+| `4`    | Status "Pohovor"         |
+| `5`    | Status "Vybrán"          |
+| `6`    | Status "Přijat"          |
+| `8`    | Status "Smazán"          | Toto ID zapřičiní, že daný uchazeč z odpovědi zmizí. |
+
+Získání informací o mém účtu, za kterého jsem právě přihlášen
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+            
++ Parameters
+    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + page (optional,numeric,`1`) - strana s vypisem odpovedi
+    + search (optional,string) - Vyhledávání ve jméně
+    + jobid (optional,int) - Omezení na určitý inzerát
+    + status (array[int])
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_json_template.json)
+
++ Response 404 (application/json)
+
+        :[](json/apidoc_json_error_general.json MSG:"Inzerát nebyl nalezen" CODE:"api.error.jobs.notfound.one")
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)
+
+
+### Me [POST]
+
+Procedura na ulozeni noveho me ( haha :D )
+
++ Request  (application/json)
+
+        {
+            "name": "Pavel,
+            "surname":  "Test",
+            "email":    "aaa@test.cz",
+            "pole": "1,43,45,933",
+        }
+
++ Response 201 (application/json)
+
+        {
+            "payload": {
+                id: 1
+            },
+            "meta": {
+                "duration": 2259,
+                "code": api.created,
+                "message_localized": "Byl jsem úspěšně vložen"
+            }
+        }
+        
+### Me [PUT]
+
+Procedura na upraveni noveho me ( haha :D )
+
++ Request  (application/json)
+
+        {
+            "name": "Pavlásek",
+            "id": 1,
+        }
+
++ Response 200 (application/json)
+
+        {
+            "payload": {
+                id: 1
+            },
+            "meta": {
+                "duration": 2259,
+                "code": api.updated,
+                "message_localized": "Byl jsem úspěšně upraven"
+            }
+        }

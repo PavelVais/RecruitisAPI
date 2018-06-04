@@ -1,3 +1,7 @@
+#Group Authentication
+
+## Login [/login]
+
 ### Login [POST]
 
 Login request for user authentication. Default response is 200. 
@@ -5,8 +9,16 @@ Login request for user authentication. Default response is 200.
  - `device_id` je ID vygenerováno firebase službou od Google inc. Pokud systém obrdží tento parametr,
  umožní přes tento login posílat SMS zprávy a systém počítá s tím, že se jedná o mobilní aplikaci.
 - `device_name` je pouze označení daného api spojení. Pod tímto názvem ho pak uživatel uvidí v Recruitisu. Jednou,
-jak se device_name zapíše, nelze přes API volání změnit. Lze změnit pouze v systému Recruitis.
+jak se device_name zapíše, nelze přes API volání změnit.
 
+Tato funkce není třeba volat, pokud již máte Token vygenerovaný. **Tato funkce vrací token s vlastností `full_access`.**
+
+| Request              | Required | Note |
+|:----------------------|--------|----------------------|
+| `password`            | Yes    |
+| `username`            | Yes    |
+| `device_id`           | No     |
+| `device_name`         | No     |
 
 + Request 
 
@@ -23,14 +35,5 @@ jak se device_name zapíše, nelze přes API volání změnit. Lze změnit pouze
         :[](json/apidoc_login_put.json)
   
 + Response 404 (application/json)
-
-        {
-            "payload": null,
-            "meta": {
-                "duration": "139.58",
-                "total_duration": 440,
-                "code": 404,
-                "message": "Login failed (#4000)",
-                "message_localized": "Vložené údaje nesouhlasí"
-            }
-        }
+       
+        :[](json/apidoc_json_error_general.json MSG:"Vložené údaje nesouhlasí." CODE:"api.error.authentication")

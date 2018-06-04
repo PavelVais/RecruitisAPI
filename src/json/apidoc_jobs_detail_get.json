@@ -1,0 +1,59 @@
+{
+  "payload": [
+    {
+      "job_id": 123456,
+      "title": "Android Developer",
+      "last_updated": "2017-11-13 15:53:01",
+      "date_created": "2017-01-30 15:14:00",
+      "date_end": "2019-01-30 15:14:00",
+      "description": "Jste maminka na mateřské dovolené, která opustila svět personalistiky tělem avšak rozhodně ne duší? Je pro Vás důležité trávit co nejvíce času s rodinou, ale zároveň si nechcete nechat ujít nové trendy v HR, aby pro Vás návrat do světa dění nebyl tak těžký? Pak Vám nabízíme příležitost, jak vše při mateřské skloubit a navíc si přivydělat! &lt;img src=&quot;http://recruitis.io/mam.jpeg&quot; class=&quot;img-responsive center&quot; alt=&quot;maminka s duší personalistky&quot;&gt;[/mujstyl] Jaká byste měla být: Personalistika je Vaší profesí a nebo alespoň velkou vášní S kolegy v oboru se ráda dělíte o užitečné novinky a hlavně o dobrou energii Skype meetingy jsou pro Vás přirozeným komunikačním prostředkem Je radost s Vámi komunikovat Trendy v HR Vás zajímají a chcete zůstat #intouch Co můžete čekat od nás: Práci z pohodlí domova Flexibilní formu spolupráce Podporu od týmu mladých pohodářů zapálených pro HR a moderní technologie [mujstyl]Zašlete nám Váš kontakt, dáme Skype nad šálkem kávy a povíme si víc. Budeme se těšit",
+      "source_site": "PRACEvCR.cz",
+      "personalist": {
+        "name": "Tomáš Krátký",
+        "id": 12345
+      },
+      "contact": {
+        "name": "Radim Velezeba",
+        "email": "foo@bar.cz",
+        "phone": 123456
+      },
+      "workfields": [
+        {
+          "id": 20,
+          "name": "Personalistika a HR"
+        }
+      ],
+      "addresses": [
+        {
+          "state": "CZ",
+          "region": "Královehradecký kraj",
+          "city": "Hradec Králové",
+          "street": "Třída ČSA 517",
+          "postcode": 50011
+        }
+      ],
+      "stats": {
+        "views": 92,
+        "answers": 8
+      },
+      "ztp": {
+      },
+      "employment": {
+        "id": 1,
+        "name": "Práce doma"
+      },
+      "education": {
+        "id": -1,
+        "name": "Vzdělání není podstatné"
+      },
+      "active": true,
+      "public_link": "http://ceskytrhprace.pracevcr.cz/detail/347677-mamca-s-dusi-personalistky",
+      "edit_link": "http://pracevcr.cz/zadavatel/inzerat/novy/iid347677/sid07ec2194ec509104427c0a4da7955bc8"
+    }
+  ],
+  "meta": {
+    "code": "api.ok",
+    "count": 1,
+    "message": "Inzerát byl nalezen."
+  }
+}

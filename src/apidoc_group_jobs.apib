@@ -1,0 +1,75 @@
+# Group Jobs
+API volání, které se vstahuje k aktivním inzerátům
+
+
+## Jobs Lists [/jobs]
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
++ Parameters
+    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + page (optional,numeric,`1`) - strana s vypisem odpovedi
+    + workfields (optional,array[int]) - Omezení na určité pracovní obory
+    + region (optional,array[int]) - Omezení na určité regiony. TODO: probrat
+    + offices (optional,array[int]) - Omezení na určité regiony
+    
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o interní inzerát.    
+
+
+### Get All Jobs [GET]
+
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_jobs_list_get.json)
+
++ Response 404 (application/json)
+
+       :[](json/apidoc_json_error_general.json MSG:"Inzeráty nebyly nalezeny" CODE:"api.error.jobs.notfound")
+
+
+## Job Detail [/jobs/{id}]
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + id (number, `1`) - Job id
+    
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o interní inzerát.
+
+#### Zobrazení parametru závisících na druhu tokenu
+   
+   | Parametr | token          | Poznámka |
+   |:-------|----------------------|----------------------|
+   | `stats`        | `full_access`          |
+   | `edit_link`    | `full_access`          |
+
+### Get Jobs Detail [GET]
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_jobs_detail_get.json)
+
+        
++ Response 404 (application/json)
+
+        :[](json/apidoc_json_error_general.json MSG:"Inzerát nebyl nalezen" CODE:"api.error.jobs.notfound.one")
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)

@@ -1,0 +1,249 @@
+{
+  "payload": [
+    {
+      "job_id": 123456,
+      "active": true,
+      "date_created": "2017-03-23 17:42:10",
+      "title": "Android Developer",
+      "source": "PRACEvCR.cz",
+      "personalist": {
+        "name": "Tomáš Krátký",
+        "id": 12345
+      },
+      "workfields": [
+        {
+          "id": 20,
+          "name": "Personalistika a HR"
+        }
+      ],
+      "employment": {
+        "id": 1,
+        "name": "Práce doma"
+      },
+      "addresses": [
+        {
+          "state": "CZ",
+          "region": "Královehradecký kraj",
+          "city": "Hradec Králové",
+          "street": "Třída ČSA 517",
+          "postcode": 50011
+        }
+      ],
+      "stats": {
+        "views": 92,
+        "answers": 8,
+        "flow_answers": [
+          {
+            "flow": 0,
+            "value": 9
+          },
+          {
+            "flow": 1,
+            "value": 1
+          },
+          {
+            "flow": 2,
+            "value": 0
+          },
+          {
+            "flow": 3,
+            "value": 0
+          },
+          {
+            "flow": 4,
+            "value": 1
+          },
+          {
+            "flow": 5,
+            "value": 0
+          },
+          {
+            "flow": 6,
+            "value": 0
+          },
+          {
+            "flow": 7,
+            "value": 0
+          },
+          {
+            "flow": 8,
+            "value": 0
+          },
+          {
+            "flow": 9,
+            "value": 0
+          },
+          {
+            "flow": -1,
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "job_id": 123456,
+      "active": true,
+      "date_created": "2017-03-23 17:42:10",
+      "title": "Android Developer",
+      "source": "PRACEvCR.cz",
+      "personalist": {
+        "name": "Tomáš Krátký",
+        "id": 12345
+      },
+      "workfields": [
+        {
+          "id": 20,
+          "name": "Personalistika a HR"
+        }
+      ],
+      "employment": {
+        "id": 1,
+        "name": "Práce doma"
+      },
+      "addresses": [
+        {
+          "state": "CZ",
+          "region": "Královehradecký kraj",
+          "city": "Hradec Králové",
+          "street": "Třída ČSA 517",
+          "postcode": 50011
+        }
+      ],
+      "stats": {
+        "views": 92,
+        "answers": 8,
+        "flow_answers": [
+          {
+            "flow": 0,
+            "value": 9
+          },
+          {
+            "flow": 1,
+            "value": 1
+          },
+          {
+            "flow": 2,
+            "value": 0
+          },
+          {
+            "flow": 3,
+            "value": 0
+          },
+          {
+            "flow": 4,
+            "value": 1
+          },
+          {
+            "flow": 5,
+            "value": 0
+          },
+          {
+            "flow": 6,
+            "value": 0
+          },
+          {
+            "flow": 7,
+            "value": 0
+          },
+          {
+            "flow": 8,
+            "value": 0
+          },
+          {
+            "flow": 9,
+            "value": 0
+          },
+          {
+            "flow": -1,
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "job_id": 123456,
+      "active": true,
+      "date_created": "2017-03-23 17:42:10",
+      "title": "Android Developer",
+      "source": "PRACEvCR.cz",
+      "personalist": {
+        "name": "Tomáš Krátký",
+        "id": 12345
+      },
+      "workfields": [
+        {
+          "id": 20,
+          "name": "Personalistika a HR"
+        }
+      ],
+      "employment": {
+        "id": 1,
+        "name": "Práce doma"
+      },
+      "addresses": [
+        {
+          "state": "CZ",
+          "region": "Královehradecký kraj",
+          "city": "Hradec Králové",
+          "street": "Třída ČSA 517",
+          "postcode": 50011
+        }
+      ],
+      "stats": {
+        "views": 92,
+        "answers": 8,
+        "flow_answers": [
+          {
+            "flow": 0,
+            "value": 9
+          },
+          {
+            "flow": 1,
+            "value": 1
+          },
+          {
+            "flow": 2,
+            "value": 0
+          },
+          {
+            "flow": 3,
+            "value": 0
+          },
+          {
+            "flow": 4,
+            "value": 1
+          },
+          {
+            "flow": 5,
+            "value": 0
+          },
+          {
+            "flow": 6,
+            "value": 0
+          },
+          {
+            "flow": 7,
+            "value": 0
+          },
+          {
+            "flow": 8,
+            "value": 0
+          },
+          {
+            "flow": 9,
+            "value": 0
+          },
+          {
+            "flow": -1,
+            "value": 0
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "code": "api.found",
+    "count": 3,
+    "message": "Inzeráty byly nalezeny."
+  }
+}

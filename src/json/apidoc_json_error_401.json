@@ -1,0 +1,9 @@
+{
+  "payload": null,
+  "meta": {
+    "duration": "139.58",
+    "total_duration": 440,
+    "code": "api.error.unauthorized",
+    "message": "Musíte být přihlášen"
+  }
+}

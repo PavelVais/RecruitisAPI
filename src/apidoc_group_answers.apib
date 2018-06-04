@@ -1,0 +1,46 @@
+# Group Answers
+API calls for actions connected with answers.
+
+## Answers [/answers]
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
+### Create new answer [POST]
+
+Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o interní inzerát.    
+   
+| Request              | Required | Note |
+|:----------------------|--------|----------------------|
+| `job_id`              | Yes    |
+| `name`                | Yes    |
+| `email`               | No     |
+| `phone`               | No     |
+| `cover_letter`        | No     |
+| `gdpr_agreement`      | No     |
+| `attachments`         | No     |
+| `attachment` `path`      | Yes   |
+| `attachment` `filename`  | No    | Veme se název souboru
+| `attachment` `type`      | No    | Default 1
+
+
+#### Typy příloh (Attachment type)
+
+:[](enums/apidoc_enums_attachments.apib)
+   
++ Request  (application/json)
+
+        :[](json/apidoc_answers_post_request.json)
+
++ Response 201 (application/json)
+
+        :[](json/apidoc_answers_post_response.json)
