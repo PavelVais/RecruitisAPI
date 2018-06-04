@@ -2,30 +2,29 @@
 API volání, které se vstahuje k aktivním inzerátům
 
 
-## Jobs Lists [/jobs]
+## Jobs Lists [/jobs{?limit,page,workfields,region}]
 
 + Request
     + Headers
     
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
-
 + Parameters
     + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfields (optional,array[int]) - Omezení na určité pracovní obory
-    + region (optional,array[int]) - Omezení na určité regiony. TODO: probrat
-    + offices (optional,array[int]) - Omezení na určité regiony
+    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
     
+    
+### Get All Jobs [GET]
+
+Získání všech inzerátů. Dle zahrnutých 
+
 #### Requirements
 
    + Authorization with token
    + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
-
-
-### Get All Jobs [GET]
-
 
 + Response 200 (application/json)
 
@@ -45,7 +44,9 @@ API volání, které se vstahuje k aktivním inzerátům
 
 + Parameters
     + id (number, `1`) - Job id
-    
+   
+### Get Jobs Detail [GET]
+
 #### Requirements
 
    + Authorization with token
@@ -58,8 +59,6 @@ API volání, které se vstahuje k aktivním inzerátům
    |:-------|----------------------|----------------------|
    | `stats`        | `full_access`          |
    | `edit_link`    | `full_access`          |
-
-### Get Jobs Detail [GET]
 
 + Response 200 (application/json)
 
