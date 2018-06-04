@@ -133,28 +133,29 @@ API volání, které se vstahuje k aktivním inzerátům
 
 ## Jobs Lists [/jobs{?limit,page,workfields,region}]
 
-+ Parameters
-    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
-    + page (optional,numeric,`1`) - strana s vypisem odpovedi
-    + workfields (optional,array[int]) - Omezení na určité pracovní obory
-    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
-    
     
 ### Get All Jobs [GET]
 
 Získání všech inzerátů. Dle zahrnutých 
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o interní inzerát.   
 
 + Request
     + Headers
     
             Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
 
-#### Requirements
-
-   + Authorization with token
-   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.    
-
++ Parameters
+    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + page (optional,numeric,`1`) - strana s vypisem odpovedi
+    + workfields (optional,array[int]) - Omezení na určité pracovní obory
+    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
+    
 + Response 200 (application/json)
 
         {
@@ -422,15 +423,8 @@ Získání všech inzerátů. Dle zahrnutých
 
 ## Job Detail [/jobs/{id}]
 
-+ Parameters
-    + id (number, `1`) - Job id
    
 ### Get Jobs Detail [GET]
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
 
 #### Requirements
 
@@ -444,6 +438,16 @@ Získání všech inzerátů. Dle zahrnutých
    |:-------|----------------------|----------------------|
    | `stats`        | `full_access`          |
    | `edit_link`    | `full_access`          |
+
++ Request
+    + Headers
+    
+            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+
++ Parameters
+    + id (number, `1`) - Job id
+
+
 
 + Response 200 (application/json)
 
@@ -538,12 +542,6 @@ API calls for actions connected with answers.
 ## Answers list [/answers]
 
 ### Create new answer [POST]
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
-
 Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 
 #### Requirements
@@ -575,7 +573,13 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 | `3`    | Emailová korespondence (obsolete)       
 | `4`    | Fotografie       
 | `5`    | GDPR souhlas       
-   
+
++ Request
+    + Headers
+    
+            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+
+
 + Request  (application/json)
 
         {

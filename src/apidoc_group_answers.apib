@@ -4,12 +4,6 @@ API calls for actions connected with answers.
 ## Answers list [/answers]
 
 ### Create new answer [POST]
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer :[](apidoc_bearer_token.txt)
-
 Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 
 #### Requirements
@@ -35,7 +29,13 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 #### Typy příloh (Attachment type)
 
 :[](enums/apidoc_enums_attachments.apib)
-   
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
 + Request  (application/json)
 
         :[](json/apidoc_answers_post_request.json)

@@ -4,28 +4,29 @@ API volání, které se vstahuje k aktivním inzerátům
 
 ## Jobs Lists [/jobs{?limit,page,workfields,region}]
 
-+ Parameters
-    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
-    + page (optional,numeric,`1`) - strana s vypisem odpovedi
-    + workfields (optional,array[int]) - Omezení na určité pracovní obory
-    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
-    
     
 ### Get All Jobs [GET]
 
 Získání všech inzerátů. Dle zahrnutých 
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o interní inzerát.   
 
 + Request
     + Headers
     
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
-#### Requirements
-
-   + Authorization with token
-   + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.    
-
++ Parameters
+    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + page (optional,numeric,`1`) - strana s vypisem odpovedi
+    + workfields (optional,array[int]) - Omezení na určité pracovní obory
+    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
+    
 + Response 200 (application/json)
 
         :[](json/apidoc_jobs_list_get.json)
@@ -37,15 +38,8 @@ Získání všech inzerátů. Dle zahrnutých
 
 ## Job Detail [/jobs/{id}]
 
-+ Parameters
-    + id (number, `1`) - Job id
    
 ### Get Jobs Detail [GET]
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer :[](apidoc_bearer_token.txt)
 
 #### Requirements
 
@@ -59,6 +53,16 @@ Získání všech inzerátů. Dle zahrnutých
    |:-------|----------------------|----------------------|
    | `stats`        | `full_access`          |
    | `edit_link`    | `full_access`          |
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + id (number, `1`) - Job id
+
+
 
 + Response 200 (application/json)
 
