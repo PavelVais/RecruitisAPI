@@ -1,0 +1,92 @@
+# Group Enumerations
+
+Sekce, která má za úkol vracet různé druhy číselníků
+
+
+## Workfields Lists [/enum/workfields{?lang}]
+
+Workfields neboli obory a profese používané v Recruitis.io systému.
+
+    
+### Get Workfields [GET]
+
+Získá všechny naše profese a obory včetně jejich ID.
+
+#### Requirements
+
+   + No Authorization is needed
+
++ Parameters
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_workfields.json)
+        
+        
+## Company Workfields Lists [/enum/workfields{?lang,channel_assignation}]
+
+
+### Get Workfields Used In Jobs [GET]
+
+Získá všechny profese, které jsou obsaženy v inzerátech dané společnosti. Někdy nemusí sedět počet (`count`) oborů při 
+součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoli i na profesi.
+
+*Pro upřesnění: Profese jsou podmnožinou jednotlivých oborů.*
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o dotaz na interní inzeráty. 
+
++ Parameters
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + channel_assignation (int,``)
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_workfields_company.json)
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)
+
+
+## Channels List [/enum/channels]
+
+### Get Company Channels [GET]
+
+Získá všechny publikační kanály, na kterých může daná firma publikovat inzeráty. Při filtraci inzerátu lze pak ID kanálu používat jako argument.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access` 
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_channels.json)
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)
+        
+## Sources List [/enum/sources]
+
+### Get Company Sources [GET]
+
+Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotným systémem, tak i přidány manuálně, firmou.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` 
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_sources.json)
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)

@@ -1,0 +1,21 @@
+{
+  "payload": [
+    {
+      "id": 1,
+      "name": "Pozice v Recruitisu (interní pozice)"
+    },
+    {
+      "id": 2,
+      "name": "Kariérní stránky"
+    },
+    {
+      "id": 54,
+      "name": "XML export \"JobSite\""
+    }
+  ],
+  "meta": {
+    "duration": 2259,
+    "code": "api.ok",
+    "message_localized": "Publikační kanály byly nalezeny."
+  }
+}

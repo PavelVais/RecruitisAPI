@@ -12,9 +12,10 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
    + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
-| Request              | Required | Note |
+| Request value        | Required | Note |
 |:----------------------|--------|----------------------|
 | `job_id`              | Yes    |
+| `source_id`           | No     | Default -1, @see Enum section
 | `name`                | Yes    |
 | `email`               | No     |
 | `phone`               | No     |

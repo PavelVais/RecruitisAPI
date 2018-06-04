@@ -9,6 +9,8 @@ API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizace pomocí tokenu, která je vyhgenerován buď samotným systémem. nebo uživatelem.
 Token se posílá v Header položce "Authorization: bearer XXX"
 
+Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI
+
 Postupem řasu budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
 bude založen nový branch (v2 atd.), nebo budete dostatečným časovým rozestupem o změně informováni.
 
@@ -37,12 +39,16 @@ jak se device_name zapíše, nelze přes API volání změnit.
 
 Tato funkce není třeba volat, pokud již máte Token vygenerovaný. **Tato funkce vrací token s vlastností `full_access`.**
 
-| Request              | Required | Note |
+| Request value        | Required | Note |
 |:----------------------|--------|----------------------|
 | `password`            | Yes    |
 | `username`            | Yes    |
 | `device_id`           | No     |
 | `device_name`         | No     |
+
+#### Requirements
+
+   + No Authorization is needed
 
 + Request 
 
@@ -550,9 +556,10 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
    + token type: `public_token` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
-| Request              | Required | Note |
+| Request value        | Required | Note |
 |:----------------------|--------|----------------------|
 | `job_id`              | Yes    |
+| `source_id`           | No     | Default -1, @see Enum section
 | `name`                | Yes    |
 | `email`               | No     |
 | `phone`               | No     |
@@ -584,6 +591,7 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 
         {
           "job_id": 123456,
+          "source_id": 1,
           "name": "Pavel Test",
           "email": "foo@bar.com",
           "phone": 123456678,
@@ -619,5 +627,236 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
             "duration": 2259,
             "code": "api.created",
             "message_localized": "Odpověď byla úspěšně vložena."
+          }
+        }
+
+# Group Enumerations
+
+Sekce, která má za úkol vracet různé druhy číselníků
+
+
+## Workfields Lists [/enum/workfields{?lang}]
+
+Workfields neboli obory a profese používané v Recruitis.io systému.
+
+    
+### Get Workfields [GET]
+
+Získá všechny naše profese a obory včetně jejich ID.
+
+#### Requirements
+
+   + No Authorization is needed
+
++ Parameters
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 1,
+              "name": "Administrativa",
+              "professions": [
+                {
+                  "id": 101,
+                  "name": "Administrativní pracovník, referent"
+                },
+                {
+                  "id": 102,
+                  "name": "Archivář, správce rejstříku"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "name": "Bankovnictví a finanční služby",
+              "professions": [
+                {
+                  "id": 201,
+                  "name": "Compliance specialista"
+                },
+                {
+                  "id": 202,
+                  "name": "Custody specialista"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "duration": 2259,
+            "code": "api.ok",
+            "message_localized": "Obory byly nalezeny."
+          }
+        }
+        
+        
+## Company Workfields Lists [/enum/workfields{?lang,channel_assignation}]
+
+
+### Get Workfields Used In Jobs [GET]
+
+Získá všechny profese, které jsou obsaženy v inzerátech dané společnosti. Někdy nemusí sedět počet (`count`) oborů při 
+součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoli i na profesi.
+
+*Pro upřesnění: Profese jsou podmnožinou jednotlivých oborů.*
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `full_access` : pokud se jedná o dotaz na interní inzeráty. 
+
++ Parameters
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + channel_assignation (int,``)
+    
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 1,
+              "name": "Administrativa",
+              "professions": [
+                {
+                  "id": 101,
+                  "name": "Administrativní pracovník, referent",
+                  "count": 4
+                }
+              ],
+              "count" : 4
+            },
+            {
+              "id": 2,
+              "name": "Bankovnictví a finanční služby",
+              "professions": [
+                {
+                  "id": 201,
+                  "name": "Compliance specialista",
+                  "count": 1
+                },
+                {
+                  "id": 202,
+                  "name": "Custody specialista",
+                  "count": 1
+
+                }
+              ],
+              "count": 2
+            }
+          ],
+          "meta": {
+            "duration": 2259,
+            "code": "api.ok",
+            "message_localized": "Obory byly nalezeny."
+          }
+        }
+
++ Response 401 (application/json)
+
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 440,
+            "code": "api.error.unauthorized",
+            "message": "Musíte být přihlášen"
+          }
+        }
+
+
+## Channels List [/enum/channels]
+
+### Get Company Channels [GET]
+
+Získá všechny publikační kanály, na kterých může daná firma publikovat inzeráty. Při filtraci inzerátu lze pak ID kanálu používat jako argument.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access` 
+    
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 1,
+              "name": "Pozice v Recruitisu (interní pozice)"
+            },
+            {
+              "id": 2,
+              "name": "Kariérní stránky"
+            },
+            {
+              "id": 54,
+              "name": "XML export \"JobSite\""
+            }
+          ],
+          "meta": {
+            "duration": 2259,
+            "code": "api.ok",
+            "message_localized": "Publikační kanály byly nalezeny."
+          }
+        }
+
++ Response 401 (application/json)
+
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 440,
+            "code": "api.error.unauthorized",
+            "message": "Musíte být přihlášen"
+          }
+        }
+        
+## Sources List [/enum/sources]
+
+### Get Company Sources [GET]
+
+Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotným systémem, tak i přidány manuálně, firmou.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token` 
+    
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 1,
+              "name": "Pozice v Recruitisu (interní pozice)"
+            },
+            {
+              "id": 2,
+              "name": "Kariérní stránky"
+            },
+            {
+              "id": 54,
+              "name": "XML export \"JobSite\""
+            }
+          ],
+          "meta": {
+            "duration": 2259,
+            "code": "api.ok",
+            "message_localized": "Publikační kanály byly nalezeny."
+          }
+        }
+
++ Response 401 (application/json)
+
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 440,
+            "code": "api.error.unauthorized",
+            "message": "Musíte být přihlášen"
           }
         }

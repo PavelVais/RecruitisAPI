@@ -1,0 +1,34 @@
+{
+  "payload": [
+    {
+      "id": 1,
+      "label": "Neznámý",
+      "type": "unknown"
+    },
+    {
+      "id": 2,
+      "label": "pracevhradci.cz",
+      "type": "portal"
+    },
+    {
+      "id": 3,
+      "label": "pracevpraze.cz",
+      "type": "portal"
+    },
+    {
+      "id": 32,
+      "label": "XML \"JobSite\"",
+      "type": "xml"
+    },
+    {
+      "id": 1063,
+      "label": "Osobní předání",
+      "type": "manual"
+    }
+  ],
+  "meta": {
+    "duration": 2259,
+    "code": "api.ok",
+    "message_localized": "Zdroje byly nalezeny."
+  }
+}

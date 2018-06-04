@@ -1,0 +1,39 @@
+{
+  "payload": [
+    {
+      "id": 1,
+      "name": "Administrativa",
+      "professions": [
+        {
+          "id": 101,
+          "name": "Administrativní pracovník, referent",
+          "count": 4
+        }
+      ],
+      "count" : 4
+    },
+    {
+      "id": 2,
+      "name": "Bankovnictví a finanční služby",
+      "professions": [
+        {
+          "id": 201,
+          "name": "Compliance specialista",
+          "count": 1
+        },
+        {
+          "id": 202,
+          "name": "Custody specialista",
+          "count": 1
+
+        }
+      ],
+      "count": 2
+    }
+  ],
+  "meta": {
+    "duration": 2259,
+    "code": "api.ok",
+    "message_localized": "Obory byly nalezeny."
+  }
+}
