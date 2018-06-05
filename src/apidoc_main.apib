@@ -5,13 +5,13 @@ HOST: http://polls.apiblueprint.org/
 
 # Recruitis.io
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
-Dokumentace je založena na autorizace pomocí tokenu, která je vyhgenerován buď samotným systémem. nebo uživatelem.
+Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
 Token se posílá v Header položce "Authorization: bearer XXX"
 
 Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI
 
-Postupem řasu budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
-bude založen nový branch (v2 atd.), nebo budete dostatečným časovým rozestupem o změně informováni.
+Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
+bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
 
 #### Tokeny
 Autorizační tokeny mají dvě úrovně:
@@ -20,8 +20,24 @@ Tento token nesmí být jakkoli zobrazen veřejnosti.
 + `public_access` : Token, který má převážně zobrazovací pravomoce. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
 
 Na oba druhy tokenů lze uplatnit doménový whitelist. (Toto nastavení doporučujeme použít.)
-Tokeny lze vytvořit v Recrutis > *nastavení* > *api propojení*.  
+Tokeny lze vytvořit v Recrutis > *nastavení* > *api propojení*. 
 
+#### Meta informace
+
+Každý `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
+
+| META parameter  | Note
+|:----------------|------------|
+| `code`          | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.
+| `message`       | Zpráva, která popisuje dané volání.  
+| `duration`      | Uplynulá doba při zpracování požadavku.
+| `cache`         | Výsledek je cachován a nemusí být aktuální.  
+| `cache`         | Výsledek je cachován a nemusí být aktuální.  
+| `cache_from`    | Čas vygenerování vráceného výsledku
+| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
+| `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
+| `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
+| `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
 
 :[group_login](apidoc_group_login.apib)
 
