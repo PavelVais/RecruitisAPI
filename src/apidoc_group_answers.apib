@@ -12,19 +12,20 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
    + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
-| Request value        | Required | Note |
-|:----------------------|--------|----------------------|
-| `job_id`              | Yes    |
-| `source_id`           | No     | Default -1, @see Enum section
-| `name`                | Yes    |
-| `email`               | No     |
-| `phone`               | No     |
-| `cover_letter`        | No     |
-| `gdpr_agreement`      | No     |
-| `attachments`         | No     |
-| `attachment` `path`      | Yes   |
-| `attachment` `filename`  | No    | Veme se název souboru
-| `attachment` `type`      | No    | Default 1
+| Request value        | Required | Default Value | Note |
+|:----------------------|--------|:----:|----------------------|
+| `job_id`              | Yes    |      |
+| `source_id`           | No     | -1   | @see Enumeration section
+| `name`                | Yes    |      |
+| `email`               | No     |      |
+| `phone`               | No     |      |
+| `cover_letter`        | No     |      |
+| `gdpr_agreement`      | No     |      |
+| `attachments`         | No     |      | Velikost souboru nesmí přesáhnout 3MB.
+| `attachment` - `path`      | Yes   |    | atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
+| `attachment` - `base64`    | Yes   |    | atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
+| `attachment` - `filename`  | Yes   |    | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.
+| `attachment` - `type`      | No    | 1  |  @see Enumeration section
 
 
 #### Typy příloh (Attachment type)

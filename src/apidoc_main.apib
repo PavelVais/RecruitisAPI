@@ -4,6 +4,9 @@ HOST: http://polls.apiblueprint.org/
 **Momentálně je k dispozici pouze mock server**
 
 # Recruitis.io
+* Verze systému: **1.0.0**
+* Poslední aktualizace: **16.6.2018**
+
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
 Token se posílá v Header položce "Authorization: bearer XXX"
@@ -12,6 +15,8 @@ Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/P
 
 Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
 bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
+
+
 
 #### Tokeny
 Autorizační tokeny mají dvě úrovně:
@@ -24,7 +29,8 @@ Tokeny lze vytvořit v Recrutis > *nastavení* > *api propojení*.
 
 #### Meta informace
 
-Každý `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
+Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny 
+okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
 
 | META parameter  | Note
 |:----------------|------------|

@@ -1,0 +1,42 @@
+{
+  "payload": [
+    {
+      "name": "Oddělení",
+      "values": [
+        {
+          "id": 1,
+          "name": "Marketing"
+        },
+        {
+          "id": 3,
+          "name": "Ředitelství"
+        },
+        {
+          "id": 7,
+          "name": "Výroba"
+        }
+      ]
+    },
+    {
+      "name": "Typ provozu",
+      "values": [
+        {
+          "id": 13,
+          "name": "Jednosměnný"
+        },
+        {
+          "id": 94,
+          "name": "Nepřetržitý"
+        },
+        {
+          "id": 34,
+          "name": "Vícesměnný"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "code": "api.ok",
+    "message_localized": "Filtry byly nalezeny."
+  }
+}

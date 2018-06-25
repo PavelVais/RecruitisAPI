@@ -7,7 +7,7 @@ API volání, které se vstahuje k aktivním inzerátům
     
 ### Get All Jobs [GET]
 
-Získání všech inzerátů. Dle zahrnutých 
+Získání všech inzerátů.
 
 
 #### Requirements
@@ -26,6 +26,7 @@ Získání všech inzerátů. Dle zahrnutých
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfields (optional,array[int]) - Omezení na určité pracovní obory
     + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
+    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Enumerations
     
 + Response 200 (application/json)
 

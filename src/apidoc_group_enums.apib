@@ -3,7 +3,7 @@
 Sekce, která má za úkol vracet různé druhy číselníků
 
 
-## Workfields Lists [/enum/workfields{?lang}]
+## Workfields Lists [/enums/workfields{?lang}]
 
 Workfields neboli obory a profese používané v Recruitis.io systému.
 
@@ -24,7 +24,7 @@ Získá všechny naše profese a obory včetně jejich ID.
         :[](json/apidoc_enum_workfields.json)
         
         
-## Company Workfields Lists [/enum/workfields{?lang,channel_assignation}]
+## Company Workfields Lists [/enums/workfields{?lang,channel_assignation}]
 
 
 ### Get Workfields Used In Jobs [GET]
@@ -53,7 +53,7 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
         :[](json/apidoc_json_error_401.json)
 
 
-## Channels List [/enum/channels]
+## Channels List [/enums/channels]
 
 ### Get Company Channels [GET]
 
@@ -72,7 +72,7 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
         :[](json/apidoc_json_error_401.json)
         
-## Sources List [/enum/sources]
+## Sources List [/enums/sources]
 
 ### Get Company Sources [GET]
 
@@ -90,3 +90,24 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
 + Response 401 (application/json)
 
         :[](json/apidoc_json_error_401.json)
+        
+ 
+## Filter List [/enums/filters]
+### Get filters [GET]
+
+Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token`
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_filters.json)
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)
+

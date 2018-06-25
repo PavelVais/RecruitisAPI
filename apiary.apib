@@ -4,6 +4,9 @@ HOST: http://polls.apiblueprint.org/
 **Momentálně je k dispozici pouze mock server**
 
 # Recruitis.io
+* Verze systému: **1.0.0**
+* Poslední aktualizace: **16.6.2018**
+
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
 Token se posílá v Header položce "Authorization: bearer XXX"
@@ -12,6 +15,8 @@ Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/P
 
 Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
 bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
+
+
 
 #### Tokeny
 Autorizační tokeny mají dvě úrovně:
@@ -24,7 +29,8 @@ Tokeny lze vytvořit v Recrutis > *nastavení* > *api propojení*.
 
 #### Meta informace
 
-Každý `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
+Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny 
+okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
 
 | META parameter  | Note
 |:----------------|------------|
@@ -120,21 +126,21 @@ Získání informací o právě přihlášeném účtu.
 + Response 200 (application/json)
 
         {
-            "payload": {
-                "fullname": "Michal Macinka",
-                "email": "macinka@gmail.com",
-                "img_src": "http://lide.uhk.cz/fim/student/macinmi1/avatar_2.jpg",
-                "device_id": "x56sj64uzr4we64rtb489uzjj186drgv13e",
-                "device_name": "restapiklient"
-            },
-            "meta": {
-                "duration": "2259.39",
-                "total_duration": 2300,
-                "code": 200,
-                "message": "",
-                "message_localized": "OK"
-            }
+          "payload": {
+            "fullname": "Michal Macinka",
+            "email": "foo@bar.com",
+            "img_src": "http://lide.uhk.cz/fim/student/macinmi1/avatar_2.jpg",
+            "device_id": "x56sj64uzr4we64rtb489uzjj186drgv13e",
+            "device_name": "restapiklient"
+          },
+          "meta": {
+            "duration": "2259.39",
+            "total_duration": 2300,
+            "code": "api.ok",
+            "message_localized": "Údaje byly nalezeny."
+          }
         }
+
 
 + Response 401 (application/json)
 
@@ -157,7 +163,7 @@ API volání, které se vstahuje k aktivním inzerátům
     
 ### Get All Jobs [GET]
 
-Získání všech inzerátů. Dle zahrnutých 
+Získání všech inzerátů.
 
 
 #### Requirements
@@ -176,6 +182,7 @@ Získání všech inzerátů. Dle zahrnutých
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfields (optional,array[int]) - Omezení na určité pracovní obory
     + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
+    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Enumerations
     
 + Response 200 (application/json)
 
@@ -571,19 +578,20 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
    + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
-| Request value        | Required | Note |
-|:----------------------|--------|----------------------|
-| `job_id`              | Yes    |
-| `source_id`           | No     | Default -1, @see Enum section
-| `name`                | Yes    |
-| `email`               | No     |
-| `phone`               | No     |
-| `cover_letter`        | No     |
-| `gdpr_agreement`      | No     |
-| `attachments`         | No     |
-| `attachment` `path`      | Yes   |
-| `attachment` `filename`  | No    | Veme se název souboru
-| `attachment` `type`      | No    | Default 1
+| Request value        | Required | Default Value | Note |
+|:----------------------|--------|:----:|----------------------|
+| `job_id`              | Yes    |      |
+| `source_id`           | No     | -1   | @see Enumeration section
+| `name`                | Yes    |      |
+| `email`               | No     |      |
+| `phone`               | No     |      |
+| `cover_letter`        | No     |      |
+| `gdpr_agreement`      | No     |      |
+| `attachments`         | No     |      | Velikost souboru nesmí přesáhnout 3MB.
+| `attachment` - `path`      | Yes   |    | atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
+| `attachment` - `base64`    | Yes   |    | atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
+| `attachment` - `filename`  | Yes   |    | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.
+| `attachment` - `type`      | No    | 1  |  @see Enumeration section
 
 
 #### Typy příloh (Attachment type)
@@ -619,9 +627,9 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
               "type": 1
             },
             {
-              "path" : "http://www.example.com/upload/cv_test.pdf",
-              "filename": "Test CV",
-              "type": 3
+              "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+              "filename": "logo.jpg",
+              "type": 4
 
             },
             {
@@ -650,7 +658,7 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 Sekce, která má za úkol vracet různé druhy číselníků
 
 
-## Workfields Lists [/enum/workfields{?lang}]
+## Workfields Lists [/enums/workfields{?lang}]
 
 Workfields neboli obory a profese používané v Recruitis.io systému.
 
@@ -707,7 +715,7 @@ Získá všechny naše profese a obory včetně jejich ID.
         }
         
         
-## Company Workfields Lists [/enum/workfields{?lang,channel_assignation}]
+## Company Workfields Lists [/enums/workfields{?lang,channel_assignation}]
 
 
 ### Get Workfields Used In Jobs [GET]
@@ -782,7 +790,7 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
         }
 
 
-## Channels List [/enum/channels]
+## Channels List [/enums/channels]
 
 ### Get Company Channels [GET]
 
@@ -829,7 +837,7 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
           }
         }
         
-## Sources List [/enum/sources]
+## Sources List [/enums/sources]
 
 ### Get Company Sources [GET]
 
@@ -888,3 +896,73 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
             "message": "Musíte být přihlášen"
           }
         }
+        
+ 
+## Filter List [/enums/filters]
+### Get filters [GET]
+
+Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token`
+    
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "name": "Oddělení",
+              "values": [
+                {
+                  "id": 1,
+                  "name": "Marketing"
+                },
+                {
+                  "id": 3,
+                  "name": "Ředitelství"
+                },
+                {
+                  "id": 7,
+                  "name": "Výroba"
+                }
+              ]
+            },
+            {
+              "name": "Typ provozu",
+              "values": [
+                {
+                  "id": 13,
+                  "name": "Jednosměnný"
+                },
+                {
+                  "id": 94,
+                  "name": "Nepřetržitý"
+                },
+                {
+                  "id": 34,
+                  "name": "Vícesměnný"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "code": "api.ok",
+            "message_localized": "Filtry byly nalezeny."
+          }
+        }
+
++ Response 401 (application/json)
+
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 440,
+            "code": "api.error.unauthorized",
+            "message": "Musíte být přihlášen"
+          }
+        }
+
