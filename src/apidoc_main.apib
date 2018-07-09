@@ -1,11 +1,14 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-**Momentálně je k dispozici pouze mock server**
+FORMAT: 1A
+HOST: https://app.recrutis.io/api2/
+
+**Funkčnost jednotlivých volání na produkční adrese průběžně doděláváme**
 
 # Recruitis.io
-* Verze systému: **1.0.0**
-* Poslední aktualizace: **16.6.2018**
+* Verze systému: **1.1.0**
+* Poslední aktualizace: **9.7.2018**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -25,7 +28,8 @@ Tento token nesmí být jakkoli zobrazen veřejnosti.
 + `public_access` : Token, který má převážně zobrazovací pravomoce. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
 
 Na oba druhy tokenů lze uplatnit doménový whitelist. (Toto nastavení doporučujeme použít.)
-Tokeny lze vytvořit v Recrutis > *nastavení* > *api propojení*. 
+
+Tokeny lze vytvořit po přihlášení v Recrutisu: *nastavení* > *api propojení*. (https://app.recruitis.io/zadavatel/nastaveni)
 
 #### Meta informace
 
@@ -37,7 +41,6 @@ okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrác
 | `code`          | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.
 | `message`       | Zpráva, která popisuje dané volání.  
 | `duration`      | Uplynulá doba při zpracování požadavku.
-| `cache`         | Výsledek je cachován a nemusí být aktuální.  
 | `cached`        | Výsledek je cachován a nemusí být aktuální.  
 | `cached_from`   | Čas vygenerování vráceného výsledku
 | `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)

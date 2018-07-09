@@ -7,14 +7,14 @@ API volání, které se vstahuje k aktivním inzerátům
     
 ### Get All Jobs [GET]
 
-Získání všech inzerátů.
+Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů (tato možnost zatím *není dostupná*) a distribučních kanálů. 
 
 
 #### Requirements
 
    + Authorization with token
-   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.   
+   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech) - (určení dle channel_id)  
+   + token type: `full_access` : pokud se jedná o interní inzerát. (určení dle channel_id)  
 
 + Request
     + Headers
@@ -24,9 +24,9 @@ Získání všech inzerátů.
 + Parameters
     + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
-    + workfields (optional,array[int]) - Omezení na určité pracovní obory
-    + region (optional,array[int]) - Omezení na určité regiony. *TODO: doplnit specifikaci*
-    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Enumerations
+    + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese
+    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Enumerations - tento parametr není zatím funkční.
+    + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations - tento parametr není zatím funkční.
     
 + Response 200 (application/json)
 
