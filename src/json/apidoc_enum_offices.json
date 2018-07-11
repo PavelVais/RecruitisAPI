@@ -1,0 +1,42 @@
+{
+  "payload": [
+    {
+      "id": "2744238",
+      "street": null,
+      "city": "Domažlice",
+      "region": "Plzeňský kraj",
+      "state": "CZ",
+      "psc": "34401",
+      "name": null,
+      "about": null,
+      "logo": null
+    },
+    {
+      "id": "2744239",
+      "street": "Vrchlického 5/161",
+      "city": "Praha",
+      "region": "Hlavní město Praha",
+      "state": "CZ",
+      "psc": "15000",
+      "name": "SubFirma #1",
+      "about": null,
+      "logo": "https://app.recruitis.io/upload/companies/loga/38c93a3440463afcf43bdb75d5e7afb2.jpg"
+    },
+    {
+      "id": "2744240",
+      "street": null,
+      "city": "Praha",
+      "region": "Hlavní město Praha",
+      "state": "CZ",
+      "psc": null,
+      "name": null,
+      "about": null,
+      "logo": null
+    }
+  ],
+  "meta": {
+    "duration": 2259,
+    "code": "api.ok",
+    "message": "Offices enumeration is returned"
+  }
+}

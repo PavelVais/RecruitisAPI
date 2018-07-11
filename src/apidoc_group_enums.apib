@@ -95,6 +95,8 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
 ## Filter List [/enums/filters]
 ### Get filters [GET]
 
+**Tato funcionalita ještě není na serveru integrovaná**
+
 Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
 ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
 
@@ -111,3 +113,22 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
         :[](json/apidoc_json_error_401.json)
 
+
+## Filter List [/enums/offices]
+### Get filters [GET]
+
+Vrací veškeré pobočky dané společnosti
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`)
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_token`
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_offices.json)
+
++ Response 401 (application/json)
+
+        :[](json/apidoc_json_error_401.json)

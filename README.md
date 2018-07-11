@@ -9,9 +9,10 @@ API je popsáno v adobe APIARY službě.
 
  * **9.7.2018: branch v1 `1.1`**
     * Zprovozněno volání nad realnými daty na url adrese: `https://app.recrutis.io/api2/`
-    * `GET /Jobs` odstraněn parametr `regions`
+    * `GET /Jobs` odstraněn parametr `regions`. Na místo něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejblížším plánu vývoje.
     * `GET /Jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována.)
     * `GET /Jobs` přidán parametr `office_id`
+    * Přidáno volání `GET /enums/offices`
     * volání `GET /enum/*` přejmenováno na `GET /enums/*`. (zpětná kompatibilita je zachována: stále se dá volat `enums`)
     * Plánuje se v nejbližší době: zprovozněno volání na `https://api.recrutis.io/` (volání na https://app.recrutis.io/api2/ bude zachováno)
 
