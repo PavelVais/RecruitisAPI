@@ -46,7 +46,7 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
     * Počáteční verze
 
 
-#### Tokeny
+## Tokeny
 Autorizační tokeny mají dvě úrovně:
 + `full_access` : Token, který má veškeré pravomoce a umožňuje upravovat data v systému dané firmy.
 Tento token nesmí být jakkoli zobrazen veřejnosti.
@@ -60,7 +60,7 @@ Samotná autorizace probíhá pomocí header informace `Authorization`, kde je s
 
 `Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`
 
-#### Meta informace
+###Meta informace
 
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
@@ -77,7 +77,7 @@ okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrác
 | `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
 | `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
 
-### Souhrn kódů odpovědí
+### Popis `code` stavů
 
 Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 
@@ -106,6 +106,7 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
 
 
+## Volání dotazů - dodatečné informace
 ### Parametry
 
 Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
