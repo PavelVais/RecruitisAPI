@@ -7,19 +7,19 @@ HOST: https://app.recrutis.io/api2/
 
 
 # Recruitis.io
-* Verze systému: **1.1.0**
-* Poslední aktualizace: **9.7.2018**
+* Verze systému: **1.1.1**
+* Poslední aktualizace: **19.7.2018**
 * **Funkčnost jednotlivých volání na produkční adrese průběžně doděláváme**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
-Token se posílá v Header položce "Authorization: bearer XXX"
 
 Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI
 
 Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
 bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
 
+:[group_changelog](apidoc_changelog.apib)
 
 
 #### Tokeny
@@ -31,6 +31,10 @@ Tento token nesmí být jakkoli zobrazen veřejnosti.
 Na oba druhy tokenů lze uplatnit doménový whitelist. (Toto nastavení doporučujeme použít.)
 
 Tokeny lze vytvořit po přihlášení v Recrutisu: *nastavení* > *api propojení*. (https://app.recruitis.io/zadavatel/nastaveni)
+
+Samotná autorizace probíhá pomocí header informace `Authorization`, kde je slovní spojení `Bearer` a následně vložený token
+
+`Authorization: Bearer :[](apidoc_bearer_token.txt)`
 
 #### Meta informace
 
@@ -44,10 +48,44 @@ okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrác
 | `duration`      | Uplynulá doba při zpracování požadavku.
 | `cached`        | Výsledek je cachován a nemusí být aktuální.  
 | `cached_from`   | Čas vygenerování vráceného výsledku
-| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
+| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
 | `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
+
+### Souhrn kódů odpovědí
+
+Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
+
+| CODE parameter                                   | Note
+|:-------------------------------------------------|--------------------------------|
+| `api.ok`                                         | Dotaz proběhl úspěšně. 
+| `api.found`                                      | Dotaz našel výsledek a poslal zpět.
+| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek. 
+| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.
+| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.
+| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.
+| `api.error.request.property.wrong_value`         | V požadavku nabívá proměnná špatnou hodnotu. 
+| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek. 
+| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.
+| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.
+| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častějí špatnými údaji. 
+| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.
+| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
+| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, Přihlášení se nezdařilo. 
+| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
+| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
+| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
+| `api.error.upload.size`                          | Příloha má více, než 3MB.
+| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
+| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
+| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
+
+
+### Parametry
+
+Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
+nebo jako pole (`foo[]=bar&foo[]=baz`). 
 
 :[group_login](apidoc_group_login.apib)
 

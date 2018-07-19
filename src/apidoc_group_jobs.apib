@@ -51,10 +51,10 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
 #### Zobrazení parametru závisících na druhu tokenu
    
-   | Parametr | token          | Poznámka |
-   |:-------|----------------------|----------------------|
-   | `stats`        | `full_access`          |
-   | `edit_link`    | `full_access`          |
+   | Parameter      | token           | Note                 |
+   |:---------------|-----------------|----------------------|
+   | `stats`        | `full_access`   |
+   | `edit_link`    | `full_access`   |
 
 + Request
     + Headers
@@ -73,7 +73,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
         
 + Response 404 (application/json)
 
-        :[](json/apidoc_json_error_general.json MSG:"Inzerát nebyl nalezen" CODE:"api.error.jobs.notfound.one")
+        :[](json/apidoc_json_error_general.json MSG:"Inzerát nebyl nalezen" CODE:"api.response.null")
 
 + Response 401 (application/json)
 

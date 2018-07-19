@@ -7,19 +7,43 @@ HOST: https://app.recrutis.io/api2/
 
 
 # Recruitis.io
-* Verze systému: **1.1.0**
-* Poslední aktualizace: **9.7.2018**
+* Verze systému: **1.1.1**
+* Poslední aktualizace: **19.7.2018**
 * **Funkčnost jednotlivých volání na produkční adrese průběžně doděláváme**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
-Token se posílá v Header položce "Authorization: bearer XXX"
 
 Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI
 
 Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
 bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
 
+## Changelog
+
+ * **19.7.2018: branch v1 `1.1.1`**
+    * Zprovozněn parametr channel_id u volání `GET /jobs`
+    * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`
+    * Opraven parametr channel_assignation u volání `GET /enums/workfields`
+    * Přidáno vynucení správných typů tokenů u volání `GET /enums/workfields` a `GET /jobs`
+    * Standartizovány některé kódové označení chyb + jsou zveřejněny a popsány v dokumentaci
+    * V dokumentaci jsou připsány další dodatečné informace o API
+ 
+ * **9.7.2018: branch v1 `1.1`**
+    * Zprovozněno volání nad realnými daty na url adrese: `https://app.recrutis.io/api2/`
+    * `GET /jobs` odstraněn parametr `regions`. Na místo něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejblížším plánu vývoje.
+    * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována.)
+    * `GET /jobs` přidán parametr `office_id`
+    * Přidáno volání `GET /enums/offices`
+    * volání `GET /enum/*` přejmenováno na `GET /enums/*`. (zpětná kompatibilita je zachována: stále se dá volat `enums`)
+    * Plánuje se v nejbližší době: zprovozněno volání na `https://api.recrutis.io/` (volání na https://app.recrutis.io/api2/ bude zachováno)
+
+ * **18.6.2018: branch v1 `1.0.1`**
+    * `POST /Answers` nyní přijíma parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
+
+ * **4.5.2018: branch v1 `1.0.0`**
+    * Ustálená verze API volání `jobs` , `answers` a `login`
+    * Počáteční verze
 
 
 #### Tokeny
@@ -31,6 +55,10 @@ Tento token nesmí být jakkoli zobrazen veřejnosti.
 Na oba druhy tokenů lze uplatnit doménový whitelist. (Toto nastavení doporučujeme použít.)
 
 Tokeny lze vytvořit po přihlášení v Recrutisu: *nastavení* > *api propojení*. (https://app.recruitis.io/zadavatel/nastaveni)
+
+Samotná autorizace probíhá pomocí header informace `Authorization`, kde je slovní spojení `Bearer` a následně vložený token
+
+`Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`
 
 #### Meta informace
 
@@ -44,10 +72,44 @@ okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrác
 | `duration`      | Uplynulá doba při zpracování požadavku.
 | `cached`        | Výsledek je cachován a nemusí být aktuální.  
 | `cached_from`   | Čas vygenerování vráceného výsledku
-| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
+| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
 | `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
+
+### Souhrn kódů odpovědí
+
+Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
+
+| CODE parameter                                   | Note
+|:-------------------------------------------------|--------------------------------|
+| `api.ok`                                         | Dotaz proběhl úspěšně. 
+| `api.found`                                      | Dotaz našel výsledek a poslal zpět.
+| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek. 
+| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.
+| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.
+| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.
+| `api.error.request.property.wrong_value`         | V požadavku nabívá proměnná špatnou hodnotu. 
+| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek. 
+| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.
+| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.
+| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častějí špatnými údaji. 
+| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.
+| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
+| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, Přihlášení se nezdařilo. 
+| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
+| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
+| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
+| `api.error.upload.size`                          | Příloha má více, než 3MB.
+| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
+| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
+| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
+
+
+### Parametry
+
+Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
+nebo jako pole (`foo[]=bar&foo[]=baz`). 
 
 #Group Authentication
 
@@ -125,7 +187,7 @@ Získání informací o právě přihlášeném účtu.
 + Request
     + Headers
     
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Response 200 (application/json)
 
@@ -179,7 +241,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 + Request
     + Headers
     
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Parameters
     + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
@@ -467,15 +529,15 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
 #### Zobrazení parametru závisících na druhu tokenu
    
-   | Parametr | token          | Poznámka |
-   |:-------|----------------------|----------------------|
-   | `stats`        | `full_access`          |
-   | `edit_link`    | `full_access`          |
+   | Parameter      | token           | Note                 |
+   |:---------------|-----------------|----------------------|
+   | `stats`        | `full_access`   |
+   | `edit_link`    | `full_access`   |
 
 + Request
     + Headers
     
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Parameters
     + id (number, `1`) - Job id
@@ -552,7 +614,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
           "meta": {
             "duration": "139.58",
             "total_duration": 330,
-            "code": "api.error.jobs.notfound.one",
+            "code": "api.response.null",
             "message": "Inzerát nebyl nalezen"
           }
         }
@@ -612,7 +674,7 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 + Request
     + Headers
     
-            Authorization: Bearer 68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 
 + Request  (application/json)
@@ -660,7 +722,7 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 
 # Group Enumerations
 
-Sekce, která má za úkol vracet různé druhy číselníků
+Sekce, která má za úkol vracet různé druhy číselníků. Na všechny číselníky se nevztahuje stránkování.
 
 
 ## Workfields Lists [/enums/workfields{?lang}]
@@ -726,7 +788,7 @@ Získá všechny naše profese a obory včetně jejich ID.
 ### Get Workfields Used In Jobs [GET]
 
 Získá všechny profese, které jsou obsaženy v inzerátech dané společnosti. Někdy nemusí sedět počet (`count`) oborů při 
-součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoli i na profesi.
+součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoliv i na profesi.
 
 *Pro upřesnění: Profese jsou podmnožinou jednotlivých oborů.*
 
@@ -734,7 +796,9 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 
    + Authorization with token
    + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o dotaz na interní inzeráty. 
+   + token type: `full_access` : pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
+   
+   Při použití `full_access` tokenu 
 
 + Parameters
     + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)

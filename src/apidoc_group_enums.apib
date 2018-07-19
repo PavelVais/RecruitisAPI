@@ -1,6 +1,6 @@
 # Group Enumerations
 
-Sekce, která má za úkol vracet různé druhy číselníků
+Sekce, která má za úkol vracet různé druhy číselníků. Na všechny číselníky se nevztahuje stránkování.
 
 
 ## Workfields Lists [/enums/workfields{?lang}]
@@ -30,7 +30,7 @@ Získá všechny naše profese a obory včetně jejich ID.
 ### Get Workfields Used In Jobs [GET]
 
 Získá všechny profese, které jsou obsaženy v inzerátech dané společnosti. Někdy nemusí sedět počet (`count`) oborů při 
-součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoli i na profesi.
+součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty návaznost pouze na obor, nikoliv i na profesi.
 
 *Pro upřesnění: Profese jsou podmnožinou jednotlivých oborů.*
 
@@ -38,7 +38,9 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 
    + Authorization with token
    + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o dotaz na interní inzeráty. 
+   + token type: `full_access` : pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
+   
+   Při použití `full_access` tokenu 
 
 + Parameters
     + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
