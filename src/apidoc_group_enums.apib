@@ -37,14 +37,18 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 #### Requirements
 
    + Authorization with token
-   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách,xml nebo na pracovních portálech)
+   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách, xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
+   + Alespoň jeden typ tokenu je tedy vyžadován ve chívli, kdy použijete parametr `channel_assignation`
    
-   Při použití `full_access` tokenu 
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)   
 
 + Parameters
     + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
-    + channel_assignation (int,``)
+    + channel_assignation (array[int],``)
     
 + Response 200 (application/json)
 
