@@ -1,0 +1,11 @@
+{
+  "payload": {
+    "id" : 12345
+  },
+  "meta": {
+    "duration": "139.58",
+    "total_duration": 330,
+    "code": ":[](CODE)",
+    "message": ":[](MSG)"
+  }
+}

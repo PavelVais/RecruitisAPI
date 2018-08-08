@@ -1,0 +1,10 @@
+{
+  "payload": {
+    "count": 1
+  },
+  "meta": {
+    "duration": 2259,
+    "code": "api.deleted",
+    "message_localized": "Filter was deleted."
+  }
+}

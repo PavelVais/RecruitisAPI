@@ -1,0 +1,81 @@
+# Group Job filters
+
+Toto je specifická oblast, ve které pracujeme s filtry pro konkrétní inzeráty. Mnohdy chceme inzeráty filtrovat podle údajů, které
+nám systém nenabízí, tak si je musíme sami vytvořit a k inzerátu přiřadit. Následně je můžeme podle nich filtrovat. 
+
+Příklad filtru: 
+ - Oddělení v nemocnici (JIP, Gynekologie, ORL..)
+ - Typy provozu (jednosměnný, dvousměnný...)
+ 
+Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na personalistovi, který inzerát tvoří.
+
+
+## Filters List [/filters{?id,group}]
+
+Vrátí seznam filtrů, které je možné dle ID přiřazovat a filtrovat u inzerátů.
+*tato funkce je totožná s funkcí GET `enums/filters`
+
+    
+### Get Filters [GET]
+
+Získá všechny naše profese a obory včetně jejich ID.
+
+#### Requirements
+
+   + Authorization with token
+      + token type: `public_token` 
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + group (optional,array[string]) - Vyfiltruje pouze seznam filtrů k dané skupině.
+    
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_filters.json)
+        
+    
+### Creating new filter [POST]
+
+Vytvoření nového filtru.
+
+| Request value         | Required | Type     | Default Value   | Note               |
+|:----------------------|----------|----------|:-------------:|----------------------|
+| `name`                | Yes      | string   | | Název filtru
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_enum_filters.json)
+        
+
+### Updating existing filter [PUT]
+
+Editace filtru dle ID v parametru URI.
+
+| Request value         | Required | Type     | Default Value  | Note               |
+|:----------------------|----------|----------|:--------------:|----------------------|
+| `name`                | Yes      | string   | | Název filtru
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+
++ Parameters
+    + id (required, number, `1`) - Filter ID
+
++ Response 201 (application/json)
+
+        :[](json/apidoc_json_error_general.json MSG:"Filter was modified." CODE:"api.modified")
+        
+### Delete existing filter [DELTE]
+        
+Smaže filtr dle ID v parametru URI.
+
++ Parameters
+    + id (required, number, `1`) - Filter ID
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_filters_delete_response.json)

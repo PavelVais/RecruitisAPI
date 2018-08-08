@@ -1,42 +1,39 @@
 {
   "payload": [
     {
-      "name": "Oddělení",
-      "values": [
-        {
-          "id": 1,
-          "name": "Marketing"
-        },
-        {
-          "id": 3,
-          "name": "Ředitelství"
-        },
-        {
-          "id": 7,
-          "name": "Výroba"
-        }
-      ]
+      "id": "6",
+      "name": "Ošetřovna",
+      "group": "oddělení"
     },
     {
-      "name": "Typ provozu",
-      "values": [
-        {
-          "id": 13,
-          "name": "Jednosměnný"
-        },
-        {
-          "id": 94,
-          "name": "Nepřetržitý"
-        },
-        {
-          "id": 34,
-          "name": "Vícesměnný"
-        }
-      ]
+      "id": "7",
+      "name": "Gynekologie",
+      "group": "oddělení"
+    },
+    {
+      "id": "8",
+      "name": "ORL",
+      "group": "oddělení"
+    },
+    {
+      "id": "5",
+      "name": "Jednosměný",
+      "group": "Smanný provoz"
+    },
+    {
+      "id": "9",
+      "name": "Dvousměnný",
+      "group": "Smanný provoz"
+    },
+    {
+      "id": "12",
+      "name": "Nepřetržitý",
+      "group": "Smanný provoz"
     }
   ],
   "meta": {
-    "code": "api.ok",
-    "message_localized": "Filtry byly nalezeny."
+    "duration": 320,
+    "code": "api.found",
+    "message": "Filter enumeration is returned."
   }
 }

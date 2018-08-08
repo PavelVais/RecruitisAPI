@@ -4,7 +4,12 @@ API calls for actions connected with answers.
 ## Answers list [/answers]
 
 ### Create new answer [POST]
-Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
+Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. 
+
+API nepodporuje vložení duplikátních odpovědí. Pokud (dle emailu nebo telefonu) již uchazeč
+na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`
+
+Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořená odpověď automaticky. Její platnost je v základním nastavení 1 rok. Pokud byste si přáli toto nastavení změnit, kontaktujte nás. 
 
 #### Requirements
 
@@ -13,19 +18,26 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
 | Request value        | Required | Default Value | Note |
-|:----------------------|--------|:----:|----------------------|
-| `job_id`              | Yes    |      |
-| `source_id`           | No     | -1   | @see Enumeration section
-| `name`                | Yes    |      |
-| `email`               | No     |      |
-| `phone`               | No     |      |
-| `cover_letter`        | No     |      |
-| `gdpr_agreement`      | No     |      |
-| `attachments`         | No     |      | Velikost souboru nesmí přesáhnout 3MB.
-| `attachment` - `path`      | Yes   |    | atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
-| `attachment` - `base64`    | Yes   |    | atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
+|:----------------------|--------|:------:|----------------------|
+| `job_id`              | Yes    |        |
+| `name`                | Yes    |        |
+| `email`               | No     |        |
+| `phone`               | No     |        |
+| `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
+| `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
+| `cover_letter`        | No     |        |
+| `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
+| `gdpr_agreement` - `date_expiration`    | No     | 1 year from now  |  formát YYYY-MM-DD
+| `gdpr_agreement` - `source`             | No     | "manual"         | Stringové označení, odkud byl GDPR souhlas pořízen.
+| `gdpr_agreement`           | No    |    |
+| `attachments`              | No    |    | Velikost souboru nesmí přesáhnout 3MB.
+| `attachment` - `path`      | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
+| `attachment` - `base64`    | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
 | `attachment` - `filename`  | Yes   |    | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.
 | `attachment` - `type`      | No    | 1  |  @see Enumeration section
+| `extra`                    | No    |    |  Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.
+| `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
+| `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
 
 
 #### Typy příloh (Attachment type)
@@ -45,3 +57,7 @@ Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi.
 + Response 201 (application/json)
 
         :[](json/apidoc_answers_post_response.json)
+        
++ Response 400 (application/json)
+        
+        :[](json/apidoc_json_error_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")

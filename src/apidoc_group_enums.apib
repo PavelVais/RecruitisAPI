@@ -98,10 +98,11 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
         :[](json/apidoc_json_error_401.json)
         
  
-## Filter List [/enums/filters]
-### Get filters [GET]
+## Filter List  [/enums/filters]
 
-**Tato funcionalita ještě není na serveru integrovaná**
+**Deprecated**: Namásto toho používejte volání `GET` `filters/`
+
+### Get filters [GET]
 
 Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
 ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
@@ -120,8 +121,8 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
         :[](json/apidoc_json_error_401.json)
 
 
-## Filter List [/enums/offices]
-### Get filters [GET]
+## Office List [/enums/offices]
+### Get offices [GET]
 
 Vrací veškeré pobočky dané společnosti
 ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`)
