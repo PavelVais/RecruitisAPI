@@ -244,7 +244,7 @@ API volání, které se vstahuje k aktivním inzerátům
     
 ### Get All Jobs [GET]
 
-Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů (tato možnost zatím *není dostupná*) a distribučních kanálů. 
+Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů a distribučních kanálů. 
 
 
 #### Requirements
@@ -262,9 +262,9 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
     + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese
-    + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations - tento parametr není zatím funkční.
-    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Enumerations - tento parametr není zatím funkční.
-    + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations - tento parametr není zatím funkční.
+    + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
+    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
+    + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
     
 + Response 200 (application/json)
 
@@ -785,7 +785,7 @@ Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na pe
 ## Filters List [/filters{?id,group}]
 
 Vrátí seznam filtrů, které je možné dle ID přiřazovat a filtrovat u inzerátů.
-*tato funkce je totožná s funkcí GET `enums/filters`
+*tato funkce je totožná s funkcí GET `enums/filters`*
 
     
 ### Get Filters [GET]
