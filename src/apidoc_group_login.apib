@@ -2,7 +2,7 @@
 
 ## Login [/login]
 
-### Login [POST]
+### Login [PUT]
 
 Login request for user authentication. Default response is 200. 
 
@@ -26,17 +26,12 @@ Tato funkce není třeba volat, pokud již máte Token vygenerovaný. **Tato fun
 
 + Request 
 
-        {
-            "password":"heslo",
-            "username":"user@test.cz",
-            "device_id": "efee4554959cecejo",
-            "device_name": "Samsung S8",
-            
-        }
+        :[](json/apidoc_login_put.json)
+
         
 + Response 200 (application/json)
 
-        :[](json/apidoc_login_put.json)
+        :[](json/apidoc_login_response.json TOKEN:"30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6")
   
 + Response 404 (application/json)
        

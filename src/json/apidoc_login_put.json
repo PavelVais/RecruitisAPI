@@ -1,14 +1,6 @@
 {
-  "payload": {
-    "token": "68b0c063374ac7fe0abaa18342dbad23168876a1.8699.3e398f0ccd4c857b29de10397534afac",
-    "device_id": "x56sj64uzr4we64rtb489uzjj186drgv13e",
-    "device_name": "restapiklient"
-  },
-  "meta": {
-    "duration": "2259.39",
-    "total_duration": 2300,
-    "code": 200,
-    "message": "",
-    "message_localized": "Přihlášení proběhlo v pořádku"
-  }
+  "password": "heslo",
+  "username": "user@test.cz",
+  "device_id": "efee4554959cecejo",
+  "device_name": "Samsung S8"
 }
