@@ -10,6 +10,18 @@
         "name": "Tomáš Krátký",
         "id": 12345
       },
+      "filterlist": [
+        {
+          "id": "5",
+          "name": "Jednosměnný",
+          "group": "Typ provozu"
+        },
+        {
+          "id": "7",
+          "name": "Marketing",
+          "group": "oddělení"
+        }
+      ],
       "workfields": [
         {
           "id": 20,
