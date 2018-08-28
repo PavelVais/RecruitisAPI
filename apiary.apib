@@ -20,6 +20,10 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
+ * **28.8.2018: branch v1 `1.2.1`**
+    * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
+    * Do volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
+ 
  * **6.8.2018: branch v1 `1.2`**
     * Přidána sekce **Filters**
     * Zprovozněn parametr filter_id u volání `GET /jobs`
@@ -614,7 +618,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
               "ztp": {
               },
               "employment": {
-                "id": 1,
+                "id": 4,
                 "name": "Práce doma"
               },
               "education": {
@@ -683,13 +687,17 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `name`                | Yes    |        |
 | `email`               | No     |        |
 | `phone`               | No     |        |
+| `skype`               | No     |        | Odkaz na uchazečův Skype
+| `linkedin`            | No     |        | Odkaz na uchazečův LinkedIn
+| `facebook`            | No     |        | Odkaz na uchazečův Facebook
+| `twitter`             | No     |        | Odkaz na uchazečův Twitter
 | `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
 | `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
 | `cover_letter`        | No     |        |
 | `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
 | `gdpr_agreement` - `date_expiration`    | No     | 1 year from now  |  formát YYYY-MM-DD
+| `gdpr_agreement` - `date_created`       | No     | now              |  formát YYYY-MM-DD H:i:s
 | `gdpr_agreement` - `source`             | No     | "manual"         | Stringové označení, odkud byl GDPR souhlas pořízen.
-| `gdpr_agreement`           | No    |    |
 | `attachments`              | No    |    | Velikost souboru nesmí přesáhnout 3MB.
 | `attachment` - `path`      | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
 | `attachment` - `base64`    | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
@@ -698,6 +706,8 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `extra`                    | No    |    |  Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.
 | `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
 | `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
+
+
 
 
 #### Typy příloh (Attachment type)
@@ -723,6 +733,8 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
           "source_id": 1,
           "name": "Pavel Test",
           "email": "foo@bar.com",
+          "skype": "foo@bar.com",
+          "linkedin": "https://example.com",
           "phone": 123456678,
           "cover_letter": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor consequat augue, eu porttitor ex blandit sit amet. Morbi sed lorem lorem. In aliquet cursus nunc, ut porttitor orci viverra non. Aenean ultrices vestibulum venenatis. Nullam facilisis justo ut tincidunt elementum. Praesent molestie nibh libero, eget efficitur odio interdum vel. Suspendisse augue ipsum, scelerisque eget massa non, pellentesque vehicula augue. Cras mollis vehicula pharetra. Phasellus neque nisi, facilisis nec dui in, bibendum lacinia leo",
           "gdpr_agreement": {

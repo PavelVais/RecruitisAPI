@@ -3,6 +3,8 @@
   "source_id": 1,
   "name": "Pavel Test",
   "email": "foo@bar.com",
+  "skype": "foo@bar.com",
+  "linkedin": "https://example.com",
   "phone": 123456678,
   "cover_letter": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor consequat augue, eu porttitor ex blandit sit amet. Morbi sed lorem lorem. In aliquet cursus nunc, ut porttitor orci viverra non. Aenean ultrices vestibulum venenatis. Nullam facilisis justo ut tincidunt elementum. Praesent molestie nibh libero, eget efficitur odio interdum vel. Suspendisse augue ipsum, scelerisque eget massa non, pellentesque vehicula augue. Cras mollis vehicula pharetra. Phasellus neque nisi, facilisis nec dui in, bibendum lacinia leo",
   "gdpr_agreement": {

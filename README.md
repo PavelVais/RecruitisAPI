@@ -1,12 +1,24 @@
 # RecruitisAPI
-Dokumentace k API pro službu Recruitis.io vytvořená společností Český Trh Práce.
-API je popsáno v adobe APIARY službě.
+Dokumentace k API pro službu Recruitis.io vytvořená společností Český Trh Práce s.r.o.
+API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá volání.
 
 # Odkazy
 [Dokumentace v APIARY](https://jsapi.apiary.io/previews/ceskytrhpracesro/reference)
 
 # Changelog
 
+ * **28.8.2018: branch v1 `1.2.1`**
+    * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
+    * Do volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
+ 
+ * **6.8.2018: branch v1 `1.2`**
+    * Přidána sekce **Filters**
+    * Zprovozněn parametr filter_id u volání `GET /jobs`
+    * U volání `POST /answer`  přibyl parametr `referral_id`, `channel_id` a `extra`, který dovoluje přidat k odpovědi poznámku nebo tag.
+    * U volání `POST /answer`  byl zprovozněn parametr `channel_id` 
+    * U volání `POST /answer`  byl upraven parametr `gppr_agreements` - Nyní je rozšířen o další atributy 
+    * Volání `GET /enums/filters` je označeno jako deprecated. Namísto toho se doporučuje volat `GET /filters`
+ 
  * **19.7.2018: branch v1 `1.1.1`**
     * Zprovozněn parametr channel_id u volání `GET /jobs`
     * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`

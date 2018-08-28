@@ -1,10 +1,14 @@
-# Group Answers
-API calls for actions connected with answers.
+# Group Candidates
+Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
 
-## Answers list [/answers]
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj monetálně vhodný inzerát. 
+Pro tuto možnost doporučujeme vložit atribut `extra` - `tag` s názvem "own"
 
-### Create new answer [POST]
-Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. 
+
+## Candidates [/candidates]
+
+### Create new candidate [POST]
+Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID odpovědi. 
 
 API nepodporuje vložení duplikátních odpovědí. Pokud (dle emailu nebo telefonu) již uchazeč
 na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`
@@ -19,20 +23,16 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
    
 | Request value        | Required | Default Value | Note |
 |:----------------------|--------|:------:|----------------------|
-| `job_id`              | Yes    |        |
 | `name`                | Yes    |        |
 | `email`               | No     |        |
 | `phone`               | No     |        |
-| `skype`               | No     |        | Odkaz na uchazečův Skype
-| `linkedin`            | No     |        | Odkaz na uchazečův LinkedIn
-| `facebook`            | No     |        | Odkaz na uchazečův Facebook
-| `twitter`             | No     |        | Odkaz na uchazečův Twitter
+| `skype`               | No     |        |
+| `linkedin`            | No     |        |
+| `facebook`            | No     |        |
+| `twitter`             | No     |        |
 | `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
-| `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
-| `cover_letter`        | No     |        |
-| `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
+| `gdpr_agreement`      | Yes    |        | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.
 | `gdpr_agreement` - `date_expiration`    | No     | 1 year from now  |  formát YYYY-MM-DD
-| `gdpr_agreement` - `date_created`       | No     | now              |  formát YYYY-MM-DD H:i:s
 | `gdpr_agreement` - `source`             | No     | "manual"         | Stringové označení, odkud byl GDPR souhlas pořízen.
 | `attachments`              | No    |    | Velikost souboru nesmí přesáhnout 3MB.
 | `attachment` - `path`      | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
@@ -42,8 +42,6 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `extra`                    | No    |    |  Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.
 | `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
 | `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
-
-
 
 
 #### Typy příloh (Attachment type)
@@ -62,7 +60,7 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 
 + Response 201 (application/json)
 
-        :[](json/apidoc_answers_post_response.json)
+                :[](json/apidoc_json_post_genera.json MSG:"Can't upload attachment." CODE:"api.error.generic")
         
 + Response 400 (application/json)
         
