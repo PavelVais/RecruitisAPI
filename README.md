@@ -5,7 +5,15 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 # Odkazy
 [Dokumentace v APIARY](https://jsapi.apiary.io/previews/ceskytrhpracesro/reference)
 
-# Changelog
+## Changelog
+
+ * **5.9.2018: branch v1 `1.2.2`**
+     * Do volání `POST /Answers` Přibyl parametr `source`.
+     * Do volání `GET /jobs` přibyl parametr `details`
+     * Do volání `GET /jobs` přibyl parametr `contact`
+     * U volání `GET /jobs` byl odebrán parametr `source`
+     * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace
+     * Aktualizace dokumentace o některé důležité informace.
 
  * **28.8.2018: branch v1 `1.2.1`**
     * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
@@ -42,4 +50,3 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
  * **4.5.2018: branch v1 `1.0.0`**
     * Ustálená verze API volání `jobs` , `answers` a `login`
     * Počáteční verze
-

@@ -9,6 +9,24 @@ API volání, které se vstahuje k aktivním inzerátům
 
 Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů a distribučních kanálů. 
 
+Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code `api.response.null`.
+
+**Parametry**
+
+ Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
+ jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`)
+ 
+| Parameter     | Required | Default Value | Note |
+|:--------------|--------|:------:|----------------------|
+| `limit`        | No     | 10  | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.
+| `page`         | No     | 1   |
+| `workfield_id` | No    |    | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.
+| `office_id`    | No    |    | Array. Filtrace podle ID poboček.
+| `filter_id`    | No    |    | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.
+| `channel_id`   | No    |     | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu)
+
+
+Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. a pod jednou adresou můžete uvést i více poboček.).
 
 #### Requirements
 
@@ -22,7 +40,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
 + Parameters
-    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + limit (optional,numeric,`10`) - počet entit, které se mohou zobrazit.
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese
     + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
@@ -33,15 +51,14 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
         :[](json/apidoc_jobs_list_get.json)
 
-+ Response 404 (application/json)
-
-        :[](json/apidoc_json_error_general.json MSG:"Inzeráty nebyly nalezeny" CODE:"api.error.jobs.notfound")
-
-
 ## Job Detail [/jobs/{id}]
 
-   
 ### Get Jobs Detail [GET]
+
+ Vráýtí detail jednoho inzerátu. Struktura odpovědi je stejná, jako když se vrací více inzerátů najednou.
+ 
+ Pokud daný inzerát neexistuje, vrátí se http status `200` s meta code `api.response.null`.
+
 
 #### Requirements
 
@@ -71,10 +88,6 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
         :[](json/apidoc_jobs_detail_get.json)
 
         
-+ Response 404 (application/json)
-
-        :[](json/apidoc_json_error_general.json MSG:"Inzerát nebyl nalezen" CODE:"api.response.null")
-
 + Response 401 (application/json)
 
         :[](json/apidoc_json_error_401.json)

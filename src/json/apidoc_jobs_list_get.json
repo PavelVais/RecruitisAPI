@@ -4,11 +4,16 @@
       "job_id": 123456,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
+      "date_end": "2019-01-30 15:14:00",
       "title": "Android Developer",
-      "source": "PRACEvCR.cz",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345
+      },
+      "contact": {
+        "name": "Radim Velezeba",
+        "email": "foo@bar.cz",
+        "phone": 123456
       },
       "filterlist": [
         {
@@ -22,6 +27,9 @@
           "group": "oddělení"
         }
       ],
+      "details": {
+        "office_id": null
+      },
       "workfields": [
         {
           "id": 20,

@@ -20,6 +20,12 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
+ * **5.9.2018: branch v1 `1.2.2`**
+     * Do volání `POST /Answers` Přibyl parametr `source`.
+     * Do volání `GET /jobs` přibyl parametr `details`
+     * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace
+     * Aktualizace dokumentace o některé důležité informace.
+
  * **28.8.2018: branch v1 `1.2.1`**
     * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
     * Do volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
@@ -250,6 +256,24 @@ API volání, které se vstahuje k aktivním inzerátům
 
 Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů a distribučních kanálů. 
 
+Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code `api.response.null`.
+
+**Parametry**
+
+ Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
+ jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`)
+ 
+| Parameter     | Required | Default Value | Note |
+|:--------------|--------|:------:|----------------------|
+| `limit`        | No     | 10  | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.
+| `page`         | No     | 1   |
+| `workfield_id` | No    |    | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.
+| `office_id`    | No    |    | Array. Filtrace podle ID poboček.
+| `filter_id`    | No    |    | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.
+| `channel_id`   | No    |     | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu)
+
+
+Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. a pod jednou adresou můžete uvést i více poboček.).
 
 #### Requirements
 
@@ -263,7 +287,7 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Parameters
-    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
+    + limit (optional,numeric,`10`) - počet entit, které se mohou zobrazit.
     + page (optional,numeric,`1`) - strana s vypisem odpovedi
     + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese
     + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
@@ -278,11 +302,16 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
               "job_id": 123456,
               "active": true,
               "date_created": "2017-03-23 17:42:10",
+              "date_end": "2019-01-30 15:14:00",
               "title": "Android Developer",
-              "source": "PRACEvCR.cz",
               "personalist": {
                 "name": "Tomáš Krátký",
                 "id": 12345
+              },
+              "contact": {
+                "name": "Radim Velezeba",
+                "email": "foo@bar.cz",
+                "phone": 123456
               },
               "filterlist": [
                 {
@@ -296,6 +325,9 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
                   "group": "oddělení"
                 }
               ],
+              "details": {
+                "office_id": null
+              },
               "workfields": [
                 {
                   "id": 20,
@@ -534,23 +566,14 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
           }
         }
 
-+ Response 404 (application/json)
-
-        {
-          "payload": null,
-          "meta": {
-            "duration": "139.58",
-            "total_duration": 330,
-            "code": "api.error.jobs.notfound",
-            "message": "Inzeráty nebyly nalezeny"
-          }
-        }
-
-
 ## Job Detail [/jobs/{id}]
 
-   
 ### Get Jobs Detail [GET]
+
+ Vráýtí detail jednoho inzerátu. Struktura odpovědi je stejná, jako když se vrací více inzerátů najednou.
+ 
+ Pokud daný inzerát neexistuje, vrátí se http status `200` s meta code `api.response.null`.
+
 
 #### Requirements
 
@@ -582,11 +605,9 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
             {
               "job_id": 123456,
               "title": "Android Developer",
-              "last_updated": "2017-11-13 15:53:01",
               "date_created": "2017-01-30 15:14:00",
               "date_end": "2019-01-30 15:14:00",
               "description": "Jste maminka na mateřské dovolené, která opustila svět personalistiky tělem avšak rozhodně ne duší? Je pro Vás důležité trávit co nejvíce času s rodinou, ale zároveň si nechcete nechat ujít nové trendy v HR, aby pro Vás návrat do světa dění nebyl tak těžký? Pak Vám nabízíme příležitost, jak vše při mateřské skloubit a navíc si přivydělat! &lt;img src=&quot;http://recruitis.io/mam.jpeg&quot; class=&quot;img-responsive center&quot; alt=&quot;maminka s duší personalistky&quot;&gt;[/mujstyl] Jaká byste měla být: Personalistika je Vaší profesí a nebo alespoň velkou vášní S kolegy v oboru se ráda dělíte o užitečné novinky a hlavně o dobrou energii Skype meetingy jsou pro Vás přirozeným komunikačním prostředkem Je radost s Vámi komunikovat Trendy v HR Vás zajímají a chcete zůstat #intouch Co můžete čekat od nás: Práci z pohodlí domova Flexibilní formu spolupráce Podporu od týmu mladých pohodářů zapálených pro HR a moderní technologie [mujstyl]Zašlete nám Váš kontakt, dáme Skype nad šálkem kávy a povíme si víc. Budeme se těšit",
-              "source_site": "PRACEvCR.cz",
               "personalist": {
                 "name": "Tomáš Krátký",
                 "id": 12345
@@ -602,6 +623,9 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
                   "name": "Personalistika a HR"
                 }
               ],
+              "details": {
+                "office_id": null
+              },
               "addresses": [
                 {
                   "state": "CZ",
@@ -638,18 +662,6 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
         }
 
         
-+ Response 404 (application/json)
-
-        {
-          "payload": null,
-          "meta": {
-            "duration": "139.58",
-            "total_duration": 330,
-            "code": "api.response.null",
-            "message": "Inzerát nebyl nalezen"
-          }
-        }
-
 + Response 401 (application/json)
 
         {
@@ -692,6 +704,7 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `facebook`            | No     |        | Odkaz na uchazečův Facebook
 | `twitter`             | No     |        | Odkaz na uchazečův Twitter
 | `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
+| `source`              | No     |        | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id`
 | `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
 | `cover_letter`        | No     |        |
 | `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
@@ -707,7 +720,9 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
 | `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
 
-
+**GDPR a souhlas se zpracováním osobních údajů k dané pozici:**
+Pokud není určen GDPR souhlas, tak souhlas ke zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
+Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirace.  
 
 
 #### Typy příloh (Attachment type)
