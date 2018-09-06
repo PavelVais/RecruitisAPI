@@ -20,15 +20,21 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
+ * **6.9.2018: branch v1 `1.2.3`**
+     * **Pozor: 11.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`
+     * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
+     * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
+
  * **5.9.2018: branch v1 `1.2.2`**
-     * Do volání `POST /Answers` Přibyl parametr `source`.
-     * Do volání `GET /jobs` přibyl parametr `details`
+     * Do odpovědi u volání `POST /Answers` Přibyl parametr `source`.
+     * Do odpovědi u volání `GET /jobs` přibyl parametr `details`
      * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace
      * Aktualizace dokumentace o některé důležité informace.
 
  * **28.8.2018: branch v1 `1.2.1`**
-    * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
-    * Do volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
+    * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
+    * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
  
  * **6.8.2018: branch v1 `1.2`**
     * Přidána sekce **Filters**
@@ -135,6 +141,12 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 
 Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
 nebo jako pole (`foo[]=bar&foo[]=baz`). 
+
+### Dovysvětlení hodnot jednotlivých parametrů
+
+ **date** - Je string ve formátu YYYY-MM-DD (2018-01-30)
+ **datetime** - Je string ve formátu YYYY-MM-DD H:i:s (2018-01-30 12:59:59)
+
 
 #Group Authentication
 
@@ -258,19 +270,22 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
 Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code `api.response.null`.
 
-**Parametry**
+#### Parameters info
 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
  jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`)
  
-| Parameter     | Required | Default Value | Note |
-|:--------------|--------|:------:|----------------------|
-| `limit`        | No     | 10  | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.
-| `page`         | No     | 1   |
-| `workfield_id` | No    |    | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.
-| `office_id`    | No    |    | Array. Filtrace podle ID poboček.
-| `filter_id`    | No    |    | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.
-| `channel_id`   | No    |     | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu)
+| Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                       |
+|:-------------------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `limit`            | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                  |
+| `page`             | No       | 1             | No                          | Aktuální stránka                                                                                                                                                           |
+| `workfield_id`     | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                              |
+| `office_id`        | No       |               | No                          | Array. Filtrace podle ID poboček.                                                                                                                                          |
+| `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                        |
+| `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu) |
+| `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby system vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
+
+
 
 
 Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. a pod jednou adresou můžete uvést i více poboček.).
@@ -581,12 +596,43 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
    + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.
 
-#### Zobrazení parametru závisících na druhu tokenu
+#### Response parameters
    
-   | Parameter      | token           | Note                 |
-   |:---------------|-----------------|----------------------|
-   | `stats`        | `full_access`   |
-   | `edit_link`    | `full_access`   |
+| Parameter                | token condition | Type          | Note                                                                                                                                               |
+|--------------------------|-----------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `job_id`                 | `public_access` | int           | ID inzerátu                                                                                                                                        |
+| `title`                  | `public_access` | string        |                                                                                                                                                    |
+| `description`            | `public_access` | string        |                                                                                                                                                    |
+| `date_end`               | `public_access` | date          |                                                                                                                                                    |
+| `date_created`           | `public_access` | datetime      |                                                                                                                                                    |
+| `workfields`             | `public_access` | array(object) |                                                                                                                                                    |
+| `workfields` - `id`      | `public_access` | int           |                                                                                                                                                    |
+| `workfields` - `name`    | `public_access` | string        |                                                                                                                                                    |
+| `stats`                  | `full_access`   | object        | Statistiky k danému inzerátu. Ukazují počt                                                                                                         |
+| `stats` - `flow_answers` | `full_access`   | array(object) | Pole jednotlivých stavů a jejich počtu odpovědí                                                                                                    |
+| `stats` - `answers`      | `full_access`   | int           |                                                                                                                                                    |
+| `stats` - `views`        | `full_access`   | int           |                                                                                                                                                    |
+| `filterlist`             | `public_access` | array(object) | Seznam filtračních položek                                                                                                                         |
+| `filterlist` - `id`      | `public_access` | int           |                                                                                                                                                    |
+| `filterlist` - `name`    | `public_access` | string        |                                                                                                                                                    |
+| `filterlist` - `group`   | `public_access` | string        |                                                                                                                                                    |
+| `details`                | `public_access` | object        |                                                                                                                                                    |
+| `details` - `office_id`  | `public_access` | int           | Pokud je inzerát propojený s pobočkou, tato položka obsahuje ID pobočky (podle ní se dá filtrovat.). Pokud není propojená, položka se nezobrazuje. |
+| `personalist`            | `public_access` | object        |                                                                                                                                                    |
+| `personalist` - `id`     | `public_access` | int           |                                                                                                                                                    |
+| `personalist` - `name`   | `public_access` | string        |                                                                                                                                                    |
+| `contact` - `name`       | `public_access` | string        |                                                                                                                                                    |
+| `contact` - `email`      | `public_access` | string        |                                                                                                                                                    |
+| `contact` - `phone`      | `public_access` | string        |                                                                                                                                                    |
+| `addresses`              | `public_access` | array(object) |                                                                                                                                                    |
+| `addresses` - `id`       | `public_access` | int           |                                                                                                                                                    |
+| `addresses` - `city`     | `public_access` | string        |                                                                                                                                                    |
+| `addresses` - `psc`      | `public_access` | string        |                                                                                                                                                    |
+| `addresses` - `street`   | `public_access` | string        |                                                                                                                                                    |
+| `addresses` - `region`   | `public_access` | string        |                                                                                                                                                    |
+| `addresses` - `state`    | `public_access` | string        |                                                                                                                                                    |
+| `active`                 | `public_access` | bool          | Značí, jestli je Inzerát aktivní (není smazaný, ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.               |
+
 
 + Request
     + Headers

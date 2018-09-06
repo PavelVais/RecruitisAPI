@@ -1,14 +1,20 @@
 ## Changelog
 
+ * **6.9.2018: branch v1 `1.2.3`**
+     * **Pozor: 11.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`
+     * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
+     * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
+
  * **5.9.2018: branch v1 `1.2.2`**
-     * Do volání `POST /Answers` Přibyl parametr `source`.
-     * Do volání `GET /jobs` přibyl parametr `details`
+     * Do odpovědi u volání `POST /Answers` Přibyl parametr `source`.
+     * Do odpovědi u volání `GET /jobs` přibyl parametr `details`
      * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace
      * Aktualizace dokumentace o některé důležité informace.
 
  * **28.8.2018: branch v1 `1.2.1`**
-    * Do volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
-    * Do volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
+    * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
+    * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
  
  * **6.8.2018: branch v1 `1.2`**
     * Přidána sekce **Filters**
