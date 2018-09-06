@@ -703,8 +703,8 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 | `linkedin`            | No     |        | Odkaz na uchazečův LinkedIn
 | `facebook`            | No     |        | Odkaz na uchazečův Facebook
 | `twitter`             | No     |        | Odkaz na uchazečův Twitter
-| `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
-| `source`              | No     |        | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id`
+| `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`
+| `source`              | No     |        | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již zdroj existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id`
 | `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
 | `cover_letter`        | No     |        |
 | `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
@@ -964,7 +964,7 @@ Editace filtru dle ID v parametru URI.
           }
         }
         
-### Delete existing filter [DELTE]
+### Delete existing filter [DELETE]
         
 Smaže filtr dle ID v parametru URI.
 
