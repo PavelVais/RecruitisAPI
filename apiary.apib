@@ -23,6 +23,7 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
  * **11.9.2018: branch v1 `1.3`**
      * **Pozor: 18.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
      * Bylo přidáno volání `POST /candidates`
+     * Do dokumentace byla přidán popis tagů
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
 
@@ -160,6 +161,14 @@ Typy příloh se používá při vytváření odpovědi, popřípadě kandidáta
 | `3`    | Emailová korespondence (obsolete)       
 | `4`    | Fotografie       
 | `5`    | GDPR souhlas       
+
+#### Speciální typy tagů
+
+Pokud místo svého znění tagu vložíte níže uvedený tag, má to hlubší vliv na fungování uchazeče, viz poznámka
+
+| Value        |  Note                             |
+|:-------------|-----------------------------------|
+| `tag.hot`    | Tento tag přidaný k uchazeči (přes přidání odpovědi / uchazeče) zaručí, že se kandidát zařadí do sekce "žhavý kandidát"  
 
 ### Dovysvětlení hodnot jednotlivých parametrů
 
