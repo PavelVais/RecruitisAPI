@@ -2,51 +2,46 @@
 Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
 
 Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj monetálně vhodný inzerát. 
-Pro tuto možnost doporučujeme vložit atribut `extra` - `tag` s názvem "own"
 
+**Hot candidates**
+Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", to jest kandidát, 
+který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více o žhavých kandidátech v Recruitisu.
 
 ## Candidates [/candidates]
 
 ### Create new candidate [POST]
 Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID odpovědi. 
 
-API nepodporuje vložení duplikátních odpovědí. Pokud (dle emailu nebo telefonu) již uchazeč
-na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`
-
-Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořená odpověď automaticky. Její platnost je v základním nastavení 1 rok. Pokud byste si přáli toto nastavení změnit, kontaktujte nás. 
+Pokud se vkládá ucghazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID.
 
 #### Requirements
 
    + Authorization with token
-   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.    
+   + token type: `public_access`
    
-| Request value        | Required | Default Value | Note |
-|:----------------------|--------|:------:|----------------------|
-| `name`                | Yes    |        |
-| `email`               | No     |        |
-| `phone`               | No     |        |
-| `skype`               | No     |        |
-| `linkedin`            | No     |        |
-| `facebook`            | No     |        |
-| `twitter`             | No     |        |
-| `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\channels`
-| `gdpr_agreement`      | Yes    |        | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.
-| `gdpr_agreement` - `date_expiration`    | No     | 1 year from now  |  formát YYYY-MM-DD
-| `gdpr_agreement` - `source`             | No     | "manual"         | Stringové označení, odkud byl GDPR souhlas pořízen.
-| `attachments`              | No    |    | Velikost souboru nesmí přesáhnout 3MB.
-| `attachment` - `path`      | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
-| `attachment` - `base64`    | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
-| `attachment` - `filename`  | Yes   |    | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.
-| `attachment` - `type`      | No    | 1  |  @see Enumeration section
-| `extra`                    | No    |    |  Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.
-| `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
-| `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
+| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
+|:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                               | Yes      |                 |                                                                                                                                                                                                                                |
+| `email`                              | No       |                 |                                                                                                                                                                                                                                |
+| `phone`                              | No       |                 |                                                                                                                                                                                                                                |
+| `skype`                              | No       |                 |                                                                                                                                                                                                                                |
+| `linkedin`                           | No       |                 |                                                                                                                                                                                                                                |
+| `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
+| `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
+| `strict`                             | No       | false           | Pokud je uvedens hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`) . |
+| `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
+| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                                              |
+| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                                         |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                   |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                     |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
+| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                                       |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                                     |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                                             |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
 
 
-#### Typy příloh (Attachment type)
-
-:[](enums/apidoc_enums_attachments.apib)
 
 + Request
     + Headers
@@ -56,11 +51,11 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 
 + Request  (application/json)
 
-        :[](json/apidoc_answers_post_request.json)
+        :[](json/apidoc_candidates_post_request.json)
 
 + Response 201 (application/json)
 
-                :[](json/apidoc_json_post_genera.json MSG:"Can't upload attachment." CODE:"api.error.generic")
+                :[](json/apidoc_json_post_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")
         
 + Response 400 (application/json)
         

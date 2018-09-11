@@ -7,8 +7,15 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+ * **11.9.2018: branch v1 `1.3`**
+     * **Pozor: 18.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * Bylo přidáno volání `POST /candidates`
+     * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
+     * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
+
+ 
  * **6.9.2018: branch v1 `1.2.3`**
-     * **Pozor: 11.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
      * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).

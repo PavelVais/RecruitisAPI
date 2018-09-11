@@ -7,8 +7,8 @@ HOST: https://app.recruitis.io/api2/
 
 
 # Recruitis.io
-* Verze systému: **1.2.3**
-* Poslední aktualizace: **5.9.2018**
+* Verze systému: **1.3**
+* Poslední aktualizace: **11.9.2018**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -94,6 +94,12 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
 nebo jako pole (`foo[]=bar&foo[]=baz`). 
 
+#### Typy příloh (Attachment type)
+
+Typy příloh se používá při vytváření odpovědi, popřípadě kandidáta.
+
+:[](enums/apidoc_enums_attachments.apib)
+
 ### Dovysvětlení hodnot jednotlivých parametrů
 
  **date** - Je string ve formátu YYYY-MM-DD (2018-01-30)
@@ -107,6 +113,8 @@ nebo jako pole (`foo[]=bar&foo[]=baz`).
 :[group_jobs](apidoc_group_jobs.apib)
 
 :[group_answers](apidoc_group_answers.apib)
+
+:[group_candidates](apidoc_group_candidates.apib)
 
 :[group_filters](apidoc_group_filters.apib)
 

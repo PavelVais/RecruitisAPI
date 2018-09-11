@@ -1,0 +1,39 @@
+{
+  "name": "Pavel Test",
+  "email": "foo@bar.com",
+  "skype": "foo@bar.com",
+  "linkedin": "https://example.com",
+  "facebook": "https://example.com",
+  "twitter": "https://example.com",
+  "phone": 12345678,
+  "gdpr_agreement": {
+    "date_expiration": "2020-10-31",
+    "source": "elektronická forma"
+  },
+  "extra" : [
+    {
+      "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
+    },
+    {
+      "tag" : "Toto je uchazečův tag"
+    }
+  ],
+  "attachments": [
+    {
+      "path" : "http://www.example.com/upload/cv.txt",
+      "filename": "cv.txt",
+      "type": 1
+    },
+    {
+      "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+      "filename": "logo.jpg",
+      "type": 4
+
+    },
+    {
+      "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+      "filename": "souhlas.pdf",
+      "type": 5
+    }
+  ]
+}
