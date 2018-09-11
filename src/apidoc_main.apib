@@ -37,7 +37,7 @@ Samotná autorizace probíhá pomocí header informace `Authorization`, kde je s
 
 ###Meta informace
 
-Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy nemusí vždy v meta sekci být a mohou být podmíněny 
+Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
 
 | META parameter  | Note
@@ -48,10 +48,21 @@ okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrác
 | `cached`        | Výsledek je cachován a nemusí být aktuální.  
 | `cached_from`   | Čas vygenerování vráceného výsledku
 | `deprecated`    | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.
+| `additional_output`   | Viz samostatná sekce
 | `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
 | `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
 | `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
+
+####Meta informace `additional_output`
+
+Při nahrávání nových údajů (odpovědí, kandidátů) může nastat stav, kdy se daná entita nahraje s různými vyjímkami 
+(duplikace příloh, sjendocení uchazečů, gdpr zosobnění, vložení špatných příloh.). V tom případě API zpětně informuje o všem, co se s danou 
+entitou stalo, viz příklad níže. Zároveň se tento stac zaloguje u nás na serveru a je zpětně k dohledání.
+
+:::json
+:[](json/apidoc_meta_additional_output.json)
+
 
 ### Popis `code` stavů
 

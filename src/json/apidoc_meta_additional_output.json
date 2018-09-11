@@ -1,0 +1,24 @@
+{
+  "additional_output": [
+    {
+      "message": "Candidate is already exists. I'll use his user ID.",
+      "status": "WARNING",
+      "code": "candidate.put.exists.join"
+    },
+    {
+      "message": "File cv.txt is already uploaded.",
+      "status": "WARNING",
+      "code": "candidate.put.attachment.duplicated"
+    },
+    {
+      "message": "File logo.jpg is already uploaded.",
+      "status": "WARNING",
+      "code": "candidate.put.attachment.duplicated"
+    },
+    {
+      "message": "File souhlas.pdf is already uploaded.",
+      "status": "WARNING",
+      "code": "candidate.put.attachment.duplicated"
+    }
+  ]
+}
