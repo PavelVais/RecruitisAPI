@@ -323,7 +323,7 @@ Získání informací o právě přihlášeném účtu.
 API volání, které se vstahuje k aktivním inzerátům
 
 
-## Jobs Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id}]
+## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id}]
 
     
 ### Get All Jobs [GET]
@@ -782,13 +782,133 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
           }
         }
 
-# Group Answers
-API calls for actions connected with answers.
+# Group Candidates
+Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
 
-## Answers list [/answers]
+**Hot candidates**
+Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", to jest kandidát, 
+který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více o žhavých kandidátech v Recruitisu.
+
+## Candidate entity [/candidates]
+
+### Create new candidate [POST]
+Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID kandidáta. 
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+
+Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
+informování přes meta položku `additional_output`.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `public_access`
+   
+| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
+|:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                               | Yes      |                 |                                                                                                                                                                                                                                |
+| `email`                              | No       |                 | Uchazeči se dle emailu slučují.                                                                                                                                                                                                                                |
+| `phone`                              | No       |                 | Uchazeči se dle telefonu slučují.                                                                                                                                                                                                                               |
+| `skype`                              | No       |                 |                                                                                                                                                                                                                                |
+| `linkedin`                           | No       |                 |                                                                                                                                                                                                                                |
+| `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
+| `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
+| `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`) . |
+| `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
+| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                                              |
+| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                                         |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                   |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                     |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
+| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                                       |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                                     |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                                             |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
+
+
+
++ Request
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+
++ Request  (application/json)
+
+        {
+          "name": "Pavel Test",
+          "email": "foo@bar.com",
+          "skype": "foo@bar.com",
+          "linkedin": "https://example.com",
+          "facebook": "https://example.com",
+          "twitter": "https://example.com",
+          "phone": 12345678,
+          "gdpr_agreement": {
+            "date_expiration": "2020-10-31",
+            "source": "elektronická forma"
+          },
+          "extra" : [
+            {
+              "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
+            },
+            {
+              "tag" : "Toto je uchazečův tag"
+            }
+          ],
+          "attachments": [
+            {
+              "path" : "http://www.example.com/upload/cv.txt",
+              "filename": "cv.txt",
+              "type": 1
+            },
+            {
+              "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+              "filename": "logo.jpg",
+              "type": 4
+
+            },
+            {
+              "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+              "filename": "souhlas.pdf",
+              "type": 5
+            }
+          ]
+        }
+
++ Response 201 (application/json)
+
+                {
+                  "payload": {
+                    "id" : 12345
+                  },
+                  "meta": {
+                    "duration": "139.58",
+                    "total_duration": 330,
+                    "code": "api.error.generic",
+                    "message": "Can't upload attachment."
+                  }
+                }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": "Can't upload attachment."
+          }
+        }
+
+
+## Answer list [/answers]
+
+Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, máme vztah mezi kandidátem a odpovědmi je 1:N. V této sekci se podíváme na získávání odpovědí. 
 
 ### Create new answer [POST]
-Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. 
+Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. Při vytváření odpovědi se vytvoří i nový uchazeč, pokud již s danými kontakty (email, telefon) neexistuje.
+V druhém případě se přiřadí k již existujícímu.
 
 API nepodporuje vložení duplikátních odpovědí. Pokud (dle emailu nebo telefonu) již uchazeč
 na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`
@@ -906,125 +1026,6 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
           }
         }
 
-# Group Candidates
-Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
-
-Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
-
-**Hot candidates**
-Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", to jest kandidát, 
-který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více o žhavých kandidátech v Recruitisu.
-
-## Candidates [/candidates]
-
-### Create new candidate [POST]
-Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID odpovědi. 
-
-Pokud se vkládá ucghazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID.
-
-#### Requirements
-
-   + Authorization with token
-   + token type: `public_access`
-   
-| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
-|:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`                               | Yes      |                 |                                                                                                                                                                                                                                |
-| `email`                              | No       |                 | Uchazeči se dle emailu slučují.                                                                                                                                                                                                                                |
-| `phone`                              | No       |                 | Uchazeči se dle telefonu slučují.                                                                                                                                                                                                                               |
-| `skype`                              | No       |                 |                                                                                                                                                                                                                                |
-| `linkedin`                           | No       |                 |                                                                                                                                                                                                                                |
-| `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
-| `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
-| `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`) . |
-| `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
-| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                                              |
-| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                                         |
-| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                   |
-| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                     |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
-| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                                       |
-| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                                     |
-| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                                             |
-| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
-
-
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
-
-
-+ Request  (application/json)
-
-        {
-          "name": "Pavel Test",
-          "email": "foo@bar.com",
-          "skype": "foo@bar.com",
-          "linkedin": "https://example.com",
-          "facebook": "https://example.com",
-          "twitter": "https://example.com",
-          "phone": 12345678,
-          "gdpr_agreement": {
-            "date_expiration": "2020-10-31",
-            "source": "elektronická forma"
-          },
-          "extra" : [
-            {
-              "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
-            },
-            {
-              "tag" : "Toto je uchazečův tag"
-            }
-          ],
-          "attachments": [
-            {
-              "path" : "http://www.example.com/upload/cv.txt",
-              "filename": "cv.txt",
-              "type": 1
-            },
-            {
-              "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
-              "filename": "logo.jpg",
-              "type": 4
-
-            },
-            {
-              "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
-              "filename": "souhlas.pdf",
-              "type": 5
-            }
-          ]
-        }
-
-+ Response 201 (application/json)
-
-                {
-                  "payload": {
-                    "id" : 12345
-                  },
-                  "meta": {
-                    "duration": "139.58",
-                    "total_duration": 330,
-                    "code": "api.error.generic",
-                    "message": "Can't upload attachment."
-                  }
-                }
-        
-+ Response 400 (application/json)
-        
-        {
-          "payload": null,
-          "meta": {
-            "duration": "139.58",
-            "total_duration": 330,
-            "code": "api.error.generic",
-            "message": "Can't upload attachment."
-          }
-        }
-
 # Group Job filters
 
 Toto je specifická oblast, ve které pracujeme s filtry pro konkrétní inzeráty. Mnohdy chceme inzeráty filtrovat podle údajů, které
@@ -1037,7 +1038,7 @@ Příklad filtru:
 Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na personalistovi, který inzerát tvoří.
 
 
-## Filters List [/filters{?id,group}]
+## Filter List [/filters{?id,group}]
 
 Vrátí seznam filtrů, které je možné dle ID přiřazovat a filtrovat u inzerátů.
 *tato funkce je totožná s funkcí GET `enums/filters`*
