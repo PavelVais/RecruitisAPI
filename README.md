@@ -5,15 +5,21 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 # Odkazy
 [Dokumentace v APIARY](https://jsapi.apiary.io/previews/ceskytrhpracesro/reference)
 
-## Changelog
 
+## Changelog
+ 
+ * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+
+ * **17.9.2018: branch v1 `1.3.1`**
+     * Bylo přidáno volání `DELETE /candidates`
+     * Přibyl popis kvót
+     * Přibyla kvóta `quota_candidates_delete`
+ 
  * **11.9.2018: branch v1 `1.3`**
-     * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
-     * Do dokumentace byla přidán popis tagů
      * Bylo přidáno volání `POST /candidates`
+     * Do dokumentace byla přidán popis tagů
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
-
  
  * **6.9.2018: branch v1 `1.2.3`**
      * Do volání `GET /jobs` přibyl parametr `include_inactive`

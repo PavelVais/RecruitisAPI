@@ -7,8 +7,8 @@ HOST: https://app.recruitis.io/api2/
 
 
 # Recruitis.io
-* Verze systému: **1.3**
-* Poslední aktualizace: **11.9.2018**
+* Verze systému: **1.3.1**
+* Poslední aktualizace: **17.9.2018**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -19,14 +19,19 @@ Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být 
 bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
 
 ## Changelog
+ 
+ * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
 
+ * **17.9.2018: branch v1 `1.3.1`**
+     * Bylo přidáno volání `DELETE /candidates`
+     * Přibyl popis kvót
+     * Přibyla kvóta `quota_candidates_delete`
+ 
  * **11.9.2018: branch v1 `1.3`**
-     * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
      * Bylo přidáno volání `POST /candidates`
      * Do dokumentace byla přidán popis tagů
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
-
  
  * **6.9.2018: branch v1 `1.2.3`**
      * Do volání `GET /jobs` přibyl parametr `include_inactive`
@@ -96,19 +101,20 @@ Samotná autorizace probíhá pomocí header informace `Authorization`, kde je s
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
 
-| META parameter  | Note
-|:----------------|------------|
-| `code`          | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.
-| `message`       | Zpráva, která popisuje dané volání.  
-| `duration`      | Uplynulá doba při zpracování požadavku.
-| `cached`        | Výsledek je cachován a nemusí být aktuální.  
-| `cached_from`   | Čas vygenerování vráceného výsledku
-| `deprecated`    | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.
-| `additional_output`   | Viz samostatná sekce
-| `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
-| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
-| `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
-| `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
+| META parameter      | Note                                                                                  |
+|:--------------------|---------------------------------------------------------------------------------------|
+| `code`              | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.                  |
+| `message`           | Zpráva, která popisuje dané volání.                                                   |
+| `duration`          | Uplynulá doba při zpracování požadavku.                                               |
+| `cached`            | Výsledek je cachován a nemusí být aktuální.                                           |
+| `cached_from`       | Čas vygenerování vráceného výsledku                                                   |
+| `deprecated`        | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.                |
+| `additional_output` | Viz samostatná sekce                                                                  |
+| `entries_from`      | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*) |
+| `entries_to`        | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*) |
+| `entries_total`     | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*)        |
+| `entries_sum`       | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)       |
+
 
 ####Meta informace `additional_output`
 
@@ -168,6 +174,7 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
 | `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, Přihlášení se nezdařilo. 
 | `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.
+| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání, viz. samostatná sekce
 | `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
 | `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
 | `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
@@ -179,6 +186,23 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 
 
 ## Volání dotazů - dodatečné informace
+
+### Kvóty
+
+Kvóty hlídají jednotlivé volání systému, monitorují jejich frekvenci a v případ jejich dosažení, je daný druh volání zakázán. 
+V případě dosažení limitu se vrací hlavíčka `403 - forbidden` s `meta.code` `api.error.quota.exceeded`.
+
+Kvóty se budou v průběhu času upravovat a optimalizovat. 
+
+Zde je výčet jednotlivých kvót:
+
+
+| Quota name                | Quota type | Max value | Note                                        |
+|:--------------------------|------------|-----------|---------------------------------------------|
+| `quota_candidates_delete` | daily      | 100       | Denní povolené množství smazaných uchazečů. |
+
+
+
 ### Parametry
 
 Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
@@ -788,7 +812,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 # Group Candidates
 Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
 
-**Hot candidates**
+**Žhaví kandidáti**
 Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", to jest kandidát, 
 který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více o žhavých kandidátech v Recruitisu.
 
@@ -827,7 +851,6 @@ informování přes meta položku `additional_output`.
 | `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                                     |
 | `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                                             |
 | `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
-
 
 
 + Request
@@ -903,6 +926,55 @@ informování přes meta položku `additional_output`.
             "message": "Can't upload attachment."
           }
         }
+        
+        
+### Delete candidate [DELETE /candidates/{id}]
+
+Toto volání smaže kompletně daného uchazeče a všechny informace, které jsou k němu přidruženy. 
+Všechny jeho odpovědi, pohovory, poznámky, přílohy, GDPR souhlasy atd. **Takto smazaný uchazeč se již nedá jakkoli obnovit.**
+
+Na toto volání se vztahuje denní kvóta. V případě překročení denní kvóty se vrátí odpověd `403 - forbidden` s `meta.code` `api.error.quota.exceeded`
+
++ Parameters
+     + id (required, number, `1`) - ID kandidáta (user ID)
+
+    
++ Response 200 (application/json)
+
+                {
+                  "payload": null,
+                  "meta": {
+                    "duration": "139.58",
+                    "total_duration": 330,
+                    "code": "api.deleted",
+                    "message": "User was deleted."
+                  }
+                }
+        
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.not_found",
+            "message": "User ID XXX doesn't exists."
+          }
+        }
+
++ Response 403 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.quota.exceeded",
+            "message": "Daily 'quota_candidates_delete quota' has been exceeded."
+          }
+        }
+
 
 ## Answer list [/answers]
 

@@ -7,8 +7,8 @@ HOST: https://app.recruitis.io/api2/
 
 
 # Recruitis.io
-* Verze systému: **1.3**
-* Poslední aktualizace: **11.9.2018**
+* Verze systému: **1.3.1**
+* Poslední aktualizace: **17.9.2018**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -40,19 +40,20 @@ Samotná autorizace probíhá pomocí header informace `Authorization`, kde je s
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
 
-| META parameter  | Note
-|:----------------|------------|
-| `code`          | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.
-| `message`       | Zpráva, která popisuje dané volání.  
-| `duration`      | Uplynulá doba při zpracování požadavku.
-| `cached`        | Výsledek je cachován a nemusí být aktuální.  
-| `cached_from`   | Čas vygenerování vráceného výsledku
-| `deprecated`    | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.
-| `additional_output`   | Viz samostatná sekce
-| `entries_from`  | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*)
-| `entries_to`    | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*)
-| `entries_total` | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*) 
-| `entries_sum`   | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)
+| META parameter      | Note                                                                                  |
+|:--------------------|---------------------------------------------------------------------------------------|
+| `code`              | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.                  |
+| `message`           | Zpráva, která popisuje dané volání.                                                   |
+| `duration`          | Uplynulá doba při zpracování požadavku.                                               |
+| `cached`            | Výsledek je cachován a nemusí být aktuální.                                           |
+| `cached_from`       | Čas vygenerování vráceného výsledku                                                   |
+| `deprecated`        | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.                |
+| `additional_output` | Viz samostatná sekce                                                                  |
+| `entries_from`      | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*) |
+| `entries_to`        | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*) |
+| `entries_total`     | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*)        |
+| `entries_sum`       | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)       |
+
 
 ####Meta informace `additional_output`
 
@@ -89,6 +90,7 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
 | `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, Přihlášení se nezdařilo. 
 | `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.
+| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání, viz. samostatná sekce
 | `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
 | `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
 | `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
@@ -100,6 +102,23 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 
 
 ## Volání dotazů - dodatečné informace
+
+### Kvóty
+
+Kvóty hlídají jednotlivé volání systému, monitorují jejich frekvenci a v případ jejich dosažení, je daný druh volání zakázán. 
+V případě dosažení limitu se vrací hlavíčka `403 - forbidden` s `meta.code` `api.error.quota.exceeded`.
+
+Kvóty se budou v průběhu času upravovat a optimalizovat. 
+
+Zde je výčet jednotlivých kvót:
+
+
+| Quota name                | Quota type | Max value | Note                                        |
+|:--------------------------|------------|-----------|---------------------------------------------|
+| `quota_candidates_delete` | daily      | 100       | Denní povolené množství smazaných uchazečů. |
+
+
+
 ### Parametry
 
 Pokud je v dokumentaci označen parametr jako `array`, poté systém očekává, že se dostaví daný parametr v url adrese jako jedna hodnota (`foo=bar`)
