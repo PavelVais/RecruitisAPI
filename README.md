@@ -8,7 +8,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 ## Changelog
 
  * **11.9.2018: branch v1 `1.3`**
-     * **Pozor: 18.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
      * Do dokumentace byla přidán popis tagů
      * Bylo přidáno volání `POST /candidates`
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.

@@ -21,7 +21,7 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 ## Changelog
 
  * **11.9.2018: branch v1 `1.3`**
-     * **Pozor: 18.9.2018 přijde změna ve volání konrétního inzerátu (`GET /jobs/id`): Nebude nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+     * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
      * Bylo přidáno volání `POST /candidates`
      * Do dokumentace byla přidán popis tagů
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
@@ -647,7 +647,10 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 
 ### Get Jobs Detail [GET]
 
- Vráýtí detail jednoho inzerátu. Struktura odpovědi je stejná, jako když se vrací více inzerátů najednou.
+ Vrátí detail jednoho inzerátu. Parametry v odpovědi jsou stejné, jako když se vrací více inzerátů najednou.
+ 
+ **POZOR: 18.9.2018 dojde ke změně odpovědi API volání: Inzerát se nebude vracet v payload jako pole (tzn.: nebude `payload: [{...}]`),
+ ale bude se vracet přímo daná odpověď (tzn.: `payload: {...}`).**
  
  Pokud daný inzerát neexistuje, vrátí se http status `404` s meta code `api.error.not_found`.
 
@@ -900,7 +903,6 @@ informování přes meta položku `additional_output`.
             "message": "Can't upload attachment."
           }
         }
-
 
 ## Answer list [/answers]
 

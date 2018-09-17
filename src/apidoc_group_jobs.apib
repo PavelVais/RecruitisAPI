@@ -58,7 +58,10 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 
 ### Get Jobs Detail [GET]
 
- Vráýtí detail jednoho inzerátu. Struktura odpovědi je stejná, jako když se vrací více inzerátů najednou.
+ Vrátí detail jednoho inzerátu. Parametry v odpovědi jsou stejné, jako když se vrací více inzerátů najednou.
+ 
+ **POZOR: 18.9.2018 dojde ke změně odpovědi API volání: Inzerát se nebude vracet v payload jako pole (tzn.: nebude `payload: [{...}]`),
+ ale bude se vracet přímo daná odpověď (tzn.: `payload: {...}`).**
  
  Pokud daný inzerát neexistuje, vrátí se http status `404` s meta code `api.error.not_found`.
 
