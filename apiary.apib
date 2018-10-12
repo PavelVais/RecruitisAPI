@@ -394,6 +394,8 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
     + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
     + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
     + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
+    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
+
     
 + Response 200 (application/json)
 
@@ -730,6 +732,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 
 + Parameters
     + id (number, `1`) - Job id
+    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
 
 
 
@@ -995,36 +998,36 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
    + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
    + token type: `full_access` : pokud se jedná o interní inzerát.    
    
-| Request value        | Required | Default Value | Note |
-|:----------------------|--------|:------:|----------------------|
-| `job_id`              | Yes    |        |
-| `name`                | Yes    |        |
-| `email`               | No     |        |
-| `phone`               | No     |        |
-| `skype`               | No     |        | Odkaz na uchazečův Skype
-| `linkedin`            | No     |        | Odkaz na uchazečův LinkedIn
-| `facebook`            | No     |        | Odkaz na uchazečův Facebook
-| `twitter`             | No     |        | Odkaz na uchazečův Twitter
-| `source_id`           | No     | -1     | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`
-| `source`              | No     |        | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již zdroj existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id`
-| `referral_id`         | No     |        | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)
-| `cover_letter`        | No     |        |
-| `gdpr_agreement`      | No     |        | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.
-| `gdpr_agreement` - `date_expiration`    | No     | 1 year from now  |  formát YYYY-MM-DD
-| `gdpr_agreement` - `date_created`       | No     | now              |  formát YYYY-MM-DD H:i:s
-| `gdpr_agreement` - `source`             | No     | "manual"         | Stringové označení, odkud byl GDPR souhlas pořízen.
-| `attachments`              | No    |    | Velikost souboru nesmí přesáhnout 3MB.
-| `attachment` - `path`      | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény. 
-| `attachment` - `base64`    | Yes   |    | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.
-| `attachment` - `filename`  | Yes   |    | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.
-| `attachment` - `type`      | No    | 1  |  @see Enumeration section
-| `extra`                    | No    |    |  Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.
-| `extra` - `note`           | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**
-| `extra` - `tag`            | Yes   |    |  Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**
+| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                           |
+|:-------------------------------------|----------|:-:--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `job_id`                             | Yes      |                 |                                                                                                                                                                                                                |
+| `name`                               | Yes      |                 |                                                                                                                                                                                                                |
+| `email`                              | No       |                 |                                                                                                                                                                                                                |
+| `phone`                              | No       |                 |                                                                                                                                                                                                                |
+| `skype`                              | No       |                 | Odkaz na uchazečův Skype                                                                                                                                                                                       |
+| `linkedin`                           | No       |                 | Odkaz na uchazečův LinkedIn                                                                                                                                                                                    |
+| `facebook`                           | No       |                 | Odkaz na uchazečův Facebook                                                                                                                                                                                    |
+| `twitter`                            | No       |                 | Odkaz na uchazečův Twitter                                                                                                                                                                                     |
+| `source_id`                          | No       | -1              | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`                                                                                                                                                |
+| `source`                             | No       |                 | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již zdroj existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id` |
+| `referral_id`                        | No       |                 | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)                                                                                                                           |
+| `cover_letter`                       | No       |                 |                                                                                                                                                                                                                |
+| `gdpr_agreement`                     | No       |                 | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.                                                                                                    |
+| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                              |
+| `gdpr_agreement` - `date_created`    | No       | now             | formát YYYY-MM-DD H:i:s                                                                                                                                                                                        |
+| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                            |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                         |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                   |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                     |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                    |
+| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                       |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                     |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                             |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                       |
 
 **GDPR a souhlas se zpracováním osobních údajů k dané pozici:**
 Pokud není určen GDPR souhlas, tak souhlas ke zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
-Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirace.  
+Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirac (Maximálně ale na rok.).  
 
 + Request
     + Headers

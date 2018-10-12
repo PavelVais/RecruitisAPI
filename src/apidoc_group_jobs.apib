@@ -49,6 +49,8 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
     + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
     + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
     + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
+    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
+
     
 + Response 200 (application/json)
 
@@ -117,6 +119,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 
 + Parameters
     + id (number, `1`) - Job id
+    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
 
 
 
