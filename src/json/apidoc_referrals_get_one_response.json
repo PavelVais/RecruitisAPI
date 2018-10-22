@@ -1,0 +1,20 @@
+{
+  "payload": {
+    "id": "exe6bhcl",
+    "public_id": "1gdbhacaf72nc7ap2jdecq34",
+    "name": "Jan Novák",
+    "photo": null,
+    "date_created": "2016-08-17 10:04:52",
+    "date_visited": null,
+    "email": "jannovak@lorem.org"
+  },
+  "meta": {
+    "code": "api.found",
+    "duration": 30,
+    "message": "Referral is returned.",
+    "entries_from": 1,
+    "entries_to": 10,
+    "entries_total": 1,
+    "entries_sum": 1
+  }
+}

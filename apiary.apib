@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.3.2**
-* Poslední aktualizace: **16.10.2018**
+* Verze systému: **1.3.3**
+* Poslední aktualizace: **22.10.2018**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,6 +18,9 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
+ * **22.10.2018: branch v1 `1.3.3`**
+     * Byla přidána nová sekce `referrals`, ve které je volání na přidání a výpis referralů. 
+     
  * **16.10.2018: branch v1 `1.3.2`**
      * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education` 
  
@@ -158,9 +161,9 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 |:-------------------------------------------------|--------------------------------|
 | `api.ok`                                         | Dotaz proběhl úspěšně. 
 | `api.found`                                      | Dotaz našel výsledek a poslal zpět.
-| `api.created`                                    | Dotaz vytvořil entitu
-| `api.deleted`                                    | Dotaz smazal entitu
-| `api.modified`                                   | Dotaz upravil entitu
+| `api.created`                                    | Dotaz vytvořil entitu.
+| `api.deleted`                                    | Dotaz smazal entitu.
+| `api.modified`                                   | Dotaz upravil entitu.
 | `api.unmodified`                                 | Dotaz nic nového neprovedl, vrátil již existující entitu.
 | `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek. 
 | `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.
@@ -183,7 +186,8 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
 | `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
 | `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
-| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl
+| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.
+| `api.error.referral.already_created`             | Daný referral byl již vytvořen.
 
 
 ## Volání dotazů - dodatečné informace
@@ -820,7 +824,7 @@ který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více 
 
 ### Create new candidate [POST]
 Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID kandidáta. 
-Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
 
 Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
 informování přes meta položku `additional_output`.
@@ -875,7 +879,7 @@ informování přes meta položku `additional_output`.
           },
           "extra" : [
             {
-              "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
+              "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
             },
             {
               "tag" : "Toto je uchazečův tag"
@@ -903,17 +907,17 @@ informování přes meta položku `additional_output`.
 
 + Response 201 (application/json)
 
-                {
-                  "payload": {
-                    "id" : 12345
-                  },
-                  "meta": {
-                    "duration": "139.58",
-                    "total_duration": 330,
-                    "code": "api.error.generic",
-                    "message": "Can't upload attachment."
-                  }
-                }
+        {
+          "payload": {
+            "id" : 12345
+          },
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.created",
+            "message": "Candidate was created."
+          }
+        }
         
 + Response 400 (application/json)
         
@@ -1049,7 +1053,7 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
           },
           "extra" : [
             {
-              "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
+              "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
             },
             {
               "tag" : "Toto je uchazečův tag"
@@ -1097,6 +1101,167 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
             "total_duration": 330,
             "code": "api.error.generic",
             "message": "Can't upload attachment."
+          }
+        }
+
+# Group Referrals
+
+Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
+hledat nové zaměstnance skrze vypsané odměny. 
+
+## Referral entity [/referrals]
+
+### Create new referral [POST]
+Procedura na uložení nového referrala. Jako odpověď se vrátí ID kandidáta. 
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+
+V případě, že daný referral již existuje, server vrací header status `409`.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+   
+ | Request value     | Required | Note                                                                                                                        |
+ |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+ | `name`            | Yes      | Jméno referrala                                                                                                             |
+ | `email`           | No       | Jeho email                                                                                                                  |
+ | `phone`           | No       | Jeho telefon                                                                                                                |
+ | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+
++ Request
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
++ Request  (application/json)
+        
+        {
+          "name": "Jan Novák",
+          "email": 1,
+          "phone": "Pavel Test",
+          "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "payload": {
+            "id" : 12345
+          },
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.created",
+            "message": "Referrals were created."
+          }
+        }
+        
++ Response 409 (application/json)
+
+        {
+          "payload": {
+            "id" : 12345
+          },
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.referral.already_created",
+            "message": "This referral already exists."
+          }
+        }
+        
+### Get referral list [GET]
+
+Zavolání vrátí veškeré referraly přidružené k dané firmě. Na výpis se vztahuje stránkovač, kde maximum entit na jednu stránku je 100.
+V případě, že neodpovídá filtru žádný referral (nebo firma žádného referrala nemá), systém vrací header status `200` s `meta.code` `api.response.null`.
+
+#### Response parameters
+
+| Parameter      | Type     | Note                                                                             |
+|----------------|----------|----------------------------------------------------------------------------------|
+| `id`           | string   | ID inzerátu                                                                      |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup k svému portálu, viz  `url` parametr |
+| `name`         | string   | Jméno referrala                                                                  |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala                             |
+| `date_created` | datetime | Datum vzniku referrala                                                           |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku                            |
+| `email`        | string   | Email na referrala                                                               |
+| `url`          | string   | Odkaz na adresu stránky referrrala                                               |
+                            
+                            
++ Parameters
+     + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala. ID se může zadat i jako array. Pozor: nekombinujte referral ID a referral access_id.
+     + limit (optional,numeric,`10`) - maximální počet entit, které se serverem vrátí. Maximální limit je 100
+     + page (optional,numeric,`1`) - strana s entitami.
+     + search (optional,string) - Vrátí referraly s daným jménem, popř. emailem.
+    
++ Response 200 (application/json)
+
+                {
+                  "payload": [
+                    {
+                      "id": "exe6bhcl",
+                      "public_id": "1gdbhacaf72nc7ap2jdecq34",
+                      "name": "Jan Novák",
+                      "photo": null,
+                      "date_created": "2016-08-17 10:04:52",
+                      "date_visited": null,
+                      "email": "jannovak@lorem.org"
+                    }
+                  ],
+                  "meta": {
+                    "code": "api.found",
+                    "duration": 30,
+                    "message": "Referrals are returned.",
+                    "entries_from": 1,
+                    "entries_to": 10,
+                    "entries_total": 1,
+                    "entries_sum": 1
+                  }
+                }
+                
+                
+### Get referral [GET /referrals/{id}]
+
+Vrátí konkrétního referrala. Polud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
+V případě, že dany referral neexistuje, vrací se `404` odpověď  
+
++ Parameters
+     + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
+
++ Response 200 (application/json)
+
+                {
+                  "payload": {
+                    "id": "exe6bhcl",
+                    "public_id": "1gdbhacaf72nc7ap2jdecq34",
+                    "name": "Jan Novák",
+                    "photo": null,
+                    "date_created": "2016-08-17 10:04:52",
+                    "date_visited": null,
+                    "email": "jannovak@lorem.org"
+                  },
+                  "meta": {
+                    "code": "api.found",
+                    "duration": 30,
+                    "message": "Referral is returned.",
+                    "entries_from": 1,
+                    "entries_to": 10,
+                    "entries_total": 1,
+                    "entries_sum": 1
+                  }
+                }
+
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.not_found",
+            "message": "Referral ID XXX doesn't exists."
           }
         }
 

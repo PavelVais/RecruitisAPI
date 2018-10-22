@@ -7,6 +7,9 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 
 ## Changelog
+
+  * **22.10.2018: branch v1 `1.3.3`**
+      * Byla přidána nová sekce `referrals`, ve které je volání na přidání a výpis referralů. 
  
   * **16.10.2018: branch v1 `1.3.2`**
       * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education` 

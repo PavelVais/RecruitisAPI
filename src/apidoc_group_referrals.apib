@@ -1,0 +1,87 @@
+# Group Referrals
+
+Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
+hledat nové zaměstnance skrze vypsané odměny. 
+
+## Referral entity [/referrals]
+
+### Create new referral [POST]
+Procedura na uložení nového referrala. Jako odpověď se vrátí ID kandidáta. 
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+
+V případě, že daný referral již existuje, server vrací header status `409`.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+   
+ | Request value     | Required | Note                                                                                                                        |
+ |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+ | `name`            | Yes      | Jméno referrala                                                                                                             |
+ | `email`           | No       | Jeho email                                                                                                                  |
+ | `phone`           | No       | Jeho telefon                                                                                                                |
+ | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Request  (application/json)
+        
+        :[](json/apidoc_referrals_post_request.json)
+
++ Response 201 (application/json)
+
+        :[](json/apidoc_json_post_general.json MSG:"Referrals were created." CODE:"api.created")
+        
++ Response 409 (application/json)
+
+        :[](json/apidoc_json_post_general.json MSG:"This referral already exists." CODE:"api.error.referral.already_created")
+        
+### Get referral list [GET]
+
+Zavolání vrátí veškeré referraly přidružené k dané firmě. Na výpis se vztahuje stránkovač, kde maximum entit na jednu stránku je 100.
+V případě, že neodpovídá filtru žádný referral (nebo firma žádného referrala nemá), systém vrací header status `200` s `meta.code` `api.response.null`.
+
+#### Response parameters
+
+| Parameter      | Type     | Note                                                                             |
+|----------------|----------|----------------------------------------------------------------------------------|
+| `id`           | string   | ID inzerátu                                                                      |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup k svému portálu, viz  `url` parametr |
+| `name`         | string   | Jméno referrala                                                                  |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala                             |
+| `date_created` | datetime | Datum vzniku referrala                                                           |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku                            |
+| `email`        | string   | Email na referrala                                                               |
+| `url`          | string   | Odkaz na adresu stránky referrrala                                               |
+                            
+                            
++ Parameters
+     + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala. ID se může zadat i jako array. Pozor: nekombinujte referral ID a referral access_id.
+     + limit (optional,numeric,`10`) - maximální počet entit, které se serverem vrátí. Maximální limit je 100
+     + page (optional,numeric,`1`) - strana s entitami.
+     + search (optional,string) - Vrátí referraly s daným jménem, popř. emailem.
+    
++ Response 200 (application/json)
+
+                :[](json/apidoc_referrals_get_response.json)
+                
+                
+### Get referral [GET /referrals/{id}]
+
+Vrátí konkrétního referrala. Polud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
+V případě, že dany referral neexistuje, vrací se `404` odpověď  
+
++ Parameters
+     + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
+
++ Response 200 (application/json)
+
+                :[](json/apidoc_referrals_get_one_response.json)
+
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_general.json MSG:"Referral ID XXX doesn't exists." CODE:"api.error.not_found")

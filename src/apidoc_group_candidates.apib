@@ -9,7 +9,7 @@ který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více 
 
 ### Create new candidate [POST]
 Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID kandidáta. 
-Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazečovi možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
 
 Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
 informování přes meta položku `additional_output`.
@@ -54,7 +54,7 @@ informování přes meta položku `additional_output`.
 
 + Response 201 (application/json)
 
-                :[](json/apidoc_json_post_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")
+        :[](json/apidoc_json_post_general.json MSG:"Candidate was created." CODE:"api.created")
         
 + Response 400 (application/json)
         

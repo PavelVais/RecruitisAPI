@@ -13,7 +13,7 @@
   },
   "extra" : [
     {
-      "note" : "Toto je text, který se uloží jako poznámka k danému uchazečovi"
+      "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
     },
     {
       "tag" : "Toto je uchazečův tag"
