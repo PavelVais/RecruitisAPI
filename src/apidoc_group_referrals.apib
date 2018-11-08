@@ -3,7 +3,7 @@
 Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
 hledat nové zaměstnance skrze vypsané odměny. 
 
-## Referral entity [/referrals]
+## Referral entity [/referrals{?id,limit,page,search}]
 
 ### Create new referral [POST]
 Procedura na uložení nového referrala. Jako odpověď se vrátí ID referrala. 
@@ -21,12 +21,12 @@ V případě, že daný referral již existuje, server vrací header status `409
  | `phone`           | No       | Jeho telefon                                                                                                                |
  | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
-    + Body  (application/json)
+    + Body
         
             :[](json/apidoc_referrals_post_request.json)
 

@@ -674,7 +674,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
           }
         }
 
-## Job Detail [/jobs/{id?include_inactive}]
+## Job Detail [/jobs/{id}?{include_inactive}]
 
 ### Get Jobs Detail [GET]
 
@@ -1107,7 +1107,7 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
 Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
 hledat nové zaměstnance skrze vypsané odměny. 
 
-## Referral entity [/referrals]
+## Referral entity [/referrals{?id,limit,page,search}]
 
 ### Create new referral [POST]
 Procedura na uložení nového referrala. Jako odpověď se vrátí ID referrala. 
@@ -1125,12 +1125,12 @@ V případě, že daný referral již existuje, server vrací header status `409
  | `phone`           | No       | Jeho telefon                                                                                                                |
  | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
-    + Body  (application/json)
+    + Body
         
             {
               "name": "Jan Novák",
