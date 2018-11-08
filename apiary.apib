@@ -352,7 +352,7 @@ Získání informací o právě přihlášeném účtu.
 API volání, které se vstahuje k aktivním inzerátům
 
 
-## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id}]
+## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive}]
 
     
 ### Get All Jobs [GET]
@@ -674,7 +674,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
           }
         }
 
-## Job Detail [/jobs/{id}]
+## Job Detail [/jobs/{id?include_inactive}]
 
 ### Get Jobs Detail [GET]
 
@@ -857,53 +857,52 @@ informování přes meta položku `additional_output`.
 | `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
 
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
+    + Body  
 
-+ Request  (application/json)
+            {
+              "name": "Pavel Test",
+              "email": "foo@bar.com",
+              "skype": "foo@bar.com",
+              "linkedin": "https://example.com",
+              "facebook": "https://example.com",
+              "twitter": "https://example.com",
+              "phone": 12345678,
+              "gdpr_agreement": {
+                "date_expiration": "2020-10-31",
+                "source": "elektronická forma"
+              },
+              "extra" : [
+                {
+                  "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
+                },
+                {
+                  "tag" : "Toto je uchazečův tag"
+                }
+              ],
+              "attachments": [
+                {
+                  "path" : "http://www.example.com/upload/cv.txt",
+                  "filename": "cv.txt",
+                  "type": 1
+                },
+                {
+                  "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+                  "filename": "logo.jpg",
+                  "type": 4
 
-        {
-          "name": "Pavel Test",
-          "email": "foo@bar.com",
-          "skype": "foo@bar.com",
-          "linkedin": "https://example.com",
-          "facebook": "https://example.com",
-          "twitter": "https://example.com",
-          "phone": 12345678,
-          "gdpr_agreement": {
-            "date_expiration": "2020-10-31",
-            "source": "elektronická forma"
-          },
-          "extra" : [
-            {
-              "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
-            },
-            {
-              "tag" : "Toto je uchazečův tag"
+                },
+                {
+                  "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+                  "filename": "souhlas.pdf",
+                  "type": 5
+                }
+              ]
             }
-          ],
-          "attachments": [
-            {
-              "path" : "http://www.example.com/upload/cv.txt",
-              "filename": "cv.txt",
-              "type": 1
-            },
-            {
-              "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
-              "filename": "logo.jpg",
-              "type": 4
-
-            },
-            {
-              "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
-              "filename": "souhlas.pdf",
-              "type": 5
-            }
-          ]
-        }
 
 + Response 201 (application/json)
 
@@ -1030,54 +1029,53 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 Pokud není určen GDPR souhlas, tak souhlas ke zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
 Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirac (Maximálně ale na rok.).  
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
-
-+ Request  (application/json)
-
-        {
-          "job_id": 123456,
-          "source_id": 1,
-          "name": "Pavel Test",
-          "email": "foo@bar.com",
-          "skype": "foo@bar.com",
-          "linkedin": "https://example.com",
-          "phone": 123456678,
-          "cover_letter": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor consequat augue, eu porttitor ex blandit sit amet. Morbi sed lorem lorem. In aliquet cursus nunc, ut porttitor orci viverra non. Aenean ultrices vestibulum venenatis. Nullam facilisis justo ut tincidunt elementum. Praesent molestie nibh libero, eget efficitur odio interdum vel. Suspendisse augue ipsum, scelerisque eget massa non, pellentesque vehicula augue. Cras mollis vehicula pharetra. Phasellus neque nisi, facilisis nec dui in, bibendum lacinia leo",
-          "gdpr_agreement": {
-            "date_expiration": "2020-10-31",
-            "source": "elektronická forma"
-          },
-          "extra" : [
+    + Body  
+    
             {
-              "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
-            },
-            {
-              "tag" : "Toto je uchazečův tag"
+              "job_id": 123456,
+              "source_id": 1,
+              "name": "Pavel Test",
+              "email": "foo@bar.com",
+              "skype": "foo@bar.com",
+              "linkedin": "https://example.com",
+              "phone": 123456678,
+              "cover_letter": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porttitor consequat augue, eu porttitor ex blandit sit amet. Morbi sed lorem lorem. In aliquet cursus nunc, ut porttitor orci viverra non. Aenean ultrices vestibulum venenatis. Nullam facilisis justo ut tincidunt elementum. Praesent molestie nibh libero, eget efficitur odio interdum vel. Suspendisse augue ipsum, scelerisque eget massa non, pellentesque vehicula augue. Cras mollis vehicula pharetra. Phasellus neque nisi, facilisis nec dui in, bibendum lacinia leo",
+              "gdpr_agreement": {
+                "date_expiration": "2020-10-31",
+                "source": "elektronická forma"
+              },
+              "extra" : [
+                {
+                  "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
+                },
+                {
+                  "tag" : "Toto je uchazečův tag"
+                }
+              ],
+              "attachments": [
+                {
+                  "path" : "http://www.example.com/upload/cv.txt",
+                  "filename": "cv.txt",
+                  "type": 1
+                },
+                {
+                  "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+                  "filename": "logo.jpg",
+                  "type": 4
+
+                },
+                {
+                  "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+                  "filename": "souhlas.pdf",
+                  "type": 5
+                }
+              ]
             }
-          ],
-          "attachments": [
-            {
-              "path" : "http://www.example.com/upload/cv.txt",
-              "filename": "cv.txt",
-              "type": 1
-            },
-            {
-              "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
-              "filename": "logo.jpg",
-              "type": 4
-
-            },
-            {
-              "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
-              "filename": "souhlas.pdf",
-              "type": 5
-            }
-          ]
-        }
 
 + Response 201 (application/json)
 
@@ -1132,14 +1130,14 @@ V případě, že daný referral již existuje, server vrací header status `409
     
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
-+ Request  (application/json)
+    + Body  (application/json)
         
-        {
-          "name": "Jan Novák",
-          "email": 1,
-          "phone": "+420123456789",
-          "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
-        }
+            {
+              "name": "Jan Novák",
+              "email": "foo@bar.com",
+              "phone": "+420123456789",
+              "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
+            }
 
 + Response 201 (application/json)
 

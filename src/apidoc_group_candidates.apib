@@ -42,15 +42,14 @@ informování přes meta položku `additional_output`.
 | `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
 
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
+    + Body  
 
-+ Request  (application/json)
-
-        :[](json/apidoc_candidates_post_request.json)
+            :[](json/apidoc_candidates_post_request.json)
 
 + Response 201 (application/json)
 
@@ -135,15 +134,14 @@ Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořen�
 Pokud není určen GDPR souhlas, tak souhlas ke zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
 Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirac (Maximálně ale na rok.).  
 
-+ Request
++ Request (application/json)
     + Headers
     
             Authorization: Bearer :[](apidoc_bearer_token.txt)
 
-
-+ Request  (application/json)
-
-        :[](json/apidoc_answers_post_request.json)
+    + Body  
+    
+            :[](json/apidoc_answers_post_request.json)
 
 + Response 201 (application/json)
 
