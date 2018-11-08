@@ -6,9 +6,7 @@ hledat nové zaměstnance skrze vypsané odměny.
 ## Referral entity [/referrals]
 
 ### Create new referral [POST]
-Procedura na uložení nového referrala. Jako odpověď se vrátí ID kandidáta. 
-Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
-
+Procedura na uložení nového referrala. Jako odpověď se vrátí ID referrala. 
 V případě, že daný referral již existuje, server vrací header status `409`.
 
 #### Requirements
@@ -49,8 +47,8 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
 
 | Parameter      | Type     | Note                                                                             |
 |----------------|----------|----------------------------------------------------------------------------------|
-| `id`           | string   | ID inzerátu                                                                      |
-| `access_id`    | string   | Veřejné ID referrala, přes který má přístup k svému portálu, viz  `url` parametr |
+| `id`           | string   | ID referrala                                                                     |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr|
 | `name`         | string   | Jméno referrala                                                                  |
 | `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala                             |
 | `date_created` | datetime | Datum vzniku referrala                                                           |
@@ -61,7 +59,7 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
                             
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala. ID se může zadat i jako array. Pozor: nekombinujte referral ID a referral access_id.
-     + limit (optional,numeric,`10`) - maximální počet entit, které se serverem vrátí. Maximální limit je 100
+     + limit (optional,numeric,`10`) - maximální počet entit, které má server vrátit. Maximální limit je 100.
      + page (optional,numeric,`1`) - strana s entitami.
      + search (optional,string) - Vrátí referraly s daným jménem, popř. emailem.
     
@@ -72,15 +70,15 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
                 
 ### Get referral [GET /referrals/{id}]
 
-Vrátí konkrétního referrala. Polud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
-V případě, že dany referral neexistuje, vrací se `404` odpověď  
+Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
+V případě, že daný referral neexistuje, vrací se `404` odpověď. 
 
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
 
 + Response 200 (application/json)
 
-                :[](json/apidoc_referrals_get_one_response.json)
+        :[](json/apidoc_referrals_get_one_response.json)
 
 + Response 404 (application/json)
         
