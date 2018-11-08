@@ -1133,25 +1133,29 @@ V případě, že daný referral již existuje, server vrací header status `409
     + Body
         
             {
-              "name": "Jan Novák",
-              "email": "foo@bar.com",
-              "phone": "+420123456789",
-              "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
+              "payload": {
+                "id": "2ntqcwix",
+                "public_id": "dn9kwh8mtmgw1raxaqmlswxj",
+                "url": "https://app.recruitis.io/referral/dn9kwh8mtmgw1raxaqmlswxj",
+                "name": "Jan Novák",
+                "email": "janovak@test.cz"
+              },
+              "meta": {
+                "code": "api.created",
+                "duration": 30,
+                "message": "Referral(s) were created."
+              }
             }
 
 + Response 201 (application/json)
 
         {
-          "payload": {
-            "id" : 12345
-          },
-          "meta": {
-            "duration": "139.58",
-            "total_duration": 330,
-            "code": "api.created",
-            "message": "Referrals were created."
-          }
+          "name": "Jan Novák",
+          "email": "foo@bar.com",
+          "phone": "+420123456789",
+          "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
         }
+
         
 + Response 409 (application/json)
 
