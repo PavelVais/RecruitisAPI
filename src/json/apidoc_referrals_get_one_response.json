@@ -1,12 +1,13 @@
 {
   "payload": {
     "id": "exe6bhcl",
-    "public_id": "1gdbhacaf72nc7ap2jdecq34",
+    "access_id": "1gdbhacaf72nc7ap2jdecq34",
     "name": "Jan Novák",
     "photo": null,
     "date_created": "2016-08-17 10:04:52",
     "date_visited": null,
-    "email": "jannovak@lorem.org"
+    "email": "jannovak@lorem.org",
+    "url": "https://app.recruitis.io/referral/1gdbhacaf72nc7ap2jdecq34"
   },
   "meta": {
     "code": "api.found",
