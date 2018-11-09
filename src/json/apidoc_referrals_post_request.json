@@ -1,14 +1,6 @@
 {
-  "payload": {
-    "id": "2ntqcwix",
-    "public_id": "dn9kwh8mtmgw1raxaqmlswxj",
-    "url": "https://app.recruitis.io/referral/dn9kwh8mtmgw1raxaqmlswxj",
-    "name": "Jan Novák",
-    "email": "janovak@test.cz"
-  },
-  "meta": {
-    "code": "api.created",
-    "duration": 30,
-    "message": "Referral(s) were created."
-  }
+  "name": "Jan Novák",
+  "email": "foo@bar.com",
+  "phone": "+420123456789",
+  "email_text": "Dobrý den,\n Vítejte v referral systému. Lorem ipsum........"
 }
