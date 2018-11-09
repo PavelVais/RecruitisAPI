@@ -829,6 +829,10 @@ Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídno
 Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
 informování přes meta položku `additional_output`.
 
+#### Důležitá informace:
+**Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+
 #### Requirements
 
    + Authorization with token
@@ -992,6 +996,10 @@ na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` 
 
 Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořená odpověď automaticky. Její platnost je v základním nastavení 1 rok. Pokud byste si přáli toto nastavení změnit, kontaktujte nás. 
 
+#### Důležitá informace:
+**Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+
 #### Requirements
 
    + Authorization with token
@@ -1112,6 +1120,10 @@ hledat nové zaměstnance skrze vypsané odměny.
 ### Create new referral [POST]
 Procedura na uložení nového referrala. Jako odpověď se vrátí ID referrala. 
 V případě, že daný referral již existuje, server vrací header status `409`.
+
+#### Důležitá informace:
+**Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
 
 #### Requirements
 

@@ -9,6 +9,10 @@ hledat nové zaměstnance skrze vypsané odměny.
 Procedura na uložení nového referrala. Jako odpověď se vrátí ID referrala. 
 V případě, že daný referral již existuje, server vrací header status `409`.
 
+#### Důležitá informace:
+**Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+
 #### Requirements
 
    + Authorization with token
