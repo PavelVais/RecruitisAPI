@@ -1196,6 +1196,11 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
      + page (optional,numeric,`1`) - strana s entitami.
      + search (optional,string) - Vrátí referraly s daným jménem, popř. emailem.
     
++ Request
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+                
 + Response 200 (application/json)
 
                 {
@@ -1230,6 +1235,11 @@ V případě, že daný referral neexistuje, vrací se `404` odpověď.
 
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
+     
++ Request
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Response 200 (application/json)
 

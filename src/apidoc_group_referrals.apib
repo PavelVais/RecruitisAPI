@@ -64,6 +64,11 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
      + page (optional,numeric,`1`) - strana s entitami.
      + search (optional,string) - Vrátí referraly s daným jménem, popř. emailem.
     
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+                
 + Response 200 (application/json)
 
                 :[](json/apidoc_referrals_get_response.json)
@@ -76,6 +81,11 @@ V případě, že daný referral neexistuje, vrací se `404` odpověď.
 
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
+     
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
 
 + Response 200 (application/json)
 
