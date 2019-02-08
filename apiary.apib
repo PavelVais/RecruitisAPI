@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.3.4**
-* Poslední aktualizace: **3.12.2018**
+* Verze systému: **1.3.5**
+* Poslední aktualizace: **8.2.2019**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,6 +18,9 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
+ * **8.2.2019: branch v1 `1.3.5`**
+     * Do volání `GET /jobs` přibyl nový parametr `only_deleted` 
+     
  * **3.12.2018: branch v1 `1.3.4`**
      * V dokumentaci přibyl popis stavu při nedostupnosti API. 
      * přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
@@ -42,7 +45,6 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
  
  * **6.9.2018: branch v1 `1.2.3`**
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
      * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
@@ -361,7 +363,7 @@ Získání informací o právě přihlášeném účtu.
 API volání, které se vstahuje k aktivním inzerátům
 
 
-## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive}]
+## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
 
     
 ### Get All Jobs [GET]
@@ -384,11 +386,12 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
 | `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                        |
 | `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu) |
 | `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby system vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
+| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby system vrátil POUZE smazané inzeráty. V tento moment systém vráti ale payload poze s job_id parametrem ( payload: [{job_id:1234},{job_id:5678}] )        |
 
 
 
 
-Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. a pod jednou adresou můžete uvést i více poboček.).
+Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. Pod jednou adresou můžete uvést i více poboček.).
 
 #### Requirements
 
@@ -409,6 +412,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
     + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
     + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
     + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
+    + only_deleted (optional,boolean) - Vrátí pouze smazané inzeráty. (viz Parameters info)
 
     
 + Response 200 (application/json)
@@ -1066,30 +1070,50 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
                 "date_expiration": "2020-10-31",
                 "source": "elektronická forma"
               },
-              "extra" : [
+              "extra": [
                 {
-                  "note" : "Toto je text, který se uloží jako poznámka k danému uchazeči"
+                  "note": "Toto je text, který se uloží jako poznámka k danému uchazeči"
                 },
                 {
-                  "tag" : "Toto je uchazečův tag"
+                  "tag": "Toto je uchazečův tag"
                 }
               ],
               "attachments": [
                 {
-                  "path" : "http://www.example.com/upload/cv.txt",
+                  "path": "http://www.example.com/upload/cv.txt",
                   "filename": "cv.txt",
                   "type": 1
                 },
                 {
-                  "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+                  "base64": "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
                   "filename": "logo.jpg",
                   "type": 4
-
                 },
                 {
-                  "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+                  "path": "http://www.example.com/upload/gdpr_agreement.pdf",
                   "filename": "souhlas.pdf",
                   "type": 5
+                }
+              ]
+            }
+
+            {
+              "job_id": 352366,
+              "name": "Peter Koval\u010d\u00edk",
+              "email": "peter.kovalcik@gmail.com",
+              "phone": "+421902514892",
+              "source": "jobangels.com",
+              "cover_letter": "Rad by som sa uchadzal o tuto poziciu",
+              "attachments": [
+                {
+                  "base64": "VG90byBqZSBwcmF6ZG55IHppdm90b3BpcywgYWJ5IHNtZSBobyBtb2hsaSBvdGVzdG92YXQgYSBwb3NsYXQgZG8gUmVjcnVpdGlzLmlv",
+                  "filename": "empty_CV.txt",
+                  "type": 1
+                },
+                {
+                  "base64": "VG90byBqZSBwcmF6ZG55IHppdm90b3BpcywgYWJ5IHNtZSBobyBtb2hsaSBvdGVzdG92YXQgYSBwb3NsYXQgZG8gUmVjcnVpdGlzLmlv",
+                  "filename": "empty_motivacny_list.txt",
+                  "type": 1
                 }
               ]
             }

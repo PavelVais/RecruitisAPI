@@ -8,6 +8,9 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+ * **8.2.2019: branch v1 `1.3.5`**
+     * Do volání `GET /jobs` přibyl nový parametr `only_deleted` 
+
  * **3.12.2018: branch v1 `1.3.4`**
      * V dokumentaci přibyl popis stavu při nedostupnosti API. 
      * přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
@@ -32,7 +35,6 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
  
  * **6.9.2018: branch v1 `1.2.3`**
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
      * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).

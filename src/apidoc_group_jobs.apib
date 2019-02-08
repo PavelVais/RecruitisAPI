@@ -2,7 +2,7 @@
 API volání, které se vstahuje k aktivním inzerátům
 
 
-## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive}]
+## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
 
     
 ### Get All Jobs [GET]
@@ -25,11 +25,12 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
 | `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                        |
 | `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu) |
 | `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby system vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
+| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby system vrátil POUZE smazané inzeráty. V tento moment systém vráti ale payload poze s job_id parametrem ( payload: [{job_id:1234},{job_id:5678}] )        |
 
 
 
 
-Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. a pod jednou adresou můžete uvést i více poboček.).
+Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. Pod jednou adresou můžete uvést i více poboček.).
 
 #### Requirements
 
@@ -50,6 +51,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
     + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
     + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
     + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
+    + only_deleted (optional,boolean) - Vrátí pouze smazané inzeráty. (viz Parameters info)
 
     
 + Response 200 (application/json)
