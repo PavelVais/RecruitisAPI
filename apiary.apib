@@ -18,9 +18,6 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
 
 ## Changelog
 
- * **8.2.2019: branch v1 `1.3.5`**
-     * Do volání `GET /jobs` přibyl nový parametr `only_deleted` 
-     
  * **3.12.2018: branch v1 `1.3.4`**
      * V dokumentaci přibyl popis stavu při nedostupnosti API. 
      * přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
@@ -45,6 +42,7 @@ bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odst
      * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
  
  * **6.9.2018: branch v1 `1.2.3`**
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Do volání `GET /jobs` přibyl parametr `include_inactive`
      * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
      * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
@@ -1093,27 +1091,6 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
                   "path": "http://www.example.com/upload/gdpr_agreement.pdf",
                   "filename": "souhlas.pdf",
                   "type": 5
-                }
-              ]
-            }
-
-            {
-              "job_id": 352366,
-              "name": "Peter Koval\u010d\u00edk",
-              "email": "peter.kovalcik@gmail.com",
-              "phone": "+421902514892",
-              "source": "jobangels.com",
-              "cover_letter": "Rad by som sa uchadzal o tuto poziciu",
-              "attachments": [
-                {
-                  "base64": "VG90byBqZSBwcmF6ZG55IHppdm90b3BpcywgYWJ5IHNtZSBobyBtb2hsaSBvdGVzdG92YXQgYSBwb3NsYXQgZG8gUmVjcnVpdGlzLmlv",
-                  "filename": "empty_CV.txt",
-                  "type": 1
-                },
-                {
-                  "base64": "VG90byBqZSBwcmF6ZG55IHppdm90b3BpcywgYWJ5IHNtZSBobyBtb2hsaSBvdGVzdG92YXQgYSBwb3NsYXQgZG8gUmVjcnVpdGlzLmlv",
-                  "filename": "empty_motivacny_list.txt",
-                  "type": 1
                 }
               ]
             }
