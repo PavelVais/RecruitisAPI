@@ -3,9 +3,9 @@
 Toto je specifická oblast, ve které pracujeme s filtry pro konkrétní inzeráty. Mnohdy chceme inzeráty filtrovat podle údajů, které
 nám systém nenabízí, tak si je musíme sami vytvořit a k inzerátu přiřadit. Následně je můžeme podle nich filtrovat. 
 
-Příklad filtru: 
- - Oddělení v nemocnici (JIP, Gynekologie, ORL..)
- - Typy provozu (jednosměnný, dvousměnný...)
+Příklad filtru:
+- Oddělení v nemocnici (JIP, Gynekologie, ORL, ...)
+- Typy provozu (jednosměnný, dvousměnný, ...)
  
 Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na personalistovi, který inzerát tvoří.
 
@@ -13,7 +13,7 @@ Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na pe
 ## Filter List [/filters{?id,group}]
 
 Vrátí seznam filtrů, které je možné dle ID přiřazovat a filtrovat u inzerátů.
-*tato funkce je totožná s funkcí GET `enums/filters`*
+*Tato funkce je totožná s funkcí GET `enums/filters`*.
 
     
 ### Get Filters [GET]
@@ -45,8 +45,8 @@ Vytvoření nového filtru.
 
 | Request value         | Required | Type     | Default Value   | Note               |
 |:----------------------|----------|----------|:-------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+| `name`                | Yes      | string   | | Název filtru.
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
 + Response 200 (application/json)
 
@@ -59,8 +59,8 @@ Editace filtru dle ID v parametru URI.
 
 | Request value         | Required | Type     | Default Value  | Note               |
 |:----------------------|----------|----------|:--------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+| `name`                | Yes      | string   | | Název filtru.
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
 + Parameters
     + id (required, number, `1`) - Filter ID

@@ -9,26 +9,26 @@
    + Authorization with token
    + token type: `full_access`
 
-#### Zobrazení parametru závisících na druhu tokenu
+#### Zobrazení parametru závislém na druhu tokenu
 
 | Parametr | token          | Poznámka |
 |:-------|----------------------|----------------------|
 | `stats`    | `full_access`          |
 
-####Vysvětlění flow hodnot
+####Vysvětlení flow hodnot
 
 | Flow ID | Vysvětlení          | Poznámka |
 |:-------|----------------------|----------------------|
 | `0`    | Status "Nový"          |
 | `1`    | Status "Nepřiřazený"   |
-| `2`    | Status "Další kolo"    | Toto ID se momentálně nepoužívá |
+| `2`    | Status "Další kolo"    | Toto ID se momentálně nepoužívá. |
 | `3`    | Status "Telefon"        |
 | `4`    | Status "Pohovor"         |
 | `5`    | Status "Vybrán"          |
 | `6`    | Status "Přijat"          |
-| `8`    | Status "Smazán"          | Toto ID zapřičiní, že daný uchazeč z odpovědi zmizí. |
+| `8`    | Status "Smazán"          | Toto ID zapříčiní, že daný uchazeč z odpovědi zmizí. |
 
-Získání informací o mém účtu, za kterého jsem právě přihlášen
+Získání informací o mém účtu, za kterého jsem právě přihlášen.
 
 + Request
     + Headers
@@ -36,10 +36,10 @@ Získání informací o mém účtu, za kterého jsem právě přihlášen
             Authorization: Bearer :[](apidoc_bearer_token.txt)
             
 + Parameters
-    + limit (optional,numeric,`10`) - pocet entit, ktere se maji zobrazit
-    + page (optional,numeric,`1`) - strana s vypisem odpovedi
-    + search (optional,string) - Vyhledávání ve jméně
-    + jobid (optional,int) - Omezení na určitý inzerát
+    + limit (optional,numeric,`10`) - počet entit, které se mají zobrazit.
+    + page (optional,numeric,`1`) - strana s výpisem odpovědí.
+    + search (optional,string) - Vyhledávání ve jméně.
+    + jobid (optional,int) - Omezení na určitý inzerát.
     + status (array[int])
 
 + Response 200 (application/json)
@@ -57,7 +57,7 @@ Získání informací o mém účtu, za kterého jsem právě přihlášen
 
 ### Me [POST]
 
-Procedura na ulozeni noveho me ( haha :D )
+Procedura na uložení nového "me"
 
 + Request  (application/json)
 
@@ -83,7 +83,7 @@ Procedura na ulozeni noveho me ( haha :D )
         
 ### Me [PUT]
 
-Procedura na upraveni noveho me ( haha :D )
+Procedura na upravení nového "me".
 
 + Request  (application/json)
 

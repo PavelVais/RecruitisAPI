@@ -1,6 +1,6 @@
 # Group Referrals
 
-Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
+Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce, odkud mohou sdílet nasdílené inzeráty a tím
 hledat nové zaměstnance skrze vypsané odměny. 
 
 ## Referral entity [/referrals{?id,limit,page,search}]
@@ -11,7 +11,7 @@ V případě, že daný referral již existuje, server vrací header status `409
 
 #### Důležitá informace:
 **Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
-Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změňte na svůj vlastní.**
 
 #### Requirements
 
@@ -20,10 +20,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
    
  | Request value     | Required | Note                                                                                                                        |
  |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
- | `name`            | Yes      | Jméno referrala                                                                                                             |
- | `email`           | No       | Jeho email                                                                                                                  |
- | `phone`           | No       | Jeho telefon                                                                                                                |
- | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+ | `name`            | Yes      | Jméno referrala.                                                                                                             |
+ | `email`           | No       | Email referrala.                                                                                                                  |
+ | `phone`           | No       | Telefon referrala.                                                                                                             |
+ | `email_text`      | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
 + Request (application/json)
     + Headers
@@ -52,14 +52,14 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
 
 | Parameter      | Type     | Note                                                                             |
 |----------------|----------|----------------------------------------------------------------------------------|
-| `id`           | string   | ID referrala                                                                     |
-| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr|
-| `name`         | string   | Jméno referrala                                                                  |
-| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala                             |
-| `date_created` | datetime | Datum vzniku referrala                                                           |
-| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku                            |
-| `email`        | string   | Email na referrala                                                               |
-| `url`          | string   | Odkaz na adresu stránky referrrala                                               |
+| `id`           | string   | ID referrala.                                                                    |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr.|
+| `name`         | string   | Jméno referrala.                                                                  |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                       |
+| `date_created` | datetime | Datum vzniku referrala.                                                           |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                            |
+| `email`        | string   | Email referrala.                                                              |
+| `url`          | string   | Odkaz na adresu stránky referrrala.                                              |
                             
                             
 + Parameters
@@ -80,7 +80,7 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
                 
 ### Get referral [GET /referrals/{id}]
 
-Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
+Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita, tzn. payload nebude obsahovat pole.
 V případě, že daný referral neexistuje, vrací se `404` odpověď. 
 
 + Parameters

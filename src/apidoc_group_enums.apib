@@ -2,7 +2,6 @@
 
 Sekce, která má za úkol vracet různé druhy číselníků. Na všechny číselníky se nevztahuje stránkování.
 
-
 ## Workfields Lists [/enums/workfields{?lang}]
 
 Workfields neboli obory a profese používané v Recruitis.io systému.
@@ -17,7 +16,7 @@ Získá všechny naše profese a obory včetně jejich ID.
    + No Authorization is needed
 
 + Parameters
-    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
     
 + Response 200 (application/json)
 
@@ -37,9 +36,9 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 #### Requirements
 
    + Authorization with token
-   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách, xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
-   + Alespoň jeden typ tokenu je tedy vyžadován ve chívli, kdy použijete parametr `channel_assignation`
+   + token type: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+   + token type: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
+   + Alespoň jeden typ tokenu je tedy vyžadován ve chvíli, kdy použijete parametr `channel_assignation`.
    
 + Request
     + Headers
@@ -47,7 +46,7 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
             Authorization: Bearer :[](apidoc_bearer_token.txt)   
 
 + Parameters
-    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
     + channel_assignation (array[int],``)
     
 + Response 200 (application/json)
@@ -82,7 +81,7 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
 ### Get Company Sources [GET]
 
-Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotným systémem, tak i přidány manuálně, firmou.
+Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotným systémem, tak i přidány manuálně, firmou.
 
 #### Requirements
 
@@ -100,12 +99,12 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
  
 ## Filter List  [/enums/filters]
 
-**Deprecated**: Namásto toho používejte volání `GET` `filters/`
+**Deprecated**: Namísto toho používejte volání `GET` `filters/`.
 
 ### Get filters [GET]
 
 Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
-ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`).
 
 #### Requirements
 
@@ -124,8 +123,8 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 ## Office List [/enums/offices]
 ### Get offices [GET]
 
-Vrací veškeré pobočky dané společnosti
-ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`)
+Vrací veškeré pobočky dané společnosti,
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`).
 
 #### Requirements
 

@@ -11,124 +11,124 @@ HOST: https://app.recruitis.io/api2/
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
 
-Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI
+Zdrojové kódy k dokumentaci jsou volně přístupné zde: https://github.com/PavelVais/RecruitisAPI .
 
-Postupem času budou příbývat jednotlivé funkcionality. Pokud by měla být narušena funčnost jakéhokoli API volání, 
-bude založen nový branch (v2 atd.), nebo budete v dostatečném časovém odstupu o změně informováni.
+Postupem času budou přibývat jednotlivé funkcionality. Pokud by měla být narušena funkčnost jakéhokoli API volání, 
+bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstupu o změně informováni.
 
 ## Changelog
 
  * **3.12.2018: branch v1 `1.3.4`**
      * V dokumentaci přibyl popis stavu při nedostupnosti API. 
-     * přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
+     * Přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
  
  * **22.10.2018: branch v1 `1.3.3`**
      * Byla přidána nová sekce `referrals`, ve které je volání na přidání a výpis referralů. 
      
  * **16.10.2018: branch v1 `1.3.2`**
-     * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education` 
+     * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education`.
  
  * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
 
  * **17.9.2018: branch v1 `1.3.1`**
-     * Bylo přidáno volání `DELETE /candidates`
-     * Přibyl popis kvót
-     * Přibyla kvóta `quota_candidates_delete`
+     * Bylo přidáno volání `DELETE /candidates`.
+     * Přibyl popis kvót.
+     * Přibyla kvóta `quota_candidates_delete`.
  
  * **11.9.2018: branch v1 `1.3`**
-     * Bylo přidáno volání `POST /candidates`
-     * Do dokumentace byla přidán popis tagů
+     * Bylo přidáno volání `POST /candidates`.
+     * Do dokumentace byl přidán popis tagů.
      * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
-     * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+"
+     * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+".
  
  * **6.9.2018: branch v1 `1.2.3`**
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`
-     * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` na místo prázdné `200` odpovědi
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`.
+     * Do volání `GET /jobs` přibyl parametr `include_inactive`.
+     * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` namísto prázdné `200` odpovědi.
      * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
 
  * **5.9.2018: branch v1 `1.2.2`**
-     * Do odpovědi u volání `POST /Answers` Přibyl parametr `source`.
-     * Do odpovědi u volání `GET /jobs` přibyl parametr `details`
-     * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace
+     * Do odpovědi u volání `POST /Answers` přibyl parametr `source`.
+     * Do odpovědi u volání `GET /jobs` přibyl parametr `details`.
+     * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace.
      * Aktualizace dokumentace o některé důležité informace.
 
  * **28.8.2018: branch v1 `1.2.1`**
-    * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče)
-    * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`
+    * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče).
+    * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`.
  
  * **6.8.2018: branch v1 `1.2`**
     * Přidána sekce **Filters**
-    * Zprovozněn parametr filter_id u volání `GET /jobs`
-    * U volání `POST /answer`  přibyl parametr `referral_id`, `channel_id` a `extra`, který dovoluje přidat k odpovědi poznámku nebo tag.
-    * U volání `POST /answer`  byl zprovozněn parametr `channel_id` 
-    * U volání `POST /answer`  byl upraven parametr `gppr_agreements` - Nyní je rozšířen o další atributy 
-    * Volání `GET /enums/filters` je označeno jako deprecated. Namísto toho se doporučuje volat `GET /filters`
+    * Zprovozněn parametr filter_id u volání `GET /jobs`.
+    * U volání `POST /answer`  přibyl parametr `referral_id`, `channel_id` a `extra`, který dovoluje přidat k odpovědi poznámku nebo tag..
+    * U volání `POST /answer`  byl zprovozněn parametr `channel_id`.
+    * U volání `POST /answer`  byl upraven parametr `gppr_agreements` - nyní je rozšířen o další atributy.
+    * Volání `GET /enums/filters` je označeno jako deprecated. Namísto toho se doporučuje volat `GET /filters`.
  
  * **19.7.2018: branch v1 `1.1.1`**
-    * Zprovozněn parametr channel_id u volání `GET /jobs`
-    * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`
-    * Opraven parametr channel_assignation u volání `GET /enums/workfields`
-    * Přidáno vynucení správných typů tokenů u volání `GET /enums/workfields` a `GET /jobs`
-    * Standartizovány některé kódové označení chyb + jsou zveřejněny a popsány v dokumentaci
-    * V dokumentaci jsou připsány další dodatečné informace o API
+    * Zprovozněn parametr channel_id u volání `GET /jobs`.
+    * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`.
+    * Opraven parametr channel_assignation u volání `GET /enums/workfields`.
+    * Přidáno vynucení správných typů tokenů u volání `GET /enums/workfields` a `GET /jobs`.
+    * Standardizovány některé kódové označení chyb + jsou zveřejněny a popsány v dokumentaci.
+    * V dokumentaci jsou připsány další dodatečné informace o API.
  
  * **9.7.2018: branch v1 `1.1`**
-    * Zprovozněno volání nad realnými daty na url adrese: `https://app.recrutis.io/api2/`
-    * `GET /jobs` odstraněn parametr `regions`. Na místo něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejblížším plánu vývoje.
-    * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována.)
-    * `GET /jobs` přidán parametr `office_id`
-    * Přidáno volání `GET /enums/offices`
-    * volání `GET /enum/*` přejmenováno na `GET /enums/*`. (zpětná kompatibilita je zachována: stále se dá volat `enums`)
-    * Plánuje se v nejbližší době: zprovozněno volání na `https://api.recrutis.io/` (volání na https://app.recrutis.io/api2/ bude zachováno)
+    * Zprovozněno volání nad reálnými daty na url adrese: `https://app.recrutis.io/api2/`.
+    * `GET /jobs` odstraněn parametr `regions`. Namísto něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejbližším plánu vývoje.
+    * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována).
+    * `GET /jobs` přidán parametr `office_id`.
+    * Přidáno volání `GET /enums/offices`.
+    * Volání `GET /enum/*` přejmenováno na `GET /enums/*`(zpětná kompatibilita je zachována: stále se dá volat `enums`).
+    * Zprovozněno volání na `https://api.recrutis.io/`(volání na https://app.recrutis.io/api2/ bude zachováno).
 
  * **18.6.2018: branch v1 `1.0.1`**
-    * `POST /Answers` nyní přijíma parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
+    * `POST /Answers` nyní přijímá parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
 
  * **4.5.2018: branch v1 `1.0.0`**
-    * Ustálená verze API volání `jobs` , `answers` a `login`
-    * Počáteční verze
+    * Ustálená verze API volání `jobs` , `answers` a `login`.
+    * Počáteční verze.
 
 
 ## Tokeny
 Autorizační tokeny mají dvě úrovně:
-+ `full_access` : Token, který má veškeré pravomoce a umožňuje upravovat data v systému dané firmy.
++ `full_access`: Token, který má veškeré pravomoci a umožňuje upravovat data v systému dané firmy.
 Tento token nesmí být jakkoli zobrazen veřejnosti.
-+ `public_access` : Token, který má převážně zobrazovací pravomoce. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
++ `public_access`: Token, který má převážně zobrazovací pravomoci. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
 
-Na oba druhy tokenů lze uplatnit doménový whitelist. (Toto nastavení doporučujeme použít.)
+Na oba druhy tokenů lze uplatnit doménový whitelist (toto nastavení doporučujeme použít).
 
-Tokeny lze vytvořit po přihlášení v Recrutisu: *nastavení* > *api propojení*. (https://app.recruitis.io/zadavatel/nastaveni)
+Tokeny lze vytvořit po přihlášení v Recrutisu: *nastavení* > *api propojení* (https://app.recruitis.io/zadavatel/nastaveni).
 
 Samotná autorizace probíhá pomocí header informace `Authorization`, kde je slovní spojení `Bearer` a následně vložený token
 
-`Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`
+`Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`.
 
 ###Meta informace
 
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
-okolnostmi volání. (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.)
+okolnostmi volání (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.).
 
 | META parameter      | Note                                                                                  |
 |:--------------------|---------------------------------------------------------------------------------------|
-| `code`              | Kód výsledku. V případě chyby je to standartizované hlášení o chybě.                  |
+| `code`              | Kód výsledku. V případě chyby je to standardizované hlášení o chybě.                  |
 | `message`           | Zpráva, která popisuje dané volání.                                                   |
 | `duration`          | Uplynulá doba při zpracování požadavku.                                               |
 | `cached`            | Výsledek je cachován a nemusí být aktuální.                                           |
-| `cached_from`       | Čas vygenerování vráceného výsledku                                                   |
-| `deprecated`        | Dané volání je ozančeno jako zastaralé a nemělo by se nadále používat.                |
-| `additional_output` | Viz samostatná sekce                                                                  |
-| `entries_from`      | Pokud se vrací pole, značí od kterého elementu dané pole je (*určeno pro stránkovač*) |
-| `entries_to`        | Pokud se vrací pole, značí do kterého elementu dané pole je (*určeno pro stránkovač*) |
-| `entries_total`     | Pokud se vrací pole, značí celkové množství elementů (*určeno pro stránkovač*)        |
-| `entries_sum`       | Pokud se vrací pole, značí aktuální množství elementů (*určeno pro stránkovač*)       |
+| `cached_from`       | Čas vygenerování vráceného výsledku.                                                   |
+| `deprecated`        | Dané volání je označeno jako zastaralé a nemělo by se nadále používat.                |
+| `additional_output` | Viz samostatná sekce.                                                                  |
+| `entries_from`      | Pokud se vrací pole, udává, od kterého elementu dané pole je (*určeno pro stránkovač*). |
+| `entries_to`        | Pokud se vrací pole, udává, do kterého elementu dané pole je (*určeno pro stránkovač*).|
+| `entries_total`     | Pokud se vrací pole, udává celkové množství elementů (*určeno pro stránkovač*).        |
+| `entries_sum`       | Pokud se vrací pole, udává aktuální množství elementů (*určeno pro stránkovač*).      |
 
 
 ####Meta informace `additional_output`
 
-Při nahrávání nových údajů (odpovědí, kandidátů) může nastat stav, kdy se daná entita nahraje s různými vyjímkami 
-(duplikace příloh, sjendocení uchazečů, gdpr zosobnění, vložení špatných příloh.). V tom případě API zpětně informuje o všem, co se s danou 
-entitou stalo, viz příklad níže. Zároveň se tento stac zaloguje u nás na serveru a je zpětně k dohledání.
+Při nahrávání nových údajů (odpovědí, kandidátů) může nastat stav, kdy se daná entita nahraje s různými výjimkami 
+(duplikace příloh, sjednocení uchazečů, gdpr zosobnění, vložení špatných příloh). V tom případě API zpětně informuje o všem, co se s danou 
+entitou stalo, viz příklad níže. Zároveň se tento stav zaloguje u nás na serveru a je zpětně k dohledání.
 
 ```json
 {
@@ -175,29 +175,29 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.request.wrong_format`                 | Špatný JSON formát requestu.
 | `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.
 | `api.error.request.property.wrong_value`         | V požadavku nabývá proměnná špatnou hodnotu. 
-| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší, než povolená hodnota.
+| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší než povolená hodnota.
 | `api.error.request.property.maximum_array_items` | Počet prvků v poli je větší, než je povoleno.
 | `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek. 
 | `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.
 | `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.
-| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častějí špatnými údaji. 
+| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častěji špatnými údaji. 
 | `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.
 | `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
-| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, Přihlášení se nezdařilo. 
+| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, přihlášení se nezdařilo. 
 | `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.
-| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání, viz. samostatná sekce
+| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání viz. samostatná sekce
 | `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
 | `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
 | `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
-| `api.error.upload.size`                          | Příloha má více, než 3MB.
+| `api.error.upload.size`                          | Příloha má více, než 3 MB.
 | `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
 | `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
 | `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
 | `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.
-| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému
+| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.
 | `api.error.referral.already_created`             | Daný referral byl již vytvořen.
 
-V případě nedostupnosti API server vrací `503` s kódem `api.error.system.unavailable`
+V případě nedostupnosti API server vrací `503` s kódem `api.error.system.unavailable`.
 
 ## Volání dotazů - dodatečné informace
 
@@ -224,7 +224,7 @@ nebo jako pole (`foo[]=bar&foo[]=baz`).
 
 #### Typy příloh (Attachment type)
 
-Typy příloh se používá při vytváření odpovědi, popřípadě kandidáta.
+Typy příloh se využívají při vytváření odpovědi, popřípadě kandidáta.
 
 | Value  |  Note                             |
 |:-------|-----------------------------------|
@@ -236,13 +236,13 @@ Typy příloh se používá při vytváření odpovědi, popřípadě kandidáta
 
 #### Speciální typy tagů
 
-Pokud místo svého znění tagu vložíte níže uvedený tag, má to hlubší vliv na fungování uchazeče, viz poznámka
+Pokud místo svého znění tagu vložíte níže uvedený tag, má to hlubší vliv na fungování uchazeče, viz poznámka.
 
 | Value        |  Note                             |
 |:-------------|-----------------------------------|
 | `tag.hot`    | Tento tag přidaný k uchazeči (přes přidání odpovědi / uchazeče) zaručí, že se kandidát zařadí do sekce "žhavý kandidát"  
 
-### Dovysvětlení hodnot jednotlivých parametrů
+### Vysvětlení hodnot jednotlivých parametrů
 
  **date** - Je string ve formátu YYYY-MM-DD (2018-01-30)
  **datetime** - Je string ve formátu YYYY-MM-DD H:i:s (2018-01-30 12:59:59)
@@ -256,7 +256,7 @@ Pokud místo svého znění tagu vložíte níže uvedený tag, má to hlubší 
 
 Login request for user authentication. Default response is 200. 
 
- - `device_id` je ID vygenerováno firebase službou od Google inc. Pokud systém obrdží tento parametr,
+ - `device_id` je ID vygenerováno firebase službou od Google inc. Pokud systém obdrží tento parametr,
  umožní přes tento login posílat SMS zprávy a systém počítá s tím, že se jedná o mobilní aplikaci.
 - `device_name` je pouze označení daného api spojení. Pod tímto názvem ho pak uživatel uvidí v Recruitisu. Jednou,
 jak se device_name zapíše, nelze přes API volání změnit.
@@ -358,7 +358,7 @@ Získání informací o právě přihlášeném účtu.
         }
 
 # Group Jobs
-API volání, které se vstahuje k aktivním inzerátům
+API volání, které se vztahuje k aktivním inzerátům.
 
 
 ## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
@@ -373,29 +373,29 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
 #### Parameters info
 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
- jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`)
+ jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`).
  
 | Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                       |
 |:-------------------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `limit`            | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                  |
-| `page`             | No       | 1             | No                          | Aktuální stránka                                                                                                                                                           |
+| `page`             | No       | 1             | No                          | Aktuální stránka.                                                                                                                                                           |
 | `workfield_id`     | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                              |
 | `office_id`        | No       |               | No                          | Array. Filtrace podle ID poboček.                                                                                                                                          |
 | `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                        |
-| `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu) |
-| `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby system vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
-| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby system vrátil POUZE smazané inzeráty. V tento moment systém vráti ale payload poze s job_id parametrem ( payload: [{job_id:1234},{job_id:5678}] )        |
+| `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu). |
+| `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
+| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).      |
 
 
 
 
-Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (U poboček vracíme adresy. Pod jednou adresou můžete uvést i více poboček.).
+Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (u poboček vracíme adresy, pod jednou adresou můžete uvést i více poboček).
 
 #### Requirements
 
    + Authorization with token
-   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech) - (určení dle channel_id)  
-   + token type: `full_access` : pokud se jedná o interní inzerát. (určení dle channel_id)  
+   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
+   + token type: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
 
 + Request
     + Headers
@@ -403,14 +403,14 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
 + Parameters
-    + limit (optional,numeric,`10`) - počet entit, které se mohou zobrazit.
-    + page (optional,numeric,`1`) - strana s vypisem odpovedi
-    + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese
-    + office_id (optional,array[int]) - Omezení na určité pobočky. Viz sekce Enumerations
-    + filter_id (optional,array[int]) - Omezení na určité filtry. Viz sekce Job Filters
-    + channel_id (optional,array[int]) - Omezení na určité kanály. Viz sekce Enumerations
-    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty
-    + only_deleted (optional,boolean) - Vrátí pouze smazané inzeráty. (viz Parameters info)
+    + limit (optional,numeric,`10`) - Počet entit, které se mohou zobrazit.
+    + page (optional,numeric,`1`) - Strana s výpisem odpovědi.
+    + workfield_id (optional,array[int]) - Omezení na určité pracovní obory, profese.
+    + office_id (optional,array[int]) - Omezení na určité pobočky, viz sekce Enumerations.
+    + filter_id (optional,array[int]) - Omezení na určité filtry, viz sekce Job Filters.
+    + channel_id (optional,array[int]) - Omezení na určité kanály, viz sekce Enumerations.
+    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty.
+    + only_deleted (optional,boolean) - Vrátí pouze smazané inzeráty, viz Parameters info.
 
     
 + Response 200 (application/json)
@@ -700,14 +700,14 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 #### Requirements
 
    + Authorization with token
-   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.
+   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+   + token type: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
    
 | Parameter                | token condition | Type          | Note                                                                                                                                               |
 |--------------------------|-----------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `job_id`                 | `public_access` | int           | ID inzerátu                                                                                                                                        |
+| `job_id`                 | `public_access` | int           | ID inzerátu.                                                                                                                                        |
 | `title`                  | `public_access` | string        |                                                                                                                                                    |
 | `description`            | `public_access` | string        |                                                                                                                                                    |
 | `date_end`               | `public_access` | date          |                                                                                                                                                    |
@@ -715,16 +715,16 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 | `workfields`             | `public_access` | array(object) |                                                                                                                                                    |
 | `workfields` - `id`      | `public_access` | int           |                                                                                                                                                    |
 | `workfields` - `name`    | `public_access` | string        |                                                                                                                                                    |
-| `stats`                  | `full_access`   | object        | Statistiky k danému inzerátu. Ukazují počt                                                                                                         |
-| `stats` - `flow_answers` | `full_access`   | array(object) | Pole jednotlivých stavů a jejich počtu odpovědí                                                                                                    |
+| `stats`                  | `full_access`   | object        | Statistiky k danému inzerátu. Ukazují počty.                                                                                                         |
+| `stats` - `flow_answers` | `full_access`   | array(object) | Pole jednotlivých stavů a jejich počtu odpovědí.                                                                                                  |
 | `stats` - `answers`      | `full_access`   | int           |                                                                                                                                                    |
 | `stats` - `views`        | `full_access`   | int           |                                                                                                                                                    |
-| `filterlist`             | `public_access` | array(object) | Seznam filtračních položek                                                                                                                         |
+| `filterlist`             | `public_access` | array(object) | Seznam filtračních položek.                                                                                                                         |
 | `filterlist` - `id`      | `public_access` | int           |                                                                                                                                                    |
 | `filterlist` - `name`    | `public_access` | string        |                                                                                                                                                    |
 | `filterlist` - `group`   | `public_access` | string        |                                                                                                                                                    |
 | `details`                | `public_access` | object        |                                                                                                                                                    |
-| `details` - `office_id`  | `public_access` | int           | Pokud je inzerát propojený s pobočkou, tato položka obsahuje ID pobočky (podle ní se dá filtrovat.). Pokud není propojená, položka se nezobrazuje. |
+| `details` - `office_id`  | `public_access` | int           | Pokud je inzerát propojený s pobočkou, tato položka obsahuje ID pobočky (podle ní se dá filtrovat). Pokud není propojená, položka se nezobrazuje. |
 | `personalist`            | `public_access` | object        |                                                                                                                                                    |
 | `personalist` - `id`     | `public_access` | int           |                                                                                                                                                    |
 | `personalist` - `name`   | `public_access` | string        |                                                                                                                                                    |
@@ -738,7 +738,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 | `addresses` - `street`   | `public_access` | string        |                                                                                                                                                    |
 | `addresses` - `region`   | `public_access` | string        |                                                                                                                                                    |
 | `addresses` - `state`    | `public_access` | string        |                                                                                                                                                    |
-| `active`                 | `public_access` | bool          | Značí, jestli je Inzerát aktivní (není smazaný, ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.               |
+| `active`                 | `public_access` | bool          | Značí, jestli je Inzerát aktivní (není smazaný ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.               |
 
 
 + Request
@@ -828,7 +828,7 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
 
 **Žhaví kandidáti**
-Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", to jest kandidát, 
+Pokud chcete, aby byl uchazeč označen systémem jako "žhavý kandidát", tj. kandidát, 
 který je vidět na hlavní stránce, přiložte k němu tag "`tag.hot`". Více o žhavých kandidátech v Recruitisu.
 
 ## Candidate entity [/candidates]
@@ -838,11 +838,11 @@ Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID kandidát
 Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
 
 Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
-informování přes meta položku `additional_output`.
+informovaní přes meta položku `additional_output`.
 
 #### Důležitá informace:
 **Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
-Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změňte na svůj vlastní.**
 
 #### Requirements
 
@@ -858,18 +858,18 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 | `linkedin`                           | No       |                 |                                                                                                                                                                                                                                |
 | `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
 | `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
-| `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`) . |
+| `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`). |
 | `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
-| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                                              |
+| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | Formát YYYY-MM-DD                                                                                                                                                                                                              |
 | `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                                         |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                                         |
 | `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                   |
 | `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                     |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
 | `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                                       |
-| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                                     |
-| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                                             |
-| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                                       |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                                     |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                                             |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                                       |
 
 
 + Request (application/json)
@@ -951,7 +951,7 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 Toto volání smaže kompletně daného uchazeče a všechny informace, které jsou k němu přidruženy. 
 Všechny jeho odpovědi, pohovory, poznámky, přílohy, GDPR souhlasy atd. **Takto smazaný uchazeč se již nedá jakkoli obnovit.**
 
-Na toto volání se vztahuje denní kvóta. V případě překročení denní kvóty se vrátí odpověd `403 - forbidden` s `meta.code` `api.error.quota.exceeded`
+Na toto volání se vztahuje denní kvóta. V případě překročení denní kvóty se vrátí odpověď `403 - forbidden` s `meta.code` `api.error.quota.exceeded`.
 
 + Parameters
      + id (required, number, `1`) - ID kandidáta (user ID)
@@ -996,26 +996,26 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
 
 ## Answer list [/answers]
 
-Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, máme vztah mezi kandidátem a odpovědmi je 1:N. V této sekci se podíváme na získávání odpovědí. 
+Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, vztah mezi kandidátem a odpověďmi je 1:N. V této sekci se podíváme na získávání odpovědí. 
 
 ### Create new answer [POST]
 Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. Při vytváření odpovědi se vytvoří i nový uchazeč, pokud již s danými kontakty (email, telefon) neexistuje.
 V druhém případě se přiřadí k již existujícímu.
 
 API nepodporuje vložení duplikátních odpovědí. Pokud (dle emailu nebo telefonu) již uchazeč
-na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`
+na daný inzerát odpovídal, vrátí se jeho answer ID s kódem: `meta`.`code` = `api.unmodified`.
 
 Poznámka: Souhlas se zpracováním osobních údajů dostává takto vytvořená odpověď automaticky. Její platnost je v základním nastavení 1 rok. Pokud byste si přáli toto nastavení změnit, kontaktujte nás. 
 
 #### Důležitá informace:
 **Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
-Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změňte na svůj vlastní.**
 
 #### Requirements
 
    + Authorization with token
-   + token type: `public_access` : pokud se jedná o veřejný inzerát (vystaven na firemních stránkách,xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o interní inzerát.    
+   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
+   + token type: `full_access`: pokud se jedná o interní inzerát.    
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                                                                                           |
 |:-------------------------------------|----------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1023,30 +1023,30 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 | `name`                               | Yes      |                 |                                                                                                                                                                                                                |
 | `email`                              | No       |                 |                                                                                                                                                                                                                |
 | `phone`                              | No       |                 |                                                                                                                                                                                                                |
-| `skype`                              | No       |                 | Odkaz na uchazečův Skype                                                                                                                                                                                       |
-| `linkedin`                           | No       |                 | Odkaz na uchazečův LinkedIn                                                                                                                                                                                    |
-| `facebook`                           | No       |                 | Odkaz na uchazečův Facebook                                                                                                                                                                                    |
-| `twitter`                            | No       |                 | Odkaz na uchazečův Twitter                                                                                                                                                                                     |
-| `source_id`                          | No       | -1              | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`                                                                                                                                                |
-| `source`                             | No       |                 | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud již zdroj existuje, přiřadí se k existujícímu. Tato položka je **ignorována** pokud je udána hodnota `source_id` |
-| `referral_id`                        | No       |                 | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu)                                                                                                                           |
+| `skype`                              | No       |                 | Odkaz na Skype uchazeče.                                                                                                                                                                                    |
+| `linkedin`                           | No       |                 | Odkaz na LinkedIn uchazeče.                                                                                                                                                                                  |
+| `facebook`                           | No       |                 | Odkaz na Facebook uchazeče.                                                                                                                                                                                  |
+| `twitter`                            | No       |                 | Odkaz na Twitter uchazeče.                                                                                                                                                                                  |
+| `source_id`                          | No       | -1              | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`.                                                                                                                                                |
+| `source`                             | No       |                 | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud zdroj již existuje, přiřadí se k existujícímu. Tato položka je **ignorována**, pokud je udána hodnota `source_id`. |
+| `referral_id`                        | No       |                 | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu).                                                                                                                           |
 | `cover_letter`                       | No       |                 |                                                                                                                                                                                                                |
-| `gdpr_agreement`                     | No       |                 | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas o zařazení do databáze uchazečů pro danou firmu.                                                                                                    |
+| `gdpr_agreement`                     | No       |                 | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas se zařazením do databáze uchazečů pro danou firmu.                                                                                                    |
 | `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                              |
 | `gdpr_agreement` - `date_created`    | No       | now             | formát YYYY-MM-DD H:i:s                                                                                                                                                                                        |
 | `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                            |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3MB.                                                                                                                                                                         |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                         |
 | `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                   |
-| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                     |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelný znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                    |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs. base64 formátu.                                                                                                                                     |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                    |
 | `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                       |
-| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku, nebo tag.                                                                                                                                                     |
-| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků**                                                                             |
-| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků**                                                                       |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                     |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                             |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                       |
 
 **GDPR a souhlas se zpracováním osobních údajů k dané pozici:**
-Pokud není určen GDPR souhlas, tak souhlas ke zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
-Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí jeho zdroj a také datum expirac (Maximálně ale na rok.).  
+Pokud není určen GDPR souhlas, tak souhlas se zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
+Pokud GDPR souhlas určen je, tak souhlas se zpracováním os. údajů dědí jeho zdroj a také datum expirace (maximálně ale na rok).  
 
 + Request (application/json)
     + Headers
@@ -1122,7 +1122,7 @@ Pokud GDPR souhlas určen je, tak souhlas ke zpracováním os. údajů dědí je
 
 # Group Referrals
 
-Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce odkud mohou sdílet nasdílené inzeráty a tím
+Tato sekce se vztahuje k referralům systému Recruitis. Tyto referralové mají přístup do své sekce, odkud mohou sdílet nasdílené inzeráty a tím
 hledat nové zaměstnance skrze vypsané odměny. 
 
 ## Referral entity [/referrals{?id,limit,page,search}]
@@ -1133,7 +1133,7 @@ V případě, že daný referral již existuje, server vrací header status `409
 
 #### Důležitá informace:
 **Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
-Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změnte na svůj vlastní.**
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změňte na svůj vlastní.**
 
 #### Requirements
 
@@ -1142,10 +1142,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
    
  | Request value     | Required | Note                                                                                                                        |
  |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
- | `name`            | Yes      | Jméno referrala                                                                                                             |
- | `email`           | No       | Jeho email                                                                                                                  |
- | `phone`           | No       | Jeho telefon                                                                                                                |
- | `email_text`      | No       | Pokud je zadáno, tento email se rovnou při vytvoření pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+ | `name`            | Yes      | Jméno referrala.                                                                                                             |
+ | `email`           | No       | Email referrala.                                                                                                                  |
+ | `phone`           | No       | Telefon referrala.                                                                                                             |
+ | `email_text`      | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
 + Request (application/json)
     + Headers
@@ -1202,14 +1202,14 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
 
 | Parameter      | Type     | Note                                                                             |
 |----------------|----------|----------------------------------------------------------------------------------|
-| `id`           | string   | ID referrala                                                                     |
-| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr|
-| `name`         | string   | Jméno referrala                                                                  |
-| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala                             |
-| `date_created` | datetime | Datum vzniku referrala                                                           |
-| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku                            |
-| `email`        | string   | Email na referrala                                                               |
-| `url`          | string   | Odkaz na adresu stránky referrrala                                               |
+| `id`           | string   | ID referrala.                                                                    |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr.|
+| `name`         | string   | Jméno referrala.                                                                  |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                       |
+| `date_created` | datetime | Datum vzniku referrala.                                                           |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                            |
+| `email`        | string   | Email referrala.                                                              |
+| `url`          | string   | Odkaz na adresu stránky referrrala.                                              |
                             
                             
 + Parameters
@@ -1252,7 +1252,7 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
                 
 ### Get referral [GET /referrals/{id}]
 
-Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita. tzn payload nebude obsahovat pole.
+Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita, tzn. payload nebude obsahovat pole.
 V případě, že daný referral neexistuje, vrací se `404` odpověď. 
 
 + Parameters
@@ -1304,9 +1304,9 @@ V případě, že daný referral neexistuje, vrací se `404` odpověď.
 Toto je specifická oblast, ve které pracujeme s filtry pro konkrétní inzeráty. Mnohdy chceme inzeráty filtrovat podle údajů, které
 nám systém nenabízí, tak si je musíme sami vytvořit a k inzerátu přiřadit. Následně je můžeme podle nich filtrovat. 
 
-Příklad filtru: 
- - Oddělení v nemocnici (JIP, Gynekologie, ORL..)
- - Typy provozu (jednosměnný, dvousměnný...)
+Příklad filtru:
+- Oddělení v nemocnici (JIP, Gynekologie, ORL, ...)
+- Typy provozu (jednosměnný, dvousměnný, ...)
  
 Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na personalistovi, který inzerát tvoří.
 
@@ -1314,7 +1314,7 @@ Jeden inzerát může mít u sebe více filtrů, tohle už záleží pouze na pe
 ## Filter List [/filters{?id,group}]
 
 Vrátí seznam filtrů, které je možné dle ID přiřazovat a filtrovat u inzerátů.
-*tato funkce je totožná s funkcí GET `enums/filters`*
+*Tato funkce je totožná s funkcí GET `enums/filters`*.
 
     
 ### Get Filters [GET]
@@ -1384,8 +1384,8 @@ Vytvoření nového filtru.
 
 | Request value         | Required | Type     | Default Value   | Note               |
 |:----------------------|----------|----------|:-------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+| `name`                | Yes      | string   | | Název filtru.
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
 + Response 200 (application/json)
 
@@ -1436,8 +1436,8 @@ Editace filtru dle ID v parametru URI.
 
 | Request value         | Required | Type     | Default Value  | Note               |
 |:----------------------|----------|----------|:--------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí
+| `name`                | Yes      | string   | | Název filtru.
+| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
 + Parameters
     + id (required, number, `1`) - Filter ID
@@ -1478,7 +1478,6 @@ Smaže filtr dle ID v parametru URI.
 
 Sekce, která má za úkol vracet různé druhy číselníků. Na všechny číselníky se nevztahuje stránkování.
 
-
 ## Workfields Lists [/enums/workfields{?lang}]
 
 Workfields neboli obory a profese používané v Recruitis.io systému.
@@ -1493,7 +1492,7 @@ Získá všechny naše profese a obory včetně jejich ID.
    + No Authorization is needed
 
 + Parameters
-    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
     
 + Response 200 (application/json)
 
@@ -1549,9 +1548,9 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 #### Requirements
 
    + Authorization with token
-   + token type: `public_token` : pokud se jedná o dotaz na veřejné inzeráty (vystaveny na firemních stránkách, xml nebo na pracovních portálech)
-   + token type: `full_access` : pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
-   + Alespoň jeden typ tokenu je tedy vyžadován ve chívli, kdy použijete parametr `channel_assignation`
+   + token type: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+   + token type: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
+   + Alespoň jeden typ tokenu je tedy vyžadován ve chvíli, kdy použijete parametr `channel_assignation`.
    
 + Request
     + Headers
@@ -1559,7 +1558,7 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6   
 
 + Parameters
-    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit. (momentálně je podporována pouze čeština)
+    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
     + channel_assignation (array[int],``)
     
 + Response 200 (application/json)
@@ -1668,7 +1667,7 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
 ### Get Company Sources [GET]
 
-Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotným systémem, tak i přidány manuálně, firmou.
+Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotným systémem, tak i přidány manuálně, firmou.
 
 #### Requirements
 
@@ -1727,12 +1726,12 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být jak definovány samotný
  
 ## Filter List  [/enums/filters]
 
-**Deprecated**: Namásto toho používejte volání `GET` `filters/`
+**Deprecated**: Namísto toho používejte volání `GET` `filters/`.
 
 ### Get filters [GET]
 
 Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
-ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`)
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`).
 
 #### Requirements
 
@@ -1797,8 +1796,8 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 ## Office List [/enums/offices]
 ### Get offices [GET]
 
-Vrací veškeré pobočky dané společnosti
-ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`)
+Vrací veškeré pobočky dané společnosti,
+ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `office_id`).
 
 #### Requirements
 
