@@ -88,9 +88,9 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
         :[](json/apidoc_json_error_general.json MSG:"Daily 'quota_candidates_delete quota' has been exceeded." CODE:"api.error.quota.exceeded")
 
 
-## Answer list [/answers]
+## Answer list [/answers{?limit,page,job_id,flow_id,search}]
 
-Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, vztah mezi kandidátem a odpověďmi je 1:N. V této sekci se podíváme na získávání odpovědí. 
+Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, vztah mezi kandidátem a odpověďmi je 1:N. V této sekci se podíváme na získávání odpovědí a její vytvoření. 
 
 ### Create new answer [POST]
 Procedura na uložení nové odpovědi. Jako odpověď se vrátí ID odpovědi. Při vytváření odpovědi se vytvoří i nový uchazeč, pokud již s danými kontakty (email, telefon) neexistuje.
@@ -158,3 +158,81 @@ Pokud GDPR souhlas určen je, tak souhlas se zpracováním os. údajů dědí je
 + Response 400 (application/json)
         
         :[](json/apidoc_json_error_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")
+
+
+### Get All Answers [GET]
+
+Tento dotaz vrací seznam všech odpovědí. Dají se filtrovat dle konkrétních inzerátů, flow, a nebo aplikovat vyhledávání dle jména uchazeče.
+
+Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `200` s meta code `api.response.null`.
+
+#### Parameters info
+
+ Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&job_id=XXX`) nebo 
+ jako více hodnot za sebou (např. `&job_id[]=XXX&job_id[]=YYY`).
+ 
+| Parameter   | Required | Default Value  | Note                                                                                                             |
+|:------------|----------|----------------|------------------------------------------------------------------------------------------------------------------|
+| `limit`     | No       | 20             | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 20 položek.                                        |
+| `page`      | No       | 1              | Aktuální stránka.                                                                                                |
+| `job_id`    | No       |                | Int,Array. Filtrování odpovědí dle ID inzerátů.                                                                  |
+| `flow_id`   | No       |                | Int,Array. Filtrování odpovědí dle Flow ID. (Dokumentaci k flow připravujeme.)                                   |
+| `search`    | No       |                | Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.     |
+| `date_from` | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, od jakého data  (včetně) se odpovědi vypíšou.                            |
+| `date_to`   | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, do jakého data (včetně)se odpovědi vypíšou.                              |
+| `order`     | No       | "date_created" | Řazení odpovědí. `date_created` vrací odpovědi dle data vzniku odpovědi, `flow` vrací odpovědi dle jejich stavu. |
+
+#### Response parameters
+   
+| Parameter                          | token condition | Type          | Note                                                                                                                                                                  |
+|------------------------------------|-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `candidate_id`                     | `full_access`   | int           | ID kandidáta, ke kterému se odpověd vztahuje.                                                                                                                         |
+| `answer_id`                        | `full_access`   | int           | ID odpovědi.                                                                                                                                                          |
+| `name`                             | `full_access`   | object        |                                                                                                                                                                       |
+| `name` - `first_name`              | `full_access`   | int           |                                                                                                                                                                       |
+| `name` - `last_name`               | `full_access`   | string        |                                                                                                                                                                       |
+| `name` - `initials`                | `full_access`   | string        | Iniciály jména                                                                                                                                                        |
+| `title`                            | `full_access`   | object        |                                                                                                                                                                       |
+| `title` - `before`                 | `full_access`   | string        | Titul před jménem.                                                                                                                                                    |
+| `title` - `after`                  | `full_access`   | string        | Titul za jménem.                                                                                                                                                      |
+| `user_img`                         | `full_access`   | string        | Cesta k obrázku uchazeče.                                                                                                                                             |
+| `rating`                           | `full_access`   | int           | 0-5, hodnocení uchazeče.                                                                                                                                              |
+| `job_details`                      | `full_access`   | object        |                                                                                                                                                                       |
+| `job_details` - `job_title`        | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
+| `job_details` - `job_id`           | `full_access`   | int           | ID inzerátu, ke kterému se odpověd vztahuje.                                                                                                                          |
+| `first_response_date`              | `full_access`   | datetime      | Datum vytvoření odpovědi.                                                                                                                                             |
+| `phone`                            | `full_access`   | string        |                                                                                                                                                                       |
+| `email`                            | `full_access`   | string        |                                                                                                                                                                       |
+| `flow_id`                          | `full_access`   | int           | ID flow, ve které se odpověď zrovna nachází. (Dokumentaci k flow zatím připravujeme.)                                                                                 |
+| `share_status`                     | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
+| `share_status_detail`              | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
+| `rejected`                         | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
+| `source`                           | `full_access`   | object        |                                                                                                                                                                       |
+| `source` - `name`                  | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
+| `source` - `type`                  | `full_access`   | string        | Typ zdroje. Například jestli je to systémový email, api aj.                                                                                                           |
+| `attachment_list`                  | `full_access`   | array(object) |                                                                                                                                                                       |
+| `attachment_list` - `name`         | `full_access`   | string        | Název souboru.                                                                                                                                                        |
+| `attachment_list` - `size`         | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
+| `attachment_list` - `download_url` | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + limit (optional,numeric,`20`) - Počet entit, které se mohou zobrazit.
+    + page (optional,numeric,`1`) - Strana s výpisem odpovědí.
+    + job_id (optional,array[int]) - Omezení na určité pracovní obory, profese.
+    + flow_id (optional,array[int]) - Vyhledá odpovědi dle jejich flow.
+    + search (optional,string) - Vyhledá odpovědi dle jména
+    
++ Response 200 (application/json)
+
+        :[](json/apidoc_answer_list_get.json)

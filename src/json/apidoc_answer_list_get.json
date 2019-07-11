@@ -1,0 +1,117 @@
+{
+  "payload": [
+    {
+      "candidate_id": 425086,
+      "answer_id": 380049,
+      "name": {
+        "first_name": "Jorgia",
+        "last_name": "Sweet",
+        "initials": "JS"
+      },
+      "title": {
+        "before": null,
+        "after": null
+      },
+      "user_img": "https:\/\/app.recruitis.io\/images\/no-avatar_sq.png",
+      "rating": 2,
+      "job_details": {
+        "job_title": "Java developer",
+        "job_id": 367996
+      },
+      "answer_created": "2019-06-27 14:31:19",
+      "phone": "728000000",
+      "email": "jorgia_sweet@test.com",
+      "flow_id": 0,
+      "share_status": null,
+      "share_status_detail": null,
+      "source": {
+        "name": "Testovací Stránky",
+        "type": "Externí služba"
+      },
+      "attachment_list": [],
+      "rejected": false
+    },
+    {
+      "candidate_id": 425085,
+      "answer_id": 380048,
+      "name": {
+        "first_name": "Monika",
+        "last_name": "Nováková",
+        "initials": "MN"
+      },
+      "title": {
+        "before": null,
+        "after": null
+      },
+      "user_img": "https:\/\/app.recruitis.io\/images\/no-avatar_sq.png",
+      "rating": 0,
+      "job_details": {
+        "job_title": "Java developer",
+        "job_id": 367996
+      },
+      "answer_created": "2019-06-21 16:14:41",
+      "phone": null,
+      "email": "monika@test.cz",
+      "flow_id": 0,
+      "share_status": null,
+      "share_status_detail": null,
+      "source": {
+        "name": "osobní předání",
+        "type": "Manuálně vložený"
+      },
+      "attachment_list": [
+        {
+          "name": "zivotopis_cameron_diaz.docx",
+          "size": 52.86,
+          "download_url": "https:\/\/api.recruitis.io\/api2\/files\/YXdQMmRtWWprNXBTY042M1hFOTdvZz09"
+        },
+        {
+          "name": "cameron_diaz.jpg",
+          "size": 16.66,
+          "download_url": "https:\/\/api.recruitis.io\/api2\/files\/cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09"
+        }
+      ],
+      "rejected": false
+    },
+    {
+      "candidate_id": 425082,
+      "answer_id": 380045,
+      "name": {
+        "first_name": "Tereza",
+        "last_name": "Barkovic",
+        "initials": "TB"
+      },
+      "title": {
+        "before": null,
+        "after": null
+      },
+      "user_img": "https:\/\/dev.recruitis.io\/images\/no-avatar_sq.png",
+      "rating": 0,
+      "job_details": {
+        "job_title": "Java developer",
+        "job_id": 367996
+      },
+      "answer_created": "2019-06-21 15:53:49",
+      "phone": null,
+      "email": "foo@bar.com",
+      "flow_id": 0,
+      "share_status": 0,
+      "share_status_detail": "Dobrý den, o pozici nemám zájem.",
+      "source": {
+        "name": "neznámý",
+        "type": "Nepřiřazený"
+      },
+      "attachment_list": [],
+      "rejected": false
+    }
+  ],
+  "meta": {
+    "code": "api.found",
+    "duration": 610,
+    "message": "Answers was found.",
+    "entries_from": 1,
+    "entries_to": 3,
+    "entries_total": 3,
+    "entries_sum": 3
+  }
+}

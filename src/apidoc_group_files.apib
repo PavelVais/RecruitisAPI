@@ -1,0 +1,41 @@
+# Group Files
+Tato sekce umožňuje správu souborů, momentálně jejich stahování.
+
+
+## Job Lists [/files/{?hash}]
+
+    
+### Download a file [GET]
+
+Stahování souboru probíhá tak, že Vám API vrátí payload s base64 stringem, který si následně můžete překonvertovat do daného souboru.
+Daný hash nyní vrací funkce [`GET`] `answers/`, který vrací celou url adresu i s daným hashem (např.: "https://api.recruitis.io/api2/files/YXdQMmRtWWprNXBTY042M1hFOTdvZz09")
+
+
+Pokud soubor neexistuje, nebo nepatří Vaší firmě, vrací se http status `404` s meta code `api.error.not_found`.
+
+#### Parameters info
+
+| Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                       |
+|:-------------------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hash`             | Yes      |               | Yes                         | Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit.                                                                                                   |
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`.
+
++ Request
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + hash (string,`cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09`) - Identifikátor souboru.
+    
++ Response 200 (application/json) 
+
+        :[](json/apidoc_files_get.json)
+        
++ Response 404 (application/json)
+
+        :[](json/apidoc_json_error_404.json)

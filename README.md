@@ -8,8 +8,12 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+ * **11.7.2019: branch v1 `1.4`**
+     * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).
+     * Přibyla dokumentace na stahování příloh (`GET files/`).
+
  * **8.2.2019: branch v1 `1.3.5`**
-     * Do volání `GET /jobs` přibyl nový parametr `only_deleted` 
+     * Do volání `GET /jobs` přibyl nový parametr `only_deleted`.
 
  * **3.12.2018: branch v1 `1.3.4`**
      * V dokumentaci přibyl popis stavu při nedostupnosti API. 
