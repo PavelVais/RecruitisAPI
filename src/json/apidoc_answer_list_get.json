@@ -16,7 +16,10 @@
       "rating": 2,
       "job_details": {
         "job_title": "Java developer",
-        "job_id": 367996
+        "job_id": 367996,
+        "job_contact_name": "Jan Novák",
+        "job_contact_email": "novák@test.cz",
+        "job_contact_phone": "+123456789"
       },
       "answer_created": "2019-06-27 14:31:19",
       "phone": "728000000",
@@ -47,7 +50,10 @@
       "rating": 0,
       "job_details": {
         "job_title": "Java developer",
-        "job_id": 367996
+        "job_id": 367996,
+        "job_contact_name": "Jan Novák",
+        "job_contact_email": "novák@test.cz",
+        "job_contact_phone": "+123456789"
       },
       "answer_created": "2019-06-21 16:14:41",
       "phone": null,
@@ -89,7 +95,10 @@
       "rating": 0,
       "job_details": {
         "job_title": "Java developer",
-        "job_id": 367996
+        "job_id": 367996,
+        "job_contact_name": "Jan Novák",
+        "job_contact_email": "novák@test.cz",
+        "job_contact_phone": "+123456789"
       },
       "answer_created": "2019-06-21 15:53:49",
       "phone": null,

@@ -11,6 +11,8 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
  * **15.7.2019: branch v1 `1.4.1`**
      * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
      * Do dokumentace byl přidán popis s meta.code `api.error.response.too_big`.
+     * Do seznamu odpovědí přibyly parametry odpovědi `job_contact_name`,`job_contact_email`,`job_contact_phone`
+
 
  * **11.7.2019: branch v1 `1.4`**
      * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).

@@ -21,6 +21,7 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
  * **15.7.2019: branch v1 `1.4.1`**
      * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
      * Do dokumentace byl přidán popis s meta.code `api.error.response.too_big`.
+     * Do seznamu odpovědí přibyly parametry odpovědi `job_contact_name`,`job_contact_email`,`job_contact_phone`
      
  * **11.7.2019: branch v1 `1.4`**
      * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).
@@ -1168,6 +1169,9 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `job_details`                      | `full_access`   | object        |                                                                                                                                                                       |
 | `job_details` - `job_title`        | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
 | `job_details` - `job_id`           | `full_access`   | int           | ID inzerátu, ke kterému se odpověd vztahuje.                                                                                                                          |
+| `job_details` - `job_contact_name` | `full_access`   | string        | Jméno konktatní osoby, přidružené k inzerátu                                                                                                                          |
+| `job_details` - `job_contact_email`| `full_access`   | string        | Email kontaktní osoby.                                                                                                                                                |
+| `job_details` - `job_contact_phone`| `full_access`   | string        | Telefon kontaktní osoby.                                                                                                                                              |
 | `answer_created`                   | `full_access`   | datetime      | Datum vytvoření odpovědi.                                                                                                                                             |
 | `phone`                            | `full_access`   | string        |                                                                                                                                                                       |
 | `email`                            | `full_access`   | string        |                                                                                                                                                                       |
@@ -1221,7 +1225,10 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
               "rating": 2,
               "job_details": {
                 "job_title": "Java developer",
-                "job_id": 367996
+                "job_id": 367996,
+                "job_contact_name": "Jan Novák",
+                "job_contact_email": "novák@test.cz",
+                "job_contact_phone": "+123456789"
               },
               "answer_created": "2019-06-27 14:31:19",
               "phone": "728000000",
@@ -1252,7 +1259,10 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
               "rating": 0,
               "job_details": {
                 "job_title": "Java developer",
-                "job_id": 367996
+                "job_id": 367996,
+                "job_contact_name": "Jan Novák",
+                "job_contact_email": "novák@test.cz",
+                "job_contact_phone": "+123456789"
               },
               "answer_created": "2019-06-21 16:14:41",
               "phone": null,
@@ -1294,7 +1304,10 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
               "rating": 0,
               "job_details": {
                 "job_title": "Java developer",
-                "job_id": 367996
+                "job_id": 367996,
+                "job_contact_name": "Jan Novák",
+                "job_contact_email": "novák@test.cz",
+                "job_contact_phone": "+123456789"
               },
               "answer_created": "2019-06-21 15:53:49",
               "phone": null,
