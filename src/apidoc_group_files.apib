@@ -15,14 +15,29 @@ Pokud soubor neexistuje, nebo nepatří Vaší firmě, vrací se http status `40
 
 #### Parameters info
 
-| Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                       |
-|:-------------------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `hash`             | Yes      |               | Yes                         | Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit.                                                                                                   |
+| Parameter | Required | Default Value | Require `full_access` token | Note                                                                                   |
+|-:---------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------|
+| `hash`    | Yes      |               | Yes                         | string,array. Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit. |
+
+Parametr `hash` lze použít i jako pole (`?hash[]=xxxxx&hash[]=yyyyyy`). V tom případě se i **payload vrací jako pole**.
 
 #### Requirements
 
    + Authorization with token
    + token type: `full_access`.
+
+#### Response parameters
+
+| Parameter | token condition | Type   | Note                                                                      |
+|-----------|-----------------|--------|---------------------------------------------------------------------------|
+| `name`    | `full_access`   | string | Název souboru i příponou.                                                 |
+| `size`    | `full_access`   | double | Velikost souboru v KB (dvě desetinná místa).                              |
+| `content` | `full_access`   | string | Znění souboru v Base64.                                                   |
+| `hash`    | `full_access`   | string | Vrací se na zpět pouze v případě, že je parametr `hash` použit jako pole. |
+
+** V případě dotázání více příloh, je potřeba, aby součet velikostí všech příloh byl menší než 30MB. Pokud je součet
+příloh větší, API vrátí http stav `413` s meta kódem `api.error.response.too_big`**
+
 
 + Request
     + Headers
@@ -39,3 +54,7 @@ Pokud soubor neexistuje, nebo nepatří Vaší firmě, vrací se http status `40
 + Response 404 (application/json)
 
         :[](json/apidoc_json_error_404.json)
+        
++ Response 413 (application/json)
+
+        :[](json/apidoc_json_error_413.json)
