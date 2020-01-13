@@ -1,0 +1,11 @@
+{
+  "payload": {
+    "id": 1234,
+    "secured_id": "dnasikljfdhosiadhfnosafpbo"
+  },
+  "meta": {
+    "duration": 2259,
+    "code": "api.created",
+    "message_localized": "Job was created."
+  }
+}
