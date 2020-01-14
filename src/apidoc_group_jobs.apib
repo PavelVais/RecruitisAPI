@@ -138,12 +138,9 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 
 ## Job creation
 
-### Create new candidate [POST]
-Procedura na uložení nového uchazeče. Jako odpověď se vrátí ID kandidáta. 
-Vytvoření kandidáta bez odpovědi se hodí například, pokud chcete nabídnout uchazeči možnost vás kontaktovat, ale nemáte pro něj momentálně vhodný inzerát. 
+### Create new job [POST]
 
-Pokud se vkládá uchazeč, který dle emailu nebo telefonního čísla v systému již existuje, provede se aktualizace informací a vrátí se dané user ID. O všem jste
-informovaní přes meta položku `additional_output`.
+Procedura vytvoří nový inzerát a dá ho do rozepsaných. Následně je možné inzerát dokončit přímo v systému Recruitis. Při správném vytvoření se vrátí i odkaz na jeho dokončení.
 
 #### Důležitá informace:
 **Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
@@ -156,8 +153,8 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
 |:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `title`                              | Yes      |                 |                                                                                                                                                                                                                                |
-| `description`                        | Yes      |                 | Uchazeči se dle emailu slučují.                                                                                                                                                                                                |
+| `title`                              | Yes      |                 | Název pozice.                                                                                                                                                                                                                                |
+| `description`                        | Yes      |                 | Popis pozice.                                                                                                                                                                                         |
 | `author_id`                          | No       |                 | ID zaměstnance, pod kterým se inzerát založí (pokud není vyplněno, využije se ten, pod kterým je přihlášeno API).                                                                                                                                                                                              |
 
 

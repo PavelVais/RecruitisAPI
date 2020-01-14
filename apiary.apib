@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.4.1**
-* Poslední aktualizace: **15.7.2019**
+* Verze systému: **1.4.2**
+* Poslední aktualizace: **14.1.2020**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -17,6 +17,10 @@ Postupem času budou přibývat jednotlivé funkcionality. Pokud by měla být n
 bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstupu o změně informováni.
 
 ## Changelog
+
+* **14.1.2020: branch v1 `1.4.2`**
+     * U volání `GET jobs/` je možné volat parametr `status` a filtrovat s ním i draft inzeráty.
+     * Přidáno volání `POST jobs/` které umí vytvořit draft inzerát. (následně je ho možné dokončit v Recruitisu)
 
  * **15.7.2019: branch v1 `1.4.1`**
      * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
@@ -384,17 +388,18 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
  jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`).
  
-| Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                       |
-|:-------------------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `limit`            | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                  |
+| Parameter          | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                        |
+|:-------------------|----------|---------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `limit`            | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                   |
 | `page`             | No       | 1             | No                          | Aktuální stránka.                                                                                                                                                           |
-| `workfield_id`     | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                              |
-| `office_id`        | No       |               | No                          | Array. Filtrace podle ID poboček.                                                                                                                                          |
-| `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                        |
+| `workfield_id`     | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                               |
+| `office_id`        | No       |               | No                          | Array. Filtrace podle ID poboček.                                                                                                                                           |
+| `filter_id`        | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                         |
 | `channel_id`       | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu). |
-| `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                        |
-| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).      |
-
+| `include_inactive` | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                         |
+| `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).         |
+| `status`           | No       | 1             | Yes                         | Parametr se chová jako bitmapa. 1 = aktivní, 2 = neaktivní, 4 = draft, 8 = smazaný. Jsou povolené kombinace všech, krom smazaných, které jdou zobrazit pouze samostatně.    |
+|                    |          |               |                             | Status nahrazuje předchozí dva parametry (include_inactive a only_deleted), které jsou deprecated, a při jeho použití jsou ignorovány.                                      | 
 
 
 
@@ -747,7 +752,8 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 | `addresses` - `street`   | `public_access` | string        |                                                                                                                                                    |
 | `addresses` - `region`   | `public_access` | string        |                                                                                                                                                    |
 | `addresses` - `state`    | `public_access` | string        |                                                                                                                                                    |
-| `active`                 | `public_access` | bool          | Značí, jestli je Inzerát aktivní (není smazaný ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.               |
+| `active`                 | `public_access` | bool          | Značí, jestli je Inzerát aktivní (není smazaný ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.                |
+| `draft`                  | `public_access` | bool          | Značí, jestli je Inzerát draft.                                                                                                                    |
 
 
 + Request
@@ -829,6 +835,67 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
             "duration": 139.58,
             "code": "api.error.unauthorized",
             "message": "Musíte být přihlášen"
+          }
+        }
+
+## Job creation
+
+### Create new job [POST]
+
+Procedura vytvoří nový inzerát a dá ho do rozepsaných. Následně je možné inzerát dokončit přímo v systému Recruitis. Při správném vytvoření se vrátí i odkaz na jeho dokončení.
+
+#### Důležitá informace:
+**Při testování POST požadavku v Apiary.io na produkčním serveru: Základní token míří na testovací účet, ke kterému mají přístup i ostatní uživatelé. 
+Neposílejte tedy své osobní údaje přes tento token, popřípadě si token změňte na svůj vlastní.**
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
+   
+| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
+|:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `title`                              | Yes      |                 | Název pozice.                                                                                                                                                                                                                                |
+| `description`                        | Yes      |                 | Popis pozice.                                                                                                                                                                                         |
+| `author_id`                          | No       |                 | ID zaměstnance, pod kterým se inzerát založí (pokud není vyplněno, využije se ten, pod kterým je přihlášeno API).                                                                                                                                                                                              |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+    + Body  
+
+            {
+              "title": "Testovací inzerát",
+              "description": "Krátký popisek inzerátu",
+              "author_id": null
+            }
+
++ Response 201 (application/json)
+
+        {
+          "payload": {
+            "id" : 12345
+          },
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.created",
+            "message": "Job was created."
+          }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": "Can't create job"
           }
         }
 

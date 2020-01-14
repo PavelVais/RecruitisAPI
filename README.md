@@ -8,11 +8,14 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+* **14.1.2020: branch v1 `1.4.2`**
+     * U volání `GET jobs/` je možné volat parametr `status` a filtrovat s ním i draft inzeráty.
+     * Přidáno volání `POST jobs/` které umí vytvořit draft inzerát. (následně je ho možné dokončit v Recruitisu)
+
  * **15.7.2019: branch v1 `1.4.1`**
      * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
      * Do dokumentace byl přidán popis s meta.code `api.error.response.too_big`.
      * Do seznamu odpovědí přibyly parametry odpovědi `job_contact_name`,`job_contact_email`,`job_contact_phone`
-
 
  * **11.7.2019: branch v1 `1.4`**
      * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).
