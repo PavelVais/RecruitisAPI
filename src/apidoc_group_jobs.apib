@@ -174,3 +174,95 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 + Response 400 (application/json)
         
         :[](json/apidoc_json_error_general.json MSG:"Can't create job" CODE:"api.error.generic")
+        
+        
+## Job channels list [/jobs/{id}/channels]
+
+### Show list of channels [GET]
+
+Zobrazení všech kanálů, kde je inzerát publikován.
+
+#### Requirements
+        
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+   
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Response 200 (application/json)
+
+    # todo
+        :[](json/apidoc_jobs_channels_get_response.json MSG:"Job channels found." CODE:"api.found")
+              
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_404.json) 
+
+
+## Publishing on channel [/jobs/{id}/channel/{channel_id}]
+
+### Publish job [PUT]
+
+Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V případě, že je inzerát na daném kanálu již vystaven, bude nastavení aktualizováno.
+
+#### Requierments
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+    
+| Request value                        | Required | Type      | Default Value   | Note                                                                                                                  |
+|:-------------------------------------|----------|:----------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
+| `date_from`                          | Yes      | datetime  |                 | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas.          |
+| `date_to`                            | Yes      | datetime  |                 | Datum, do kdy má být inzerát na daném kanále vystaven.                                                                |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+    + Body  
+
+            :[](json/apidoc_jobs_channel_put_request.json)
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_jobs_channel_put_response.json)
+        
++ Response 400 (application/json)
+        
+        :[](json/apidoc_json_error_general.json MSG:"Draft cannot be published" CODE:"api.error.generic")
+        
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_404.json)
+        
+        
+### Unpublish job [DELETE]
+
+Stažení inzerátu z prezentačního kanálu.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+   
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Response 202 (application/json)
+
+        :[](json/apidoc_jobs_channel_delete_response.json)
+        
++ Response 400 (application/json)
+        
+        :[](json/apidoc_json_error_general.json MSG:"Draft cannot be unpublished" CODE:"api.error.generic")
+        
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_404.json)
