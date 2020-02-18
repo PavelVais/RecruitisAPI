@@ -5,6 +5,7 @@
   "recipient": "Lukáš",
   "subject": "předmět",
   "content": "obsah komunikace, třeba pěkná pochvala",
+  "direction": "in",
   "type": "email",
   "strict": 1,
   "attachments": [

@@ -6,6 +6,7 @@
       "author_id": 123,
       "sender": "já",
       "recipient": "taky já",
+      "direction": "in",
       "subject": "předmět",
       "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
       "attachments": []
@@ -16,6 +17,7 @@
       "author_id": 123,
       "sender": "Pavel Vais",
       "recipient": "Test Dva",
+      "direction": "in",
       "subject": "předmět",
       "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
       "attachments": []
@@ -26,13 +28,15 @@
       "author_id": 456,
       "sender": "Lukáš Test",
       "recipient": "Test Dva",
+      "direction": "out",
       "subject": "předmět",
       "content": "obsah komunikace, někdo někoho pěkně chválí",
       "attachments": [
         {
+          "url": "download url",
           "name": "test.png",
           "size": 10.2,
-          "url": ""
+          "size_unit": "kB"
         }
       ]
     },
@@ -42,6 +46,7 @@
       "author_id": 456,
       "sender": "Lukáš Test",
       "recipient": "Test Dva",
+      "direction": "out",
       "subject": "předmět",
       "content": "obsah komunikace, někdo někoho pěkně chválí, opakovaně",
       "attachments": [
