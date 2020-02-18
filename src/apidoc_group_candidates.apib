@@ -77,7 +77,7 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
     
 + Response 200 (application/json)
 
-                :[](json/apidoc_json_response_empty_general.json MSG:"User was deleted." CODE:"api.deleted")
+        :[](json/apidoc_json_response_empty_general.json MSG:"User was deleted." CODE:"api.deleted")
         
 + Response 404 (application/json)
         
@@ -86,6 +86,62 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
 + Response 403 (application/json)
         
         :[](json/apidoc_json_error_general.json MSG:"Daily 'quota_candidates_delete quota' has been exceeded." CODE:"api.error.quota.exceeded")
+        
+
+## Communication with candidate
+
+### List candidate communication [GET /candidate/{id}(/{answerId})/communication{?limit,page,author_id,type}]
+Výpis komunikace s kandidátem. Bez vyplněného parametru answerId vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění answerId vypíše komunikaci vázanou na danou odpověď.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+            
++ Response 200 (application/json)
+
+        :[](json/apidoc_candidates_communication_get.json)
+
+
+### Create new communication record [POST /candidate/{id}(/{answerId})/communication]
+Založení nového záznamu komunikace (zprávy) s klientem. Parametr answerId funguje stejně jako u GET volání.
+
+#### Requirements
+
+   + Authorization with token
+   
+| Request value                        | Required | Default Value   | Note                                                                                                                                            |
+|:-------------------------------------|----------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `employee_id`                        | Yes      |                 | ID uživatele, který zprávu posílá.                                                                                                              |
+| `author_id`                          | No       | employee_id     | ID uživatele, vyplťte, pokud je autor jiný uživatel, než ten, který zprávu posílá. Pokud nevyplněno, použije se employee_i                      |
+| `sender`                             | No       |                 | Textová podoba odesílatele (jméno, email, telefoní číslo (SMS)), pokud nebude vyplněno, použijí se data vázaná na author_id.                    |
+| `recipient`                          | No       |                 | Dtto. sender.                                                                                                                                   |
+| `subject`                            | Yes      |                 |                                                                                                                                                 |
+| `content`                            | Yes      |                 |                                                                                                                                                 |
+| `strict`                             | No       | 1               | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách.            |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                         |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                    |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                      |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                     |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+    + Body  
+    
+            :[](json/apidoc_candidates_communication_post_request.json)
+
++ Response 201 (application/json)
+
+        :[](json/apidoc_answers_post_response.json)
+        
++ Response 400 (application/json)
+        
+        :[](json/apidoc_json_error_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")
+
 
 
 ## Answer list [/answers{?limit,page,job_id,flow_id,search}]

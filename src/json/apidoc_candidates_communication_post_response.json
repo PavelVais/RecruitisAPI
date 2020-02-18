@@ -1,0 +1,10 @@
+{
+  "payload": {
+    "message_id": 1
+  },
+  "meta": {
+    "duration": 2259,
+    "code": "api.created",
+    "message_localized": "User communication record was created."
+  }
+}

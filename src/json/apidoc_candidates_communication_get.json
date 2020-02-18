@@ -1,0 +1,66 @@
+{
+  "payload": [
+    {
+      "message_id": 1,
+      "employee_id": 123,
+      "author_id": 123,
+      "sender": "já",
+      "recipient": "taky já",
+      "subject": "předmět",
+      "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+      "attachments": []
+    },
+    {
+      "message_id": 2,
+      "employee_id": 123,
+      "author_id": 123,
+      "sender": "Pavel Vais",
+      "recipient": "Test Dva",
+      "subject": "předmět",
+      "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+      "attachments": []
+    },
+    {
+      "message_id": 3,
+      "employee_id": 123,
+      "author_id": 456,
+      "sender": "Lukáš Test",
+      "recipient": "Test Dva",
+      "subject": "předmět",
+      "content": "obsah komunikace, někdo někoho pěkně chválí",
+      "attachments": [
+        {
+          "name": "test.png",
+          "size": 10.2,
+          "url": ""
+        }
+      ]
+    },
+    {
+      "message_id": 4,
+      "employee_id": 123,
+      "author_id": 456,
+      "sender": "Lukáš Test",
+      "recipient": "Test Dva",
+      "subject": "předmět",
+      "content": "obsah komunikace, někdo někoho pěkně chválí, opakovaně",
+      "attachments": [
+        {
+          "url": "download url",
+          "name": "cv.txt",
+          "size": 0.09,
+          "size_unit": "kB"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "code": "api.found",
+    "duration": 1990,
+    "message": "User communication found.",
+    "entries_from": 1,
+    "entries_to": 20,
+    "entries_total": 4,
+    "entries_sum": 4
+  }
+}
