@@ -266,3 +266,19 @@ Stažení inzerátu z prezentačního kanálu.
 + Response 404 (application/json)
         
         :[](json/apidoc_json_error_404.json)
+
+
+## Communication with candidate        
+        
+### List communication with candidates [/jobs/{id}/communication{?limit,page,candidate_id,direction,type}]
+
+Výpis komunikace s kandidáty.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+            
++ Response 200 (application/json)
+
+        :[](json/apidoc_jobs_communication_get.json)

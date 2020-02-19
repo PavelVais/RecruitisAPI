@@ -90,7 +90,8 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
 
 ## Communication with candidate
 
-### List candidate communication [GET /candidate/{id}(/{answerId})/communication{?limit,page,author_id,type}]
+### List candidate communication [GET /candidate/{id}(/{answerId})/communication{?limit,page,author_id,direction,type}]
+
 Výpis komunikace s kandidátem. Bez vyplněného parametru answerId vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění answerId vypíše komunikaci vázanou na danou odpověď.
 
 + Request (application/json)
