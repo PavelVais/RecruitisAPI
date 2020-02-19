@@ -88,11 +88,26 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
         :[](json/apidoc_json_error_general.json MSG:"Daily 'quota_candidates_delete quota' has been exceeded." CODE:"api.error.quota.exceeded")
         
 
-## Communication with candidate
+## Communication with candidate [/candidate/{id}(/{answer_id})/communication{?limit,page,author_id,direction,type}]
 
-### List candidate communication [GET /candidate/{id}(/{answerId})/communication{?limit,page,author_id,direction,type}]
+### List candidate communication [GET]
 
-Výpis komunikace s kandidátem. Bez vyplněného parametru answerId vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění answerId vypíše komunikaci vázanou na danou odpověď.
+Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění `answer_id` vypíše komunikaci vázanou na danou odpověď.
+
++ Parameters
+    + limit (optional,numeric,`10`) - Počet entit, které se mohou zobrazit.
+    + page (optional,numeric,`1`) - Strana s výpisem inzerátů.
+    + author_id (optional,int) - Omezení na konkrétního autora zprávy (ID personalisty).
+    + direction (optional,string) - Omezení na určité směr zprávy. Povolené hodnoty jsou "in" a "out"
+    + type (optional,string) - viz tabulka níže
+
+| Parameter `type` | Note                                           |
+|-:----------------|------------------------------------------------|
+| linkedin         | Komunikace ze sociální sítě LinkedIn           |
+| email            | Komunikace z emailové schránky                 |
+| sms              | Komunikace ze sociální sítě LinkedIn           |
+| note             | Komunikace s klientem proběhla na jiném místě. |
+
 
 + Request (application/json)
     + Headers
@@ -104,8 +119,8 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru answerId vypíše ko
         :[](json/apidoc_candidates_communication_get.json)
 
 
-### Create new communication record [POST /candidate/{id}(/{answerId})/communication]
-Založení nového záznamu komunikace (zprávy) s klientem. Parametr answerId funguje stejně jako u GET volání.
+### Create new communication record [POST /candidate/{id}(/{answer_id})/communication]
+Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id funguje stejně jako u GET volání.
 
 #### Requirements
 

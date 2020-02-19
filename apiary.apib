@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.4.2**
-* Poslední aktualizace: **14.1.2020**
+* Verze systému: **1.5.0**
+* Poslední aktualizace: **19.2.2020**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -17,6 +17,10 @@ Postupem času budou přibývat jednotlivé funkcionality. Pokud by měla být n
 bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstupu o změně informováni.
 
 ## Changelog
+
+* **19.2.2020: branch v1 `1.5.0`**
+     * Přidáno API pro vytváření komunikace s uchazečem. 
+     * U API s komunikací s uchazečem se nyní vypisují detailněji validační chyby (`meta`.`errors`). Postupně bude hlášení o chybách ve validaci ve všech volání.
 
 * **14.1.2020: branch v1 `1.4.2`**
      * U volání `GET jobs/` je možné volat parametr `status` a filtrovat s ním i draft inzeráty.
@@ -899,6 +903,303 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
             "message": "Can't create job"
           }
         }
+        
+        
+## Job channels list [/jobs/{id}/channels]
+
+### Show list of channels [GET]
+
+Zobrazení všech kanálů, kde je inzerát publikován.
+
+#### Requirements
+        
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+   
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
++ Response 200 (application/json)
+
+    # todo
+        {
+          "payload": [
+            {
+              "id": 3,
+              "name": "Kariérní stránky společnosti Český Trh Práce s.r.o.",
+              "date_from": null,
+              "date_to": "2020-02-14 07:14:06",
+              "paused": false
+            },
+            {
+              "id": 125,
+              "name": "startupjobs",
+              "date_from": null,
+              "date_to": "2020-01-20 10:00:00",
+              "paused": false
+            }
+          ],
+          "meta": {
+            "code": "api.found",
+            "duration": 930,
+            "message": "Job channels found",
+            "entries_from": 0,
+            "entries_to": 2,
+            "entries_total": 2,
+            "entries_sum": 2
+          }
+        }
+              
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": 139.58,
+            "code": "api.error.not_found",
+            "message": "Attachment does not exists."
+          }
+        } 
+
+
+## Publishing on channel [/jobs/{id}/channel/{channel_id}]
+
+### Publish job [PUT]
+
+Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V případě, že je inzerát na daném kanálu již vystaven, bude nastavení aktualizováno.
+
+#### Requierments
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+    
+| Request value                        | Required | Type      | Default Value   | Note                                                                                                                  |
+|:-------------------------------------|----------|:----------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
+| `date_from`                          | Yes      | datetime  |                 | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas.          |
+| `date_to`                            | Yes      | datetime  |                 | Datum, do kdy má být inzerát na daném kanále vystaven.                                                                |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+    + Body  
+
+            {
+              "date_from": "2020-01-01 10:00:00",
+              "date_to": null
+            }
+
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 3,
+              "name": "Kariérní stránky společnosti Český Trh Práce s.r.o.",
+              "date_from": null,
+              "date_to": "2020-02-14 07:14:06",
+              "paused": false
+            },
+            {
+              "id": 125,
+              "name": "startupjobs",
+              "date_from": null,
+              "date_to": "2020-01-20 10:00:00",
+              "paused": false
+            }
+          ],
+          "meta": {
+            "code": "api.updated",
+            "duration": 930,
+            "message": "Job was successfully published on channel 125",
+            "entries_from": 0,
+            "entries_to": 2,
+            "entries_total": 2,
+            "entries_sum": 2
+          }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": "Draft cannot be published"
+          }
+        }
+        
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": 139.58,
+            "code": "api.error.not_found",
+            "message": "Attachment does not exists."
+          }
+        }
+        
+        
+### Unpublish job [DELETE]
+
+Stažení inzerátu z prezentačního kanálu.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+   
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
++ Response 202 (application/json)
+
+        {
+          "payload": [
+            {
+              "id": 3,
+              "name": "Kariérní stránky společnosti Český Trh Práce s.r.o.",
+              "date_from": null,
+              "date_to": "2020-02-14 07:14:06",
+              "paused": false
+            }
+          ],
+          "meta": {
+            "code": "api.updated",
+            "duration": 1040,
+            "message": "Job was successfully unpublished from channel 125",
+            "entries_from": 0,
+            "entries_to": 1,
+            "entries_total": 1,
+            "entries_sum": 1
+          }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": "Draft cannot be unpublished"
+          }
+        }
+        
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": 139.58,
+            "code": "api.error.not_found",
+            "message": "Attachment does not exists."
+          }
+        }
+
+
+## Communication with candidate [/jobs/{id}/communication{?limit,page,candidate_id,direction,type}]      
+        
+### List communication with candidates [GET]
+
+Výpis komunikace s kandidáty.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+            
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "message_id": 1,
+              "employee_id": 123,
+              "author_id": 123,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "já",
+              "recipient": "taky já",
+              "direction": "in",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+              "attachments": []
+            },
+            {
+              "message_id": 2,
+              "employee_id": 123,
+              "author_id": 123,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Pavel Vais",
+              "recipient": "Test Dva",
+              "direction": "in",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+              "attachments": []
+            },
+            {
+              "message_id": 3,
+              "employee_id": 123,
+              "author_id": 456,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Lukáš Test",
+              "recipient": "Test Dva",
+              "direction": "out",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně chválí",
+              "attachments": [
+                {
+                  "url": "download url",
+                  "name": "test.png",
+                  "size": 10.2,
+                  "size_unit": "kB"
+                }
+              ]
+            },
+            {
+              "message_id": 4,
+              "employee_id": 123,
+              "author_id": 456,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Lukáš Test",
+              "recipient": "Test Dva",
+              "direction": "out",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně chválí, opakovaně",
+              "attachments": [
+                {
+                  "url": "download url",
+                  "name": "cv.txt",
+                  "size": 0.09,
+                  "size_unit": "kB"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "code": "api.found",
+            "duration": 1990,
+            "message": "Candidate communication found.",
+            "entries_from": 1,
+            "entries_to": 20,
+            "entries_total": 4,
+            "entries_sum": 4
+          }
+        }
 
 # Group Candidates
 Kandidát je osoba, kterou máte v databázi a na kterou se vztahují odpovědi.
@@ -1035,15 +1336,15 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
     
 + Response 200 (application/json)
 
-                {
-                  "payload": null,
-                  "meta": {
-                    "duration": "139.58",
-                    "total_duration": 330,
-                    "code": "api.deleted",
-                    "message": "User was deleted."
-                  }
-                }
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.deleted",
+            "message": "User was deleted."
+          }
+        }
         
 + Response 404 (application/json)
         
@@ -1068,6 +1369,204 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
             "message": "Daily 'quota_candidates_delete quota' has been exceeded."
           }
         }
+        
+
+## Communication with candidate [/candidate/{id}(/{answer_id})/communication{?limit,page,author_id,direction,type}]
+
+### List candidate communication [GET]
+
+Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění `answer_id` vypíše komunikaci vázanou na danou odpověď.
+
++ Parameters
+    + limit (optional,numeric,`10`) - Počet entit, které se mohou zobrazit.
+    + page (optional,numeric,`1`) - Strana s výpisem inzerátů.
+    + author_id (optional,int) - Omezení na konkrétního autora zprávy (ID personalisty).
+    + direction (optional,string) - Omezení na určité směr zprávy. Povolené hodnoty jsou "in" a "out"
+    + type (optional,string) - viz tabulka níže
+
+| Parameter `type` | Note                                           |
+|-:----------------|------------------------------------------------|
+| linkedin         | Komunikace ze sociální sítě LinkedIn           |
+| email            | Komunikace z emailové schránky                 |
+| sms              | Komunikace ze sociální sítě LinkedIn           |
+| note             | Komunikace s klientem proběhla na jiném místě. |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+            
++ Response 200 (application/json)
+
+        {
+          "payload": [
+            {
+              "message_id": 1,
+              "employee_id": 123,
+              "author_id": 123,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "já",
+              "recipient": "taky já",
+              "direction": "in",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+              "attachments": []
+            },
+            {
+              "message_id": 2,
+              "employee_id": 123,
+              "author_id": 123,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Pavel Vais",
+              "recipient": "Test Dva",
+              "direction": "in",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně pomlouvá",
+              "attachments": []
+            },
+            {
+              "message_id": 3,
+              "employee_id": 123,
+              "author_id": 456,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Lukáš Test",
+              "recipient": "Test Dva",
+              "direction": "out",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně chválí",
+              "attachments": [
+                {
+                  "url": "download url",
+                  "name": "test.png",
+                  "size": 10.2,
+                  "size_unit": "kB"
+                }
+              ]
+            },
+            {
+              "message_id": 4,
+              "employee_id": 123,
+              "author_id": 456,
+              "candidate_id": 1122,
+              "answer_id": 3344,
+              "sender": "Lukáš Test",
+              "recipient": "Test Dva",
+              "direction": "out",
+              "subject": "předmět",
+              "content": "obsah komunikace, někdo někoho pěkně chválí, opakovaně",
+              "attachments": [
+                {
+                  "url": "download url",
+                  "name": "cv.txt",
+                  "size": 0.09,
+                  "size_unit": "kB"
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "code": "api.found",
+            "duration": 1990,
+            "message": "Candidate communication found.",
+            "entries_from": 1,
+            "entries_to": 20,
+            "entries_total": 4,
+            "entries_sum": 4
+          }
+        }
+
+
+### Create new communication record [POST /candidate/{id}(/{answer_id})/communication]
+Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id funguje stejně jako u GET volání.
+
+#### Requirements
+
+   + Authorization with token
+   
+| Request value                        | Required | Default Value   | Note                                                                                                                                            |
+|:-------------------------------------|----------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `employee_id`                        | Yes      |                 | ID uživatele, který zprávu posílá.                                                                                                              |
+| `author_id`                          | No       | employee_id     | ID uživatele, vyplťte, pokud je autor jiný uživatel, než ten, který zprávu posílá. Pokud nevyplněno, použije se employee_i                      |
+| `sender`                             | No       |                 | Textová podoba odesílatele (jméno, email, telefoní číslo (SMS)), pokud nebude vyplněno, použijí se data vázaná na author_id.                    |
+| `recipient`                          | No       |                 | Dtto. sender.                                                                                                                                   |
+| `subject`                            | Yes      |                 | Předmět zprávy.                                                                                                                                 |
+| `content`                            | Yes      |                 | Obsah zprávy.                                                                                                                                   |
+| `direction`                          | Yes      |                 | Jedna z hodnot: in = příchozí, out = odchozí, váže se ke kandidátovi/odpovědi. Tj. příchozí ke kandidátovi a odchozí od kandidáta.              |
+| `strict`                             | No       | 1               | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách.            |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                         |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                    |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                      |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                     |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+    + Body  
+    
+            {
+              "employee_id": 123,
+              "author_id": 456,
+              "sender": "Pavel",
+              "recipient": "Lukáš",
+              "subject": "předmět",
+              "content": "obsah komunikace, třeba pěkná pochvala",
+              "direction": "in",
+              "type": "email",
+              "strict": 1,
+              "attachments": [
+                {
+                  "path" : "http://www.example.com/upload/cv.txt",
+                  "filename": "cv.txt"
+                },
+                {
+                  "base64" : "iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX////9/v/1+vz7/f75/P3b6/WTw+JUoNF3tNrs9fqgy+XL4vGt0ekihcMdgsJWodHW6PRnq9anzuf+//98ttwnh8XJ4fDA3O5BlsyEu96WxeM+lMvf7fa11usyjshcpdPu9vrl8fhhqNQsisZGmc242OwvjMc2kMnQ5fLx9/vs9PrF3+8egsKYxuNIms5ToNHt9fr4+/1zstkkhsS01eu21+tbpNPz+fzy+PtYo9IhhMOu0um72e0lhsTr9Pl0stmKvt/o8vlAlswpicXH4PBMnM/w9/umzud7ttuOwOCq0Oh+uNwqicbO5PJ5tds9lMvm8fh9t9xSn9D0+fz8/v6eyuV6tduIvd/U5/QrisaSw+JEmM1srteeyeXP5fKjzObB3e67gPv3AAAAAWJLR0QAiAUdSAAAAAd0SU1FB98MCxI0KKxwQkkAAADqSURBVDjLxdLJUsJQFATQlwRUUFsQAjKriAEMCDKqjE6As0wqAvL/XwEW69DZUPbqLk513ffqCvGvkWRlOVisspGRNza3rH+Dzb5tWLSzC+zZhHA4912GyA1A9QjvgU8xXsm/QIFgKBw5XLH30XH0JBY61eIrX5dwJM80PcU+IZjGeYaY7AVyeVZUUFEsEVO+xNU1K6pUka4RI9WBBitq3uDWw9CdivsHhlpAmxnRgf5I0ROeXyh6xds7RR/o9ihqwNmnaIAhNSKmf3L09T3iKPPj50gam0BiQs97kemvCZSYmUBSzWVCrTdzroQWUBRujJsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMTItMTFUMTg6NTI6NDArMDE6MDCHteiRAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTEyLTExVDE4OjUyOjQwKzAxOjAw9uhQLQAAAFd6VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPyDAhxVigoyk/LzEnlUgADIwsuYwsTIxNLkxQDEyBEgDTDZAMjs1Qgy9jUyMTMxBzEB8uASKBKLgDqFxF08kI1lQAAAABJRU5ErkJggg==",
+                  "filename": "logo.jpg"
+
+                },
+                {
+                  "path" : "http://www.example.com/upload/gdpr_agreement.pdf",
+                  "filename": "souhlas.pdf"
+                }
+              ]
+            }
+
++ Response 201 (application/json)
+
+        {
+          "payload": {
+            "id": 1
+          },
+          "meta": {
+            "duration": 2259,
+            "code": "api.created",
+            "message_localized": "Answer was created."
+          }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "errors": {
+              "validation": {
+                "direction": ["Object property 'direction' has wrong value. Allowed enum values: in, out"]
+              }
+            },
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": "Can't upload attachment."
+          }
+        }
+
 
 
 ## Answer list [/answers{?limit,page,job_id,flow_id,search}]
