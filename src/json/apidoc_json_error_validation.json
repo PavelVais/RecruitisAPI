@@ -1,0 +1,14 @@
+{
+  "payload": null,
+  "meta": {
+    "errors": {
+      "validation": {
+        ":[](PROPERTY)": [":[](VALIDATION)"]
+      }
+    },
+    "duration": "139.58",
+    "total_duration": 330,
+    "code": ":[](CODE)",
+    "message": ":[](MSG)"
+  }
+}

@@ -142,7 +142,7 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr answerId f
         
 + Response 400 (application/json)
         
-        :[](json/apidoc_json_error_general.json MSG:"Can't upload attachment." CODE:"api.error.generic")
+        :[](json/apidoc_json_error_validation.json MSG:"Can't upload attachment." CODE:"api.error.generic" PROPERTY:"direction" VALIDATION:"Object property 'direction' has wrong value. Allowed enum values: in, out")
 
 
 
