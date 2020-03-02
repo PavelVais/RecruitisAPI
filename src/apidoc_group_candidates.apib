@@ -254,6 +254,7 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `date_from` | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, od jakého data  (včetně) se odpovědi vypíšou.                            |
 | `date_to`   | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, do jakého data (včetně)se odpovědi vypíšou.                              |
 | `order`     | No       | "date_created" | Řazení odpovědí. `date_created` vrací odpovědi dle data vzniku odpovědi, `flow` vrací odpovědi dle jejich stavu. |
+| `exported`  | No       |                | Stav exportu odpovědi. Závisí na čísleníku společnosti, viz export odpovědi.                                     |
 
 #### Response parameters
    
@@ -290,6 +291,7 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `attachment_list` - `name`         | `full_access`   | string        | Název souboru.                                                                                                                                                        |
 | `attachment_list` - `size`         | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
 | `attachment_list` - `download_url` | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
+| `custom_data`                      | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
 
 
 #### Requirements
@@ -312,3 +314,52 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 + Response 200 (application/json)
 
         :[](json/apidoc_answer_list_get.json)
+        
+        
+        
+### Export answer [PUT /answers/{answer_id}/export]
+Označí odpověď v Recruitisu jako exportovanou. Nemá pevně daný číselník, 
+
+#### Důležitá informace:
+Hodnota "stats" nemá pevně daný číselník, každá společnost si jej definuje sama na své straně. 
+Pro definici hodnot pooužijte bitmasku.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`.    
+   
+| Request value        | Required | Default Value   | Note                                                                                      |
+|:---------------------|----------|-----------------|-------------------------------------------------------------------------------------------|
+| `status`             | Yes      |                 | Bitmaska, hodnoty v řadě 1,2,4,8,16,...                                                   |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+    + Body  
+    
+            {
+                "status": 1
+            }
+
++ Response 200 (application/json)
+
+        {
+            "payload": {
+                "answer_id": 1234,
+                "exported_status": 1,
+                "exported_date": "2020-03-02 15:54:49"
+            },
+             "meta": {
+                "code": "api.modified",
+                "duration": 1040,
+                "message": "Answer was marked as exported."
+            }
+        }
+        
++ Response 400 (application/json)
+        
+        :[](json/apidoc_json_error_general.json)
