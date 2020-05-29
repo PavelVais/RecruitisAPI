@@ -1,0 +1,39 @@
+# Group reports
+
+Tato sekce se vztahuje k reportu
+
+## Report [/reports/v/{version}{?date_from,date_to,parts\[\]}]
+
+### Export data [GET]
+
+Výpis dat ze systému, alternativa k exportu reportů do Excelu - data jsou ve stejém formátu.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+   
+ | Request value     | Required | Type      | Note                                                                                                                                              |
+ |-------------------|----------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+ | `version`         | Yes      | integer   | Verze reportu, dle číselníku, aktuálně pouze "1".                                                                                                 |
+ | `date_from`       | No       | date      | Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `date_to`         | No       | date      | Datum, do kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `parts`           | No       | array     | Seznam "listů" exportu, odpovídá reportu v Excelu: answers, jobs, timeline, offices, personalists, personalists-answers, personalists-timeline    |
+
+
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_referrals_post_response.json)
+
+        
++ Response 40O (application/json)
+
+        :[](json/apidoc_json_post_general.json MSG:"Date from must be lower than date to." CODE:"api.error.property.wrong_value")
