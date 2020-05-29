@@ -38,9 +38,9 @@
         "DateCreated": "2020-05-13 08:17:57",
         "DateEnd": false,
         "AuthorID": null,
-        "AuthorName": "Štěpán Bartyzal",
-        "ContactName": "Štěpán Bartyzal",
-        "ContactEmail": "personalista@pracevcr.cz",
+        "AuthorName": "Petr Personalista",
+        "ContactName": "Petr Novák",
+        "ContactEmail": "petr@novak.cz",
         "ContactPhone": "602123898",
         "OfficeID": 361376,
         "OfficeName": "Hradec Králové, Královéhradecký kraj",
@@ -62,7 +62,7 @@
       {
         "ID": 1,
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
         "Status": "Ve výběru",
@@ -77,7 +77,7 @@
       {
         "ID": 1,
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "ActionCreated": "2020-05-13 09:01:28",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
@@ -90,12 +90,12 @@
       {
         "ID": 2,
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "ActionCreated": "2020-05-13 09:01:30",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
         "ActionName": "answer_share",
-        "ActionDescription": "Štěpán Bartyzal",
+        "ActionDescription": "Petr Novák",
         "ActionDetailedDescription": "",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
@@ -103,7 +103,7 @@
       {
         "ID": 3,
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "ActionCreated": "2020-05-29 08:37:39",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
@@ -116,7 +116,7 @@
       {
         "ID": 4,
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "ActionCreated": "2020-05-29 08:38:05",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
@@ -129,12 +129,12 @@
       {
         "ID": 5,
         "PersonalistID": "8699",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "ActionCreated": "2020-05-13 09:01:30",
         "AnswerID": "380184",
         "ApplicantName": "Martin Testovací",
         "ActionName": "answer_add",
-        "ActionDescription": "Štěpán Bartyzal",
+        "ActionDescription": "Petr Novák",
         "ActionDetailedDescription": "This answer came from sharing by another personalist.",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
@@ -144,10 +144,10 @@
       {
         "ID": 1,
         "PersonalistID": "8699",
-        "PersonalistName": "Štěpán Bartyzal jr.",
+        "PersonalistName": "Petr Personalista",
         "LastLogin": "2020-01-29 09:28:23",
         "ContactPhone": "602123456",
-        "ContactEmail": "bartyzal@ceskytrhprace.cz",
+        "ContactEmail": "personalista@petr.cz",
         "ContactPhoto": "https://app.recruitis.io/path-to-employee-photo.jpg",
         "Role": "",
         "StatsOffersCreated": "0"
@@ -164,7 +164,7 @@
         "ActionDescription": "",
         "ActionCreated": "2020-05-13 08:17:58",
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
       },
@@ -189,10 +189,10 @@
         "ApplicantName": "Martin Testovací",
         "ActionName": "answer_share",
         "ActionArgument": "8699",
-        "ActionDescription": "Štěpán Bartyzal jr.",
+        "ActionDescription": "Petr Novák jr.",
         "ActionCreated": "2020-05-13 09:01:30",
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
       },
@@ -206,7 +206,7 @@
         "ActionDescription": "Ve výběru",
         "ActionCreated": "2020-05-29 08:37:39",
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
       },
@@ -220,7 +220,7 @@
         "ActionDescription": "",
         "ActionCreated": "2020-05-29 08:38:05",
         "PersonalistID": "2268",
-        "PersonalistName": "Štěpán Bartyzal",
+        "PersonalistName": "Petr Novák",
         "JobID": "373460",
         "JobTitle": "Nový testovací inzerát"
       }
