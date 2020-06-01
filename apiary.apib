@@ -20,7 +20,9 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 * **1.6.2020: branch v1 `1.6.0`**
      * Přidáno API pro vytvoření reportů ze systému. 
-     * U API s komunikací s uchazečem se nyní vypisují detailněji validační chyby (`meta`.`errors`). Postupně bude hlášení o chybách ve validaci ve všech volání.
+     * Přibyla dokumentace na zobrazování konkrétní odpovědi (`GET answers/id`).
+     * U dotazu na seznam odpovědí nyní vracíme parametr `hash` v konkrétní příloze.
+     * U volání `GET answers/id` je možné volat parametr `im_author`.
      
 * **19.2.2020: branch v1 `1.5.0`**
      * Přidáno API pro vytváření komunikace s uchazečem. 
@@ -1529,6 +1531,7 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
               "subject": "předmět",
               "content": "obsah komunikace, třeba pěkná pochvala",
               "direction": "in",
+              "date_action": "2020-01-01 12:44:59",
               "type": "email",
               "strict": 1,
               "attachments": [
@@ -1857,11 +1860,13 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
                 {
                   "name": "zivotopis_cameron_diaz.docx",
                   "size": 52.86,
+                  "hash": "YXdQMmRtWWprNXBTY042M1hFOTdvZz09",
                   "download_url": "https:\/\/api.recruitis.io\/api2\/files\/YXdQMmRtWWprNXBTY042M1hFOTdvZz09"
                 },
                 {
                   "name": "cameron_diaz.jpg",
                   "size": 16.66,
+                  "hash": "cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09",
                   "download_url": "https:\/\/api.recruitis.io\/api2\/files\/cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09"
                 }
               ],
