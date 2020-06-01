@@ -1,0 +1,53 @@
+# Group reports
+
+Tato sekce se vztahuje k reportu
+
+## Report [/reports/{?date_from,date_to,lists}]
+
+### Export data [GET]
+
+Výpis dat ze systému, alternativa k exportu reportů do Excelu - data jsou ve stejném formátu. Tato API se hodí při využívání
+jiných reportovacích systému, například Keboola.
+
+Popis jednotlivých listů, viz `lists` parametr:
+    
+ - **answers**: Obsahuje všechny odpovědi vzniklé v daném časovém rozmezí. 
+ - **jobs**: Obsahuje všechny inzeráty aktivní v daném časovém rozmezí.
+ - **timeline**: Vrací chronologicky řazené záznamy podle jednotlivých uchazečů v daném časovém rozmezí.
+ - **offices**: Vrátí seznam všech poboček. Na tuto sekci se nevztahuje parametr `date_from` a `date_to`.
+ - **personalists**: Vrátí seznam všech personalistů. Na tuto sekci se nevztahuje parametr `date_from` a `date_to`.
+ - **personalists-answers**: Tato sekce vypisuje všechny odpovědi a personalisty, kteří k nim mají přístup.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+   
+ | Request value     | Required | Type      | Note                                                                                                                                              |
+ |-------------------|----------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+ | `version`         | Yes      | integer   | Verze reportu, dle číselníku, aktuálně pouze "1".                                                                                                 |
+ | `date_from`       | No       | date      | Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `date_to`         | No       | date      | Datum, do kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `lists`           | No       | array     | Filtrace jednotlivých skupin exportů: answers, jobs, timeline, offices, personalists, personalists-answers. V případě, že není určeno, zvolí se všechny skupiny.    |
+
+
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+
++ Parameters
+    + date_from (optional,string,``) - Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.
+    + date_to (optional,string,``) - Datum, do kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.
+    + lists (array[string],``) - Seznam "listů" : answers, jobs, timeline, offices, personalists, personalists-answers, personalists-timeline    
+
++ Response 200 (application/json)
+
+        :[](json/apidoc_reports_get.json)
+
+        
++ Response 400 (application/json)
+
+        :[](json/apidoc_json_post_general.json MSG:"Date from must be lower than date to." CODE:"api.error.property.wrong_value")

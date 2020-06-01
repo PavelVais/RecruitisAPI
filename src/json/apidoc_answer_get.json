@@ -1,0 +1,55 @@
+{
+  "payload": {
+    "candidate_id": 123456,
+    "answer_id": 123456,
+    "job_id": 123456,
+    "name": {
+      "first_name": "Jan",
+      "last_name": "Novák",
+      "initials": "JN"
+    },
+    "title": {
+      "before": null,
+      "after": null
+    },
+    "user_img": "https:\/\/api.recruitis.io\/images\/no-avatar_sq.png",
+    "sign_job": {
+      "job_title": "Hledáme IT programátora",
+      "job_source_site": "pracevhradci.cz"
+    },
+    "source_site": "recruitis.io",
+    "phone": "604123456",
+    "email": "jannovak@test.cz",
+    "rating": 0,
+    "rejected": false,
+    "additional_details": [
+      {
+        "name": "telefon",
+        "value": "604123456"
+      }
+    ],
+    "share_status": null,
+    "flow_id": 49,
+    "share_status_detail": null,
+    "source": {
+      "name": "recruitis.io",
+      "type": "Z inzertních portálů"
+    },
+    "interview_date": null,
+    "date_response": "2020-05-14 11:23:55",
+    "attachment_list": [
+      {
+        "name": "zivotopis.pdf",
+        "size": 1490.48,
+        "hash": "xxxxxxxx",
+        "download_url": "https:\/\/api.recruitis.io\/api2\/files\/xxxxxxxx"
+      }
+    ],
+    "cover_letter": "Lorem ipsum....."
+  },
+  "meta": {
+    "code": "api.ok",
+    "duration": 1010,
+    "message": "Answer %id was found."
+  }
+}
