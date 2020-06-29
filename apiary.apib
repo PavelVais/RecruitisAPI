@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.5.0**
-* Poslední aktualizace: **19.2.2020**
+* Verze systému: **1.6.0**
+* Poslední aktualizace: **1.6.2020**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,6 +18,12 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **1.6.2020: branch v1 `1.6.0`**
+     * Přidáno API pro vytvoření reportů ze systému. 
+     * Přibyla dokumentace na zobrazování konkrétní odpovědi (`GET answers/id`).
+     * U dotazu na seznam odpovědí nyní vracíme parametr `hash` v konkrétní příloze.
+     * U volání `GET answers/id` je možné volat parametr `im_author`.
+     
 * **19.2.2020: branch v1 `1.5.0`**
      * Přidáno API pro vytváření komunikace s uchazečem. 
      * U API s komunikací s uchazečem se nyní vypisují detailněji validační chyby (`meta`.`errors`). Postupně bude hlášení o chybách ve validaci ve všech volání.
@@ -970,11 +976,12 @@ Zobrazení všech kanálů, kde je inzerát publikován.
 
 Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V případě, že je inzerát na daném kanálu již vystaven, bude nastavení aktualizováno.
 
-#### Requierments
+
+#### Requirements
 
    + Authorization with token
    + token type: `full_access`: pro publikaci inzerátu je potřeba full access
-    
+
 | Request value                        | Required | Type      | Default Value   | Note                                                                                                                  |
 |:-------------------------------------|----------|:----------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
 | `date_from`                          | Yes      | datetime  |                 | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas.          |
@@ -993,6 +1000,10 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
               "date_to": null
             }
 
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+    + channel_id (optional,numeric,`1`) - Id publikačního kanálu.
+        
 + Response 200 (application/json)
 
         {
@@ -1236,6 +1247,7 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 | `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
 | `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
 | `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`). |
+| `im_author`                          | No       | false           | Pokud je true, potom je daný personalista určen jako autor odpovědi, včetně poznámek. V opačném případě nebudou mít poznámky žádného autora a budou tkz. systémové.                                                |
 | `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
 | `gdpr_agreement` - `date_expiration` | No       | 1 year from now | Formát YYYY-MM-DD                                                                                                                                                                                                              |
 | `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
@@ -1377,13 +1389,6 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
 
 Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění `answer_id` vypíše komunikaci vázanou na danou odpověď.
 
-+ Parameters
-    + limit (optional,numeric,`10`) - Počet entit, které se mohou zobrazit.
-    + page (optional,numeric,`1`) - Strana s výpisem inzerátů.
-    + author_id (optional,int) - Omezení na konkrétního autora zprávy (ID personalisty).
-    + direction (optional,string) - Omezení na určité směr zprávy. Povolené hodnoty jsou "in" a "out"
-    + type (optional,string) - viz tabulka níže
-
 | Parameter `type` | Note                                           |
 |-:----------------|------------------------------------------------|
 | linkedin         | Komunikace ze sociální sítě LinkedIn           |
@@ -1396,7 +1401,14 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
     + Headers
     
             Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
-            
+
++ Parameters
+    + limit (optional,numeric,`10`) - Počet entit, které se mohou zobrazit.
+    + page (optional,numeric,`1`) - Strana s výpisem inzerátů.
+    + author_id (optional,int) - Omezení na konkrétního autora zprávy (ID personalisty).
+    + direction (optional,string) - Omezení na určité směr zprávy. Povolené hodnoty jsou "in" a "out"
+    + type (optional,string) - viz tabulka níže
+    
 + Response 200 (application/json)
 
         {
@@ -1481,7 +1493,7 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
 
 
 ### Create new communication record [POST /candidate/{id}(/{answer_id})/communication]
-Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id funguje stejně jako u GET volání.
+Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id` funguje stejně jako u GET volání.
 
 #### Requirements
 
@@ -1497,6 +1509,7 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id 
 | `content`                            | Yes      |                 | Obsah zprávy.                                                                                                                                   |
 | `direction`                          | Yes      |                 | Jedna z hodnot: in = příchozí, out = odchozí, váže se ke kandidátovi/odpovědi. Tj. příchozí ke kandidátovi a odchozí od kandidáta.              |
 | `strict`                             | No       | 1               | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách.            |
+| `date_action`                        | No       | now             | Datum vytvoření komunikace.                  |
 | `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                         |
 | `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                    |
 | `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                      |
@@ -1518,6 +1531,7 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id 
               "subject": "předmět",
               "content": "obsah komunikace, třeba pěkná pochvala",
               "direction": "in",
+              "date_action": "2020-01-01 12:44:59",
               "type": "email",
               "strict": 1,
               "attachments": [
@@ -1566,7 +1580,6 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr answer_id 
             "message": "Can't upload attachment."
           }
         }
-
 
 
 ## Answer list [/answers{?limit,page,job_id,flow_id,search}]
@@ -1695,7 +1708,6 @@ Pokud GDPR souhlas určen je, tak souhlas se zpracováním os. údajů dědí je
           }
         }
 
-
 ### Get All Answers [GET]
 
 Tento dotaz vrací seznam všech odpovědí. Dají se filtrovat dle konkrétních inzerátů, flow, a nebo aplikovat vyhledávání dle jména uchazeče.
@@ -1717,6 +1729,7 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `date_from` | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, od jakého data  (včetně) se odpovědi vypíšou.                            |
 | `date_to`   | No       |                | Datum ve formátu "YYYY-MM-DD". Omezení, do jakého data (včetně)se odpovědi vypíšou.                              |
 | `order`     | No       | "date_created" | Řazení odpovědí. `date_created` vrací odpovědi dle data vzniku odpovědi, `flow` vrací odpovědi dle jejich stavu. |
+| `exported`  | No       |                | Stav exportu odpovědi. Závisí na čísleníku společnosti, viz export odpovědi.                                     |
 
 #### Response parameters
    
@@ -1752,7 +1765,9 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `attachment_list`                  | `full_access`   | array(object) |                                                                                                                                                                       |
 | `attachment_list` - `name`         | `full_access`   | string        | Název souboru.                                                                                                                                                        |
 | `attachment_list` - `size`         | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
+| `attachment_list` - `hash`         | `full_access`   | string        | ID (hash) souboru.                                                                                                                                                    |
 | `attachment_list` - `download_url` | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
+| `custom_data`                      | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
 
 
 #### Requirements
@@ -1845,11 +1860,13 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
                 {
                   "name": "zivotopis_cameron_diaz.docx",
                   "size": 52.86,
+                  "hash": "YXdQMmRtWWprNXBTY042M1hFOTdvZz09",
                   "download_url": "https:\/\/api.recruitis.io\/api2\/files\/YXdQMmRtWWprNXBTY042M1hFOTdvZz09"
                 },
                 {
                   "name": "cameron_diaz.jpg",
                   "size": 16.66,
+                  "hash": "cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09",
                   "download_url": "https:\/\/api.recruitis.io\/api2\/files\/cFMrMmRoWGpNVVNLbDlHM2lweWJ6UT09"
                 }
               ],
@@ -1898,6 +1915,176 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
             "entries_to": 3,
             "entries_total": 3,
             "entries_sum": 3
+          }
+        }
+        
+     
+## Answer detail [/answers/{answer_id}]
+### Get Answer [GET]
+
+Tento dotaz vrací konkrétní odpověď. Oproti seznamu odpovědí není payload pole, ale rovnou kokrétní objekt odpovědi s nepatrně jinou strukturou (detailnější).
+Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta code `api.error.not_found`.
+ 
+#### Response parameters
+   
+| Parameter                          | token condition | Type          | Note                                                                                                                                                                  |
+|------------------------------------|-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `candidate_id`                     | `full_access`   | int           | ID kandidáta, ke kterému se odpověd vztahuje.                                                                                                                         |
+| `answer_id`                        | `full_access`   | int           | ID odpovědi.                                                                                                                                                          |
+| `job_id`                           | `full_access`   | int           | ID inzerátu.                                                                                                                                                          |
+| `name`                             | `full_access`   | object        |                                                                                                                                                                       |
+| `name` - `first_name`              | `full_access`   | int           |                                                                                                                                                                       |
+| `name` - `last_name`               | `full_access`   | string        |                                                                                                                                                                       |
+| `name` - `initials`                | `full_access`   | string        | Iniciály jména                                                                                                                                                        |
+| `title`                            | `full_access`   | object        |                                                                                                                                                                       |
+| `title` - `before`                 | `full_access`   | string        | Titul před jménem.                                                                                                                                                    |
+| `title` - `after`                  | `full_access`   | string        | Titul za jménem.                                                                                                                                                      |
+| `user_img`                         | `full_access`   | string        | Cesta k obrázku uchazeče.                                                                                                                                             |
+| `rating`                           | `full_access`   | int           | 0-5, hodnocení uchazeče.                                                                                                                                              |
+| `sign_job`                         | `full_access`   | object        |                                                                                                                                                                       |
+| `sign_job` - `job_title`           | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
+| `sign_job` - `job_source_site`     | `full_access`   | string        | DEPRECATED: portál, na kterém byl inzerát vytvořen.                                                                                                                     |
+| `phone`                            | `full_access`   | string        |                                                                                                                                                                       |
+| `email`                            | `full_access`   | string        |                                                                                                                                                                       |
+| `flow_id`                          | `full_access`   | int           | ID flow, ve které se odpověď zrovna nachází. (Dokumentaci k flow zatím připravujeme.)                                                                                 |
+| `share_status`                     | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
+| `share_status_detail`              | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
+| `rejected`                         | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
+| `source`                           | `full_access`   | object        |                                                                                                                                                                       |
+| `source` - `name`                  | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
+| `source` - `type`                  | `full_access`   | string        | Typ zdroje. Například jestli je to systémový email, api aj.                                                                                                           |
+| `attachment_list`                  | `full_access`   | array(object) |                                                                                                                                                                       |
+| `attachment_list` - `name`         | `full_access`   | string        | Název souboru.                                                                                                                                                        |
+| `attachment_list` - `size`         | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
+| `attachment_list` - `hash`         | `full_access`   | string        | ID (hash) souboru.                                                                                                                                                    |
+| `attachment_list` - `download_url` | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
+| `custom_data`                      | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+
++ Request
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
++ Parameters
+    + answer_id (numeric,`123456`) - ID odpovědi
+    
++ Response 200 (application/json)
+
+        {
+          "payload": {
+            "candidate_id": 123456,
+            "answer_id": 123456,
+            "job_id": 123456,
+            "name": {
+              "first_name": "Jan",
+              "last_name": "Novák",
+              "initials": "JN"
+            },
+            "title": {
+              "before": null,
+              "after": null
+            },
+            "user_img": "https:\/\/api.recruitis.io\/images\/no-avatar_sq.png",
+            "sign_job": {
+              "job_title": "Hledáme IT programátora",
+              "job_source_site": "pracevhradci.cz"
+            },
+            "source_site": "recruitis.io",
+            "phone": "604123456",
+            "email": "jannovak@test.cz",
+            "rating": 0,
+            "rejected": false,
+            "additional_details": [
+              {
+                "name": "telefon",
+                "value": "604123456"
+              }
+            ],
+            "share_status": null,
+            "flow_id": 49,
+            "share_status_detail": null,
+            "source": {
+              "name": "recruitis.io",
+              "type": "Z inzertních portálů"
+            },
+            "interview_date": null,
+            "date_response": "2020-05-14 11:23:55",
+            "attachment_list": [
+              {
+                "name": "zivotopis.pdf",
+                "size": 1490.48,
+                "hash": "xxxxxxxx",
+                "download_url": "https:\/\/api.recruitis.io\/api2\/files\/xxxxxxxx"
+              }
+            ],
+            "cover_letter": "Lorem ipsum....."
+          },
+          "meta": {
+            "code": "api.ok",
+            "duration": 1010,
+            "message": "Answer %id was found."
+          }
+        }
+           
+### Export answer [PUT /answers/{answer_id}/export]
+Označí odpověď v Recruitisu jako exportovanou. Nemá pevně daný číselník. Tato funkcionalita není určená pro
+normální použití. Pro detailnější popis nás kontaktujte.
+
+#### Důležitá informace:
+Hodnota "status" nemá pevně daný číselník, každá společnost si jej definuje sama na své straně. 
+Pro definici hodnot pooužijte bitmasku.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`.    
+   
+| Request value        | Required | Default Value   | Note                                                                                      |
+|:---------------------|----------|-----------------|-------------------------------------------------------------------------------------------|
+| `status`             | Yes      |                 | Bitmaska, hodnoty v řadě 1,2,4,8,16,...                                                   |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+    + Body  
+    
+            {
+                "status": 1
+            }
+
++ Response 200 (application/json)
+
+        {
+            "payload": {
+                "answer_id": 1234,
+                "exported_status": 1,
+                "exported_date": "2020-03-02 15:54:49"
+            },
+             "meta": {
+                "code": "api.modified",
+                "duration": 1040,
+                "message": "Answer was marked as exported."
+            }
+        }
+        
++ Response 400 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.generic",
+            "message": ""
           }
         }
 
@@ -2259,7 +2446,7 @@ Smaže filtr dle ID v parametru URI.
 Tato sekce umožňuje správu souborů, momentálně jejich stahování.
 
 
-## Job Lists [/files/{?hash}]
+## File Lists [/files/{?hash}]
 
     
 ### Download a file [GET]
@@ -2720,5 +2907,302 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
             "duration": 139.58,
             "code": "api.error.unauthorized",
             "message": "Musíte být přihlášen"
+          }
+        }
+
+# Group reports
+
+Tato sekce se vztahuje k reportu
+
+## Report [/reports/{?date_from,date_to,lists}]
+
+### Export data [GET]
+
+Výpis dat ze systému, alternativa k exportu reportů do Excelu - data jsou ve stejném formátu. Tato API se hodí při využívání
+jiných reportovacích systému, například Keboola.
+
+Popis jednotlivých listů, viz `lists` parametr:
+    
+ - **answers**: Obsahuje všechny odpovědi vzniklé v daném časovém rozmezí. 
+ - **jobs**: Obsahuje všechny inzeráty aktivní v daném časovém rozmezí.
+ - **timeline**: Vrací chronologicky řazené záznamy podle jednotlivých uchazečů v daném časovém rozmezí.
+ - **offices**: Vrátí seznam všech poboček. Na tuto sekci se nevztahuje parametr `date_from` a `date_to`.
+ - **personalists**: Vrátí seznam všech personalistů. Na tuto sekci se nevztahuje parametr `date_from` a `date_to`.
+ - **personalists-answers**: Tato sekce vypisuje všechny odpovědi a personalisty, kteří k nim mají přístup.
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`
+   
+ | Request value     | Required | Type      | Note                                                                                                                                              |
+ |-------------------|----------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+ | `version`         | Yes      | integer   | Verze reportu, dle číselníku, aktuálně pouze "1".                                                                                                 |
+ | `date_from`       | No       | date      | Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `date_to`         | No       | date      | Datum, do kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
+ | `lists`           | No       | array     | Filtrace jednotlivých skupin exportů: answers, jobs, timeline, offices, personalists, personalists-answers. V případě, že není určeno, zvolí se všechny skupiny.    |
+
+
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
++ Parameters
+    + date_from (optional,string,``) - Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.
+    + date_to (optional,string,``) - Datum, do kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.
+    + lists (array[string],``) - Seznam "listů" : answers, jobs, timeline, offices, personalists, personalists-answers, personalists-timeline    
+
++ Response 200 (application/json)
+
+        {
+          "payload": {
+            "answers": [
+              {
+                "ID": 1,
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "DateCreated": "2020-05-13 09:01:26",
+                "Source": "testovací zdroj",
+                "AdditionalSource": "vlastní zdroje",
+                "Status": "Ve výběru",
+                "Rejected": "0",
+                "OfferAcceptationStatus": "0",
+                "Sex": null,
+                "Nationality": null,
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát",
+                "Interviews": [
+                  {
+                    "Strengths": null,
+                    "Weaknesses": null,
+                    "Opportunities": null,
+                    "Threats": null,
+                    "Note": null,
+                    "AvailableSince": "zítra",
+                    "EndingReason": null,
+                    "SalaryDemand": "10000"
+                  }
+                ]
+              }
+            ],
+            "jobs": [
+              {
+                "ID": 1,
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát",
+                "JobDescription": "Job description shortened to max 150 characters",
+                "DateCreated": "2020-05-13 08:17:57",
+                "DateEnd": false,
+                "AuthorID": null,
+                "AuthorName": "Petr Personalista",
+                "ContactName": "Petr Novák",
+                "ContactEmail": "petr@novak.cz",
+                "ContactPhone": "602123898",
+                "OfficeID": 361376,
+                "OfficeName": "Hradec Králové, Královéhradecký kraj",
+                "StatsViews": "0",
+                "StatsAnswers": "5"
+              }
+            ],
+            "offices": [
+              {
+                "ID": 1,
+                "OfficeID": "361376",
+                "OfficeAddress": "Československé armády 329 Hradec Králové 50003, Královéhradecký kraj",
+                "SubCompanyName": null,
+                "SubCompanyDescription": null,
+                "SubCompanyLogo": ""
+              }
+            ],
+            "personalists-answers": [
+              {
+                "ID": 1,
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "Status": "Ve výběru",
+                "Rejected": "0",
+                "OfferAcceptationStatus": "0",
+                "DateCreated": "2020-05-13 09:01:26",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              }
+            ],
+            "personalists-timeline": [
+              {
+                "ID": 1,
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "ActionCreated": "2020-05-13 09:01:28",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "answer_add",
+                "ActionDescription": "Nový testovací inzerát",
+                "ActionDetailedDescription": "This answer was automatically shared and it cames from answer form.",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 2,
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "ActionCreated": "2020-05-13 09:01:30",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "answer_share",
+                "ActionDescription": "Petr Novák",
+                "ActionDetailedDescription": "",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 3,
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "ActionCreated": "2020-05-29 08:37:39",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "flow_change",
+                "ActionDescription": "Ve výběru",
+                "ActionDetailedDescription": "",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 4,
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "ActionCreated": "2020-05-29 08:38:05",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "message_email_send",
+                "ActionDescription": "",
+                "ActionDetailedDescription": "",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 5,
+                "PersonalistID": "8699",
+                "PersonalistName": "Petr Novák",
+                "ActionCreated": "2020-05-13 09:01:30",
+                "AnswerID": "380184",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "answer_add",
+                "ActionDescription": "Petr Novák",
+                "ActionDetailedDescription": "This answer came from sharing by another personalist.",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              }
+            ],
+            "personalists": [
+              {
+                "ID": 1,
+                "PersonalistID": "8699",
+                "PersonalistName": "Petr Personalista",
+                "LastLogin": "2020-01-29 09:28:23",
+                "ContactPhone": "602123456",
+                "ContactEmail": "personalista@petr.cz",
+                "ContactPhoto": "https://app.recruitis.io/path-to-employee-photo.jpg",
+                "Role": "",
+                "StatsOffersCreated": "0"
+              }
+            ],
+            "timeline": [
+              {
+                "ID": 1,
+                "AnswerID": null,
+                "ApplicantID": null,
+                "ApplicantName": "",
+                "ActionName": "offer_add",
+                "ActionArgument": "373460",
+                "ActionDescription": "",
+                "ActionCreated": "2020-05-13 08:17:58",
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 2,
+                "AnswerID": "380184",
+                "ApplicantID": "434219",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "answer_add",
+                "ActionArgument": "373460",
+                "ActionDescription": "Nový testovací inzerát",
+                "ActionCreated": "2020-05-13 09:01:28",
+                "PersonalistID": null,
+                "PersonalistName": "",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 3,
+                "AnswerID": "380184",
+                "ApplicantID": "434219",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "answer_share",
+                "ActionArgument": "8699",
+                "ActionDescription": "Petr Personalista",
+                "ActionCreated": "2020-05-13 09:01:30",
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 4,
+                "AnswerID": "380184",
+                "ApplicantID": "434219",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "flow_change",
+                "ActionArgument": "1",
+                "ActionDescription": "Ve výběru",
+                "ActionCreated": "2020-05-29 08:37:39",
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              },
+              {
+                "ID": 5,
+                "AnswerID": "380184",
+                "ApplicantID": "434219",
+                "ApplicantName": "Martin Testovací",
+                "ActionName": "message_email_send",
+                "ActionArgument": null,
+                "ActionDescription": "",
+                "ActionCreated": "2020-05-29 08:38:05",
+                "PersonalistID": "2268",
+                "PersonalistName": "Petr Novák",
+                "JobID": "373460",
+                "JobTitle": "Nový testovací inzerát"
+              }
+            ]
+          },
+          "meta": {
+            "code": "api.found",
+            "duration": 1020,
+            "message": "Report was done."
+          }
+        }
+
+        
++ Response 400 (application/json)
+
+        {
+          "payload": {
+            "id" : 12345
+          },
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.error.property.wrong_value",
+            "message": "Date from must be lower than date to."
           }
         }

@@ -208,11 +208,12 @@ Zobrazení všech kanálů, kde je inzerát publikován.
 
 Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V případě, že je inzerát na daném kanálu již vystaven, bude nastavení aktualizováno.
 
-#### Requierments
+
+#### Requirements
 
    + Authorization with token
    + token type: `full_access`: pro publikaci inzerátu je potřeba full access
-    
+
 | Request value                        | Required | Type      | Default Value   | Note                                                                                                                  |
 |:-------------------------------------|----------|:----------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
 | `date_from`                          | Yes      | datetime  |                 | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas.          |
@@ -228,6 +229,10 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 
             :[](json/apidoc_jobs_channel_put_request.json)
 
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+    + channel_id (optional,numeric,`1`) - Id publikačního kanálu.
+        
 + Response 200 (application/json)
 
         :[](json/apidoc_jobs_channel_put_response.json)
