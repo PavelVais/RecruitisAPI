@@ -12,6 +12,11 @@
         "before": null,
         "after": null
       },
+      "salutation": {
+        "first_name": "Jorgia",
+        "last_name": "Sweet"
+      },
+      "gender": "F",
       "user_img": "https:\/\/app.recruitis.io\/images\/no-avatar_sq.png",
       "rating": 2,
       "job_details": {
@@ -46,6 +51,11 @@
         "before": null,
         "after": null
       },
+      "salutation": {
+        "first_name": "Moniko",
+        "last_name": "Nováková"
+      },
+      "gender": "F",
       "user_img": "https:\/\/app.recruitis.io\/images\/no-avatar_sq.png",
       "rating": 0,
       "job_details": {
@@ -91,6 +101,11 @@
         "before": null,
         "after": null
       },
+      "salutation": {
+        "first_name": "Terezo",
+        "last_name": "Barkovic"
+      },
+      "gender": "F",
       "user_img": "https:\/\/dev.recruitis.io\/images\/no-avatar_sq.png",
       "rating": 0,
       "job_details": {
