@@ -28,7 +28,8 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
 | `only_deleted`     | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).         |
 | `status`           | No       | 1             | Yes                         | Parametr se chová jako bitmapa. 1 = aktivní, 2 = neaktivní, 4 = draft, 8 = smazaný. Jsou povolené kombinace všech, krom smazaných, které jdou zobrazit pouze samostatně.    |
 |                    |          |               |                             | Status nahrazuje předchozí dva parametry (include_inactive a only_deleted), které jsou deprecated, a při jeho použití jsou ignorovány.                                      | 
-
+| `updated_from`     | No       |               | No                          | Date, fitrace podle data editace inzerátu                                                                                                                                   |
+| `updated_to`       | No       |               | No                          | Date, fitrace podle data editace inzerátu                                                                                                                                   |
 
 
 Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (u poboček vracíme adresy, pod jednou adresou můžete uvést i více poboček).
