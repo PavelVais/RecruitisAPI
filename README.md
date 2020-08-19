@@ -8,6 +8,9 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+* **19.8.2020: branch v1 `1.6.1`**
+     * U volání `GET jobs/id` jsou v odpovědi navíc tyto parametry: `public_id`,`salary`,`education`,`last_update`,`draft`. Byl rozšíren parametr `details` o `facebook_picture_path` a `opening_reason`
+     
 * **1.6.2020: branch v1 `1.6.0`**
      * Přidáno API pro vytvoření reportů ze systému. 
      * Přibyla dokumentace na zobrazování konkrétní odpovědi (`GET answers/id`).
