@@ -27,8 +27,9 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
      
     * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
     * Přidán chybový kód `api.error.job.disallowed_acess_type`.
-    
-     * **Pozor: 11.11.2020 Dojde k těmto změnám:**
+    * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
+
+    * **Pozor: 11.11.2020 Dojde k těmto změnám:**
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_stopped` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .

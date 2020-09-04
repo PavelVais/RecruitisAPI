@@ -19,7 +19,8 @@
      
     * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
     * Přidán chybový kód `api.error.job.disallowed_acess_type`.
-    
+    * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
+
      * **Pozor: 11.11.2020 Dojde k těmto změnám:**
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_stopped` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 

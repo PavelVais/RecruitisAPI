@@ -2,10 +2,10 @@
 API volání, které se vztahuje k aktivním inzerátům.
 
 
-## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
+## Jobs listing [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
 
     
-### Get All Jobs [GET]
+### Get All jobs [GET]
 
 Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů a distribučních kanálů. 
 
@@ -86,9 +86,9 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
         :[](json/apidoc_jobs_list_get.json)
 
-## Job Detail [/jobs/{id}?{include_inactive}]
+## Job detail [/jobs/{id}?{include_inactive}]
 
-### Get Jobs Detail [GET]
+### Get Job detail [GET]
 
  Vrátí detail jednoho inzerátu. Parametry v odpovědi jsou stejné, jako když se vrací více inzerátů najednou. Je nutné počítat s tím, že se jednotlivé
  argumenty mohou vrátit i jako null namísto stringu, objektu.
@@ -292,6 +292,38 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
         
         :[](json/apidoc_json_error_404.json)
         
+
+## Job access state operation [/jobs/{id}/access_state/{state}]
+
+### Changing job access state [PUT]
+
+Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci pozic. Více je popsáno v sekci [parameter-access_state](#parameter-access_state).
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+            
+
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+    + state (optional,numeric,`1`) - Id parametru access_state. (viz. dokumentace přímo tohoto parametru.)
+        
++ Response 200 (application/json)
+
+        :[](json/apidoc_json_response_empty_general.json MSG:"Job access was successfully change into open|closed|archived state." CODE:"api.updated")
+
+        
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_404.json)
+        
         
 ### Unpublish job [DELETE]
 
@@ -324,7 +356,7 @@ Stažení inzerátu z prezentačního kanálu.
         
 ### List communication with candidates [GET]
 
-Výpis komunikace s kandidáty.
+Výpis komunikace s kandidáty na konkrétní pozici.
 
 + Request (application/json)
     + Headers

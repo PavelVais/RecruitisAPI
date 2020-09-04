@@ -37,7 +37,8 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
      
     * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
     * Přidán chybový kód `api.error.job.disallowed_acess_type`.
-    
+    * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
+
      * **Pozor: 11.11.2020 Dojde k těmto změnám:**
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_stopped` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
@@ -415,10 +416,10 @@ Získání informací o právě přihlášeném účtu.
 API volání, které se vztahuje k aktivním inzerátům.
 
 
-## Job Lists [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
+## Jobs listing [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
 
     
-### Get All Jobs [GET]
+### Get All jobs [GET]
 
 Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), filtrů a distribučních kanálů. 
 
@@ -812,9 +813,9 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
           }
         }
 
-## Job Detail [/jobs/{id}?{include_inactive}]
+## Job detail [/jobs/{id}?{include_inactive}]
 
-### Get Jobs Detail [GET]
+### Get Job detail [GET]
 
  Vrátí detail jednoho inzerátu. Parametry v odpovědi jsou stejné, jako když se vrací více inzerátů najednou. Je nutné počítat s tím, že se jednotlivé
  argumenty mohou vrátit i jako null namísto stringu, objektu.
@@ -1179,6 +1180,53 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
           }
         }
         
+
+## Job access state operation [/jobs/{id}/access_state/{state}]
+
+### Changing job access state [PUT]
+
+Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci pozic. Více je popsáno v sekci [parameter-access_state](#parameter-access_state).
+
+
+#### Requirements
+
+   + Authorization with token
+   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+            
+
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+    + state (optional,numeric,`1`) - Id parametru access_state. (viz. dokumentace přímo tohoto parametru.)
+        
++ Response 200 (application/json)
+
+        {
+          "payload": null,
+          "meta": {
+            "duration": "139.58",
+            "total_duration": 330,
+            "code": "api.updated",
+            "message": "Job access was successfully change into open|closed|archived state."
+          }
+        }
+
+        
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": 139.58,
+            "code": "api.error.not_found",
+            "message": "Attachment does not exists."
+          }
+        }
+        
         
 ### Unpublish job [DELETE]
 
@@ -1245,7 +1293,7 @@ Stažení inzerátu z prezentačního kanálu.
         
 ### List communication with candidates [GET]
 
-Výpis komunikace s kandidáty.
+Výpis komunikace s kandidáty na konkrétní pozici.
 
 + Request (application/json)
     + Headers
