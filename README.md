@@ -8,7 +8,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
-* **19.8.2020: branch v1 `1.7.0`**
+* **5.9.2020: branch v1 `1.7.0`**
 
      * U volání `GET jobs/` byly přidány tyto parametry: `date_stopped`,`access_state`,`stop_duration`,`activity_state`.
         * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
