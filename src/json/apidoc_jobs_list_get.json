@@ -2,11 +2,13 @@
   "payload": [
     {
       "job_id": 123456,
+      "access_state": 2,
       "public_id": "REC_2322",
       "draft" : false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
-      "date_end": "2019-01-30 15:14:00",
+      "date_stopped": "2019-01-30 15:14:00",
+      "stop_duration": 333454,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
       "personalist": {
@@ -112,14 +114,15 @@
     },
     {
       "job_id": 123456,
+      "access_state": 1,
       "public_id": null,
       "draft": false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
-      "date_end": null,
+      "date_stopped": null,
+      "stop_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
-      "source": "PRACEvCR.cz",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345
@@ -203,13 +206,15 @@
     },
     {
       "job_id": 123456,
+      "access_state": 1,
       "public_id": null,
       "draft": false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
+      "date_stopped": null,
+      "stop_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
-      "source": "PRACEvCR.cz",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345

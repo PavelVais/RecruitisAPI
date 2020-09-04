@@ -16,23 +16,49 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
  jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`).
  
-| Parameter            | Required   | Default Value   | Require `full_access` token   | Note                                                                                                                                                                        |
-| :------------------- | ---------- | --------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `limit`              | No         | 10              | No                            | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                   |
-| `page`               | No         | 1               | No                            | Aktuální stránka.                                                                                                                                                           |
-| `workfield_id`       | No         |                 | No                            | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                               |
-| `office_id`          | No         |                 | No                            | Array. Filtrace podle ID poboček.                                                                                                                                           |
-| `filter_id`          | No         |                 | No                            | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                         |
-| `channel_id`         | No         |                 | No                            | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu). |
-| `include_inactive`   | No         | 0               | Yes                           | Pokud chcete, aby systém vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                         |
-| `only_deleted`       | No         | 0               | Yes                           | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).         |
-| `status`             | No         | 1               | Yes                           | Parametr se chová jako bitmapa. 1 = aktivní, 2 = neaktivní, 4 = draft, 8 = smazaný. Jsou povolené kombinace všech, krom smazaných, které jdou zobrazit pouze samostatně.    |
-|                      |            |                 |                               | Status nahrazuje předchozí dva parametry (include_inactive a only_deleted), které jsou deprecated, a při jeho použití jsou ignorovány.                                      |
-| `updated_from`       | No         |                 | No                            | Datetime, fitrace podle data editace inzerátu                                                                                                                               |
-| `updated_to`         | No         |                 | No                            | Datetime, fitrace podle data editace inzerátu                                                                                                                               |
+| Parameter                       | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                        |
+| :-------------------------------|----------|---------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `limit`                         | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                   |
+| `page`                          | No       | 1             | No                          | Aktuální stránka.                                                                                                                                                           |
+| `workfield_id`                  | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                               |
+| `office_id`                     | No       |               | No                          | Array. Filtrace podle ID poboček.                                                                                                                                           |
+| `filter_id`                     | No       |               | No                          | Array. Filtrace podle ID jednotlivých filtračních položek přiřazených k inzerátu. Více v sekci filtračních položek.                                                         |
+| `channel_id`                    | No       |               | No                          | Array. Omezení na určité kanály. Více informací o kanálech vrací číselník, viz sekce Enumerations. Pokud není parametr určen, vrátí se všechny možné inzeráty (dle tokenu). |
+| `include_inactive` (deprecated) | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil i pozastavené / staré inzeráty, vložte tento parametr s hodnotou 1.                                                                         |
+| `only_deleted` (deprecated)     | No       | 0             | Yes                         | Pokud chcete, aby systém vrátil POUZE smazané inzeráty. V tento moment systém vrátí ale payload pouze s job_id parametrem (payload: [{job_id:1234},{job_id:5678}]).         |
+| `status` (deprecated)           | No       | 1             | Yes                         | Parametr se chová jako bitmapa. 1 = aktivní, 2 = neaktivní, 4 = draft, 8 = smazaný. Jsou povolené kombinace všech, krom smazaných, které jdou zobrazit pouze samostatně.    |
+|                                 |          |               |                             | Status nahrazuje předchozí dva parametry (include_inactive a only_deleted), které jsou deprecated, a při jeho použití jsou ignorovány.                                      |
+| `activity_state`                | No       | 1             | Yes                         | Viz. popis atributu níže.                                                                                                                                                   |
+| `access_state`                  | No       |               | Yes                         | Viz. popis atributu níže.                                                                                                                                                   |
+| `updated_from`                  | No       |               | No                          | Datetime, fitrace podle data poslední editace inzerátu                                                                                                                      |
+| `updated_to`                    | No       |               | No                          | Datetime, fitrace podle data poslední editace inzerátu                                                                                                                      |
 
 
 Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (u poboček vracíme adresy, pod jednou adresou můžete uvést i více poboček).
+
+
+#### Parameter activity_state
+
+Parametr filtruje pozice podle toho, jestli jsou aktivní nebo neaktivní. Zároveň je parametr bitmapa, tudíž lze jednotlivé hodnoty sčítat a ty používat (Umožňuje filtrovat více možností na jednou.).
+
+| Parameter        | Value | Note                                                          |
+|------------------|-------|---------------------------------------------------------------|
+| Aktivní pozice   | 1     | Pozice, která se nachází alespoň v jednom publikačním kanále. |
+| Neaktivní pozice | 2     | Pozice, která se nenchází v žádném publikačním kanále.        |
+
+
+#### Parameter access_state
+
+Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na rozdíl od activity_state **nelze** jednotlivé hodnoty kombinovat.
+
+| Parameter          | Value | Note                                                                                                                                                                                                                   |
+|--------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Otevřená pozice    | 1     | Otevřená pozice se nachází alespoň v jednom publikačním kanálu. Lze do ní přidávat odpovědi a jako jediná nepotřebuje `full_access` token.                                                                             |
+| Uzavřená pozice    | 2     | Uzavřená pozice se nenachází v žádném publikačním kanálu a lze do ní přidávat odpovědi.                                                                                                                                |
+| Archivovaná pozice | 3     | Archivovaná pozice (dříve smazaná) je pozice určená ke znovu otevření, popř. úplnému smazání. Nepřijímá nové odpovědi a neumožňuje editaci svávajících. Při Archivaci dochází k odosobnění uchazečů bez GDPR souhlasu. |
+| Draft              | 4     | Rozepsaná pozice právě přihlášeného personalisty.                                                                                                                                                                      |
+| Šablona            | 5     | Pozice určená jako šablona. Může být buď právě přihlášeného personalisty nebo celé firmy.                                                                                                                              |
+
 
 #### Requirements
 
@@ -85,10 +111,12 @@ Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřa
 | ----------------------------------  | ----------------- | ---------------    | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `job_id`                            | `public_access`   | int                | ID inzerátu.                                                                                                                                       |
 | `public_id`                         | `public_access`   | string             | Interní označení inzerátu. Nemusí být vyplněné.                                                                                                    |
+| `access_state`                      | `public_access`   | int                | Značení o jaký typ pozice se jedná. Viz. access_state parametr.                                                                                    |
 | `draft`                             | `public_access`   | bool               | Značí, jestli je inzerát zveřejněný, nebo jen rozepsaný.                                                                                           |
 | `title`                             | `public_access`   | string             |                                                                                                                                                    |
 | `description`                       | `public_access`   | string             |                                                                                                                                                    |
-| `date_end`                          | `public_access`   | date,null          |                                                                                                                                                    |
+| `date_stopped`                      | `public_access`   | date,null          |                                                                                                                                                    |
+| `stop_duration`                     | `public_access`   | date,null          |                                                                                                                                                    |
 | `last_update`                       | `public_access`   | datetime           | Datum, kdy byl inzerát naposledy upraven.                                                                                                          |
 | `date_created`                      | `public_access`   | datetime           |                                                                                                                                                    |
 | `workfields`                        | `public_access`   | array(object)      |                                                                                                                                                    |

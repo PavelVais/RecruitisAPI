@@ -1,13 +1,14 @@
-# Group reports
+# Group Reports
 
-Tato sekce se vztahuje k reportu
+Tato sekce se vztahuje k reportu dat ze systému Recruitis.
 
 ## Report [/reports/{?date_from,date_to,lists}]
 
 ### Export data [GET]
 
 Výpis dat ze systému, alternativa k exportu reportů do Excelu - data jsou ve stejném formátu. Tato API se hodí při využívání
-jiných reportovacích systému, například Keboola.
+jiných reportovacích systému, například Keboola. Pozor: Při použití velkého datumového rozmezí může dotaz trvat velmi dlouho.
+**Doporučujeme pro urychlení reportu využít filtraci konkrétních listů.**
 
 Popis jednotlivých listů, viz `lists` parametr:
     

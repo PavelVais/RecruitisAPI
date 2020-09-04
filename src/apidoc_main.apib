@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.6.1**
-* Poslední aktualizace: **19.8.2020**
+* Verze systému: **1.7.0**
+* Poslední aktualizace: **5.9.2020**
 
 API dokumentace pro systém Recruitis.io (http://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -103,6 +103,7 @@ Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popis.
 | `api.error.response.too_big`                     | Odpověď je příliš velká.
 | `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.
 | `api.error.referral.already_created`             | Daný referral byl již vytvořen.
+| `api.error.job.disallowed_acess_type`            | Tento typ inzerátu nepřijímá žádné odpovědi, popř. nelze nijak upravovat.
 
 V případě nedostupnosti API server vrací `503` s kódem `api.error.system.unavailable`.
 

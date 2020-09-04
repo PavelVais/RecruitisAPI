@@ -1,7 +1,33 @@
 ## Changelog
 
+* **19.8.2020: branch v1 `1.7.0`**
+
+     * U volání `GET jobs/` byly přidány tyto parametry: `date_stopped`,`access_state`,`stop_duration`,`activity_state`.
+        * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
+        * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony. 
+        * Podrobnější popis naleznete v přehledu parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+     
+     * U volání `GET jobs/` jsou tyto parametry označeny jako obsolete a v budoucnu dojde k jejim vymazání: 
+        * `source_site`: Prvek byl zavádějící.
+        * `date_end`: Bude nahrazen argumentem `date_stopped`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
+        * `only_deleted`: Vrátit smazané (resp. archivované pozice) bude možné přes parametr `access_state` s hodnotou 3.
+        * `include_inactive`: Neaktivní pozice (tj. pozice, které nejsou aktivní na žádném pulikačním kanálu)  se dají vrátit přes parametr `activity_state` s hodnotou 2, popř. 3 (bitmapa).
+        * `status` s hodnotou 4 (drafty) se nyní má volat přes parametr `access_state` s hodnotou 4.
+        * `status` s hodnotou 8 (smazané) se nyní má volat přes parametr `access_state` s hodnotou 3.
+        
+     * **Toerie:** Jedná se o zjednodušení filtračních možností pozic se zachováním všech možných stávajících variant. Zároveň bylo potřeba zakomponovat novou logiku otevřených a uzavřených pozic.
+     
+    * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
+    * Přidán chybový kód `api.error.job.disallowed_acess_type`.
+    
+     * **Pozor: 11.11.2020 Dojde k těmto změnám:**
+        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_stopped` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
+        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
+        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+        * pozn.: Do tohoto datumu bude dostupný veškerý starý i nový obsah.
+ 
 * **19.8.2020: branch v1 `1.6.1`**
-     * U volání `GET jobs/id` jsou v odpovědi navíc tyto parametry: `public_id`,`salary`,`education`,`last_update`,`draft`. Byl rozšíren parametr `details` o `facebook_picture_path` a `opening_reason`
+     * U volání `GET jobs/` A `GET jobs/id` jsou v odpovědi navíc tyto parametry: `public_id`,`salary`,`education`,`last_update`,`draft`. Byl rozšíren parametr `details` o `facebook_picture_path` a `opening_reason`
 
 * **1.6.2020: branch v1 `1.6.0`**
      * Přidáno API pro vytvoření reportů ze systému. 
