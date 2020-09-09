@@ -117,13 +117,13 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
     * V dokumentaci jsou připsány další dodatečné informace o API.
  
  * **9.7.2018: branch v1 `1.1`**
-    * Zprovozněno volání nad reálnými daty na url adrese: `https://app.recrutis.io/api2/`.
+    * Zprovozněno volání nad reálnými daty na url adrese: `https://app.recruitis.io/api2/`.
     * `GET /jobs` odstraněn parametr `regions`. Namísto něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejbližším plánu vývoje.
     * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována).
     * `GET /jobs` přidán parametr `office_id`.
     * Přidáno volání `GET /enums/offices`.
     * Volání `GET /enum/*` přejmenováno na `GET /enums/*`(zpětná kompatibilita je zachována: stále se dá volat `enums`).
-    * Zprovozněno volání na `https://api.recrutis.io/`(volání na https://app.recrutis.io/api2/ bude zachováno).
+    * Zprovozněno volání na `https://api.recruitis.io/`(volání na https://app.recruitis.io/api2/ bude zachováno).
 
  * **18.6.2018: branch v1 `1.0.1`**
     * `POST /Answers` nyní přijímá parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
