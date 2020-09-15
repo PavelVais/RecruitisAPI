@@ -10,6 +10,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 * **15.9.2020: branch v1 `1.7.1`**
     * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+    * U volání `GET reports/` přibyl parametr `stop_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 11.11.2020 odstraněn.
 
 * **5.9.2020: branch v1 `1.7.0`**
     * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`stop_duration`,`activity_state`.
@@ -18,7 +19,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
         * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony. 
         * Podrobnější popis naleznete v přehledu parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
      
-     * U volání `GET jobs/` jsou tyto parametry označeny jako obsolete a v budoucnu dojde k jejim vymazání: 
+     * U volání `GET jobs/` jsou tyto parametry označeny jako deprecated a v budoucnu dojde k jejim vymazání: 
         * `source_site`: Prvek byl zavádějící.
         * `date_end`: Bude nahrazen argumentem `date_closed`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
         * `only_deleted`: Vrátit smazané (resp. archivované pozice) bude možné přes parametr `access_state` s hodnotou 3.
@@ -36,6 +37,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_closed` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+        * Ve výpisu reportu (`GET reports/` ) dojde k odstranění položky `date_end`.
         * pozn.: Do tohoto datumu bude dostupný veškerý starý i nový obsah.
  
 * **19.8.2020: branch v1 `1.6.1`**
