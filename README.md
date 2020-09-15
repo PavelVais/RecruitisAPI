@@ -12,7 +12,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
     * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
 
 * **5.9.2020: branch v1 `1.7.0`**
-    * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_stopped`,`access_state`,`stop_duration`,`activity_state`.
+    * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`stop_duration`,`activity_state`.
     * U volání `GET jobs/` byly přidány tyto request parametry: `activity_state`,`access_state`
         * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
         * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony. 
@@ -20,7 +20,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
      
      * U volání `GET jobs/` jsou tyto parametry označeny jako obsolete a v budoucnu dojde k jejim vymazání: 
         * `source_site`: Prvek byl zavádějící.
-        * `date_end`: Bude nahrazen argumentem `date_stopped`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
+        * `date_end`: Bude nahrazen argumentem `date_closed`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
         * `only_deleted`: Vrátit smazané (resp. archivované pozice) bude možné přes parametr `access_state` s hodnotou 3.
         * `include_inactive`: Neaktivní pozice (tj. pozice, které nejsou aktivní na žádném pulikačním kanálu)  se dají vrátit přes parametr `activity_state` s hodnotou 2, popř. 3 (bitmapa).
         * `status` s hodnotou 4 (drafty) se nyní má volat přes parametr `access_state` s hodnotou 4.
@@ -33,7 +33,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
     * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
 
      * **Pozor: 11.11.2020 Dojde k těmto změnám:**
-        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_stopped` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
+        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_closed` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
         * pozn.: Do tohoto datumu bude dostupný veškerý starý i nový obsah.
