@@ -7,8 +7,8 @@
       "draft" : false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
-      "date_stopped": "2019-01-30 15:14:00",
-      "stop_duration": 333454,
+      "date_closed": "2019-01-30 15:14:00",
+      "closed_duration": 333454,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
       "personalist": {
@@ -119,8 +119,8 @@
       "draft": false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
-      "date_stopped": null,
-      "stop_duration": null,
+      "date_closed": null,
+      "closed_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
       "personalist": {
@@ -211,8 +211,8 @@
       "draft": false,
       "active": true,
       "date_created": "2017-03-23 17:42:10",
-      "date_stopped": null,
-      "stop_duration": null,
+      "date_closed": null,
+      "closed_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
       "personalist": {

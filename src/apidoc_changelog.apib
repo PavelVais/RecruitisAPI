@@ -2,10 +2,10 @@
 
 * **15.9.2020: branch v1 `1.7.1`**
     * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
-    * U volání `GET reports/` přibyl parametr `stop_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 11.11.2020 odstraněn.
+    * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 11.11.2020 odstraněn.
 
 * **5.9.2020: branch v1 `1.7.0`**
-    * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`stop_duration`,`activity_state`.
+    * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`closed_duration`,`activity_state`.
     * U volání `GET jobs/` byly přidány tyto request parametry: `activity_state`,`access_state`
         * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
         * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony. 

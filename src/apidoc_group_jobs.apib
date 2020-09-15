@@ -106,7 +106,7 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
    + token type: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
-   
+
 | Parameter                           | token condition   | Type               | Note                                                                                                                                               |
 | ----------------------------------  | ----------------- | ---------------    | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `job_id`                            | `public_access`   | int                | ID inzerátu.                                                                                                                                       |
@@ -117,7 +117,7 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | `title`                             | `public_access`   | string             |                                                                                                                                                    |
 | `description`                       | `public_access`   | string             |                                                                                                                                                    |
 | `date_closed`                       | `public_access`   | date,null          | Dřívější `date_end` signalizující datum, kdy byla pozice naposledy zavřena.                                                                        |
-| `stop_duration`                     | `public_access`   | timestamp (int)    | Čas, kdy byl inzerát ve stavu zavřený. Tato hodnota je kumulativní a sčítá veškerý čas i přes několikanásobné zavření a otevření pozice.           |
+| `closed_duration`                   | `public_access`   | timestamp (int)    | Čas, kdy byl inzerát ve stavu zavřený. Tato hodnota je kumulativní a sčítá veškerý čas i přes několikanásobné zavření a otevření pozice.           |
 | `last_update`                       | `public_access`   | datetime           | Datum, kdy byl inzerát naposledy upraven.                                                                                                          |
 | `date_created`                      | `public_access`   | datetime           |                                                                                                                                                    |
 | `workfields`                        | `public_access`   | array(object)      |                                                                                                                                                    |
