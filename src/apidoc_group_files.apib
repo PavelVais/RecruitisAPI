@@ -15,7 +15,7 @@ Pokud soubor neexistuje, nebo nepatří Vaší firmě, vrací se http status `40
 
 #### Parameters info
 
-| Parameter | Required | Default Value | Require `full_access` token | Note                                                                                   |
+| Parametr | Required | Default Value | Require `full_access` token | Note                                                                                   |
 |-----------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------|
 | `hash`    | Yes      |               | Yes                         | string,array. Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit. |
 
@@ -28,7 +28,7 @@ Parametr `hash` lze použít i jako pole (`?hash[]=xxxxx&hash[]=yyyyyy`). V tom 
 
 #### Response parameters
 
-| Parameter | token condition | Type   | Note                                                                      |
+| Parametr | token condition | Type   | Note                                                                      |
 |-----------|-----------------|--------|---------------------------------------------------------------------------|
 | `name`    | `full_access`   | string | Název souboru i příponou.                                                 |
 | `size`    | `full_access`   | double | Velikost souboru v KB (dvě desetinná místa).                              |

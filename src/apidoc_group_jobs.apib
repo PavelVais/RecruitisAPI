@@ -2,7 +2,7 @@
 API volání, které se vztahuje k aktivním inzerátům.
 
 
-## Jobs listing [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,include_inactive,only_deleted}]
+## Jobs listing [/jobs{?limit,page,workfield_id,office_id,filter_id,channel_id,activity_state,access_state,updated_from,updated_to}]
 
     
 ### Get All jobs [GET]
@@ -16,7 +16,7 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&office_id=XXX`) nebo 
  jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`).
  
-| Parameter                       | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                        |
+| Parametr                        | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                        |
 | :-------------------------------|----------|---------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `limit`                         | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                   |
 | `page`                          | No       | 1             | No                          | Aktuální stránka.                                                                                                                                                           |
@@ -37,7 +37,7 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
 Tip: Pokud chcete filtrovat podle adres, můžete inzeráty v Recruitisu přiřadit ke konkrétním pobočkám a pak filtrovat podle nich (u poboček vracíme adresy, pod jednou adresou můžete uvést i více poboček).
 
 
-#### Parameter activity_state
+#### Parametr activity_state
 
 Parametr filtruje pozice podle toho, jestli jsou aktivní nebo neaktivní. Zároveň je parametr bitmapa, tudíž lze jednotlivé hodnoty sčítat a ty používat (Umožňuje filtrovat více možností na jednou.).
 
@@ -47,17 +47,17 @@ Parametr filtruje pozice podle toho, jestli jsou aktivní nebo neaktivní. Záro
 | Neaktivní pozice | 2     | Pozice, která se nenchází v žádném publikačním kanále.        |
 
 
-#### Parameter access_state
+#### Parametr access_state
 
 Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na rozdíl od activity_state **nelze** jednotlivé hodnoty kombinovat.
 
-| Parameter          | Value | Note                                                                                                                                                                                                                   |
-|--------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Otevřená pozice    | 1     | Otevřená pozice se nachází alespoň v jednom publikačním kanálu. Lze do ní přidávat odpovědi a jako jediná nepotřebuje `full_access` token.                                                                             |
-| Uzavřená pozice    | 2     | Uzavřená pozice se nenachází v žádném publikačním kanálu a lze do ní přidávat odpovědi.                                                                                                                                |
-| Archivovaná pozice | 3     | Archivovaná pozice (dříve smazaná) je pozice určená ke znovu otevření, popř. úplnému smazání. Nepřijímá nové odpovědi a neumožňuje editaci svávajících. Při Archivaci dochází k odosobnění uchazečů bez GDPR souhlasu. |
-| Draft              | 4     | Rozepsaná pozice právě přihlášeného personalisty.                                                                                                                                                                      |
-| Šablona            | 5     | Pozice určená jako šablona. Může být buď právě přihlášeného personalisty nebo celé firmy.                                                                                                                              |
+| Parameter          | Value | Note                                                                                                                                                                                                                                                |
+|--------------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Otevřená pozice    | 1     | Otevřená pozice se nachází alespoň v jednom publikačním kanálu. Lze do ní přidávat odpovědi a jako jediná nepotřebuje `full_access` token.                                                                                                          |
+| Uzavřená pozice    | 2     | Uzavřená pozice se nenachází v žádném publikačním kanálu a lze do ní přidávat odpovědi.                                                                                                                                                             |
+| Archivovaná pozice | 3     | Archivovaná pozice (dříve smazaná) je pozice určená ke znovu otevření, popř. úplnému smazání. Nepřijímá nové odpovědi a neumožňuje editaci svávajících. Při Archivaci dochází k odosobnění uchazečů bez GDPR souhlasu. Vrací pouze seznam ID pozic. |
+| Draft              | 4     | Rozepsaná pozice právě přihlášeného personalisty.                                                                                                                                                                                                   |
+| Šablona            | 5     | Pozice určená jako šablona. Může být buď právě přihlášeného personalisty nebo celé firmy.                                                                                                                                                           |
 
 
 #### Requirements
@@ -86,7 +86,7 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
         :[](json/apidoc_jobs_list_get.json)
 
-## Job detail [/jobs/{id}?{include_inactive}]
+## Job detail [/jobs/{id}?{activity_state,access_state}]
 
 ### Get Job detail [GET]
 
@@ -113,9 +113,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | `public_id`                         | `public_access`   | string             | Interní označení inzerátu. Nemusí být vyplněné.                                                                                                    |
 | `access_state`                      | `public_access`   | int                | Značení o jaký typ pozice se jedná. Viz. access_state parametr.                                                                                    |
 | `draft`                             | `public_access`   | bool               | Značí, jestli je inzerát zveřejněný, nebo jen rozepsaný.                                                                                           |
+| `active`                            | `public_access`   | bool               | Viz popisek níže.                                                                                                                                  |
 | `title`                             | `public_access`   | string             |                                                                                                                                                    |
 | `description`                       | `public_access`   | string             |                                                                                                                                                    |
-| `date_stopped`                      | `public_access`   | date,null          |                                                                                                                                                    |
+| `date_stopped`                      | `public_access`   | date,null          | Dřívější `date_end` signalizující datum, kdy byla pozice zavřena.                                                                                  |
 | `stop_duration`                     | `public_access`   | date,null          |                                                                                                                                                    |
 | `last_update`                       | `public_access`   | datetime           | Datum, kdy byl inzerát naposledy upraven.                                                                                                          |
 | `date_created`                      | `public_access`   | datetime           |                                                                                                                                                    |
@@ -159,9 +160,15 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | `addresses` - `street`              | `public_access`   | string             |                                                                                                                                                    |
 | `addresses` - `region`              | `public_access`   | string             |                                                                                                                                                    |
 | `addresses` - `state`               | `public_access`   | string             |                                                                                                                                                    |
-| `active`                            | `public_access`   | bool               | Značí, jestli je Inzerát aktivní (není smazaný ani starý). Pokud se neaplikuje filtr `include_inactive`, tato položka je vždy true.                |
 | `draft`                             | `public_access`   | bool               | Značí, jestli je Inzerát draft.                                                                                                                    |
 
+#### Atribut active
+
+Atribut `active` ve výpisu inzerátů značí, jestli je daný inzerát aktivní, to jest, že je právě v tuto chvíli někde publikován a zároveň není pozastaven.  
+
+  * V případě, že je určen filtrační parametr `channel_id`, pak atribut `active` říká, jestli je inzerát aktivní v daném publikačním kanálu.
+  * Pokud je ve filtračním parametru `channel_id` více kanálů, pak je atribut `active` = true ve chvíli, kdy je alespoň v jednom z daných publikačních kanálů aktivní.
+  * Pokud filtrační parametr `channel_id` *není* určen, poté atribut `active` říká, jestli je inzerát aktivní alespoň v jednom ze všech publikáčních kanálů (tzn: je *kdekoli* právě vystaven.).
 
 + Request
     + Headers
