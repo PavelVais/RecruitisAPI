@@ -1,0 +1,11 @@
+{
+  "payload": {
+    "id": 12345,
+    "accessState": 1
+  },
+  "meta": {
+    "code": "api.updated",
+    "duration": 600,
+    "message": "Job access was successfully change into open state."
+  }
+}

@@ -501,9 +501,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
     + office_id (optional,array[int]) - Omezení na určité pobočky, viz sekce Enumerations.
     + filter_id (optional,array[int]) - Omezení na určité filtry, viz sekce Job Filters.
     + channel_id (optional,array[int]) - Omezení na určité kanály, viz sekce Enumerations.
-    + include_inactive (optional,boolean) - Vrátí i pozastavené nebo vypršelé inzeráty.
-    + only_deleted (optional,boolean) - Vrátí pouze smazané inzeráty, viz Parameters info.
-
+    + activity_state (optional,numeric) - Omezení na aktivní / neaktivní inzeráty.
+    + access_state (optional,numeric) - Omezení na otevřené / uzavřené a archivované inzeráty.
+    + updated_from (optional,numeric)  - Omezení na inzeráty s poslední úpravou.
+    + updated_to (optional,datetime) - Omezení na inzeráty s poslední úpravou.
     
 + Response 200 (application/json)
 
@@ -913,7 +914,8 @@ Atribut `active` ve výpisu inzerátů značí, jestli je daný inzerát aktivn�
 
 + Parameters
     + id (number, `1`) - Job id
-    + include_inactive (optional,boolean) - Vrátí inzerát, přestože je pozastavený nebo vypršelý.
+    + activity_state (optional,numeric) - Omezení na aktivní / neaktivní inzeráty.
+    + access_state (optional,numeric) - Omezení na otevřené / uzavřené a archivované inzeráty.
 
 
 
@@ -1106,9 +1108,8 @@ Zobrazení všech kanálů, kde je inzerát publikován.
             "code": "api.error.not_found",
             "message": "Attachment does not exists."
           }
-        } 
-
-
+        }
+         
 ## Publishing on channel [/jobs/{id}/channel/{channel_id}]
 
 ### Publish job [PUT]
@@ -1222,12 +1223,14 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
 + Response 200 (application/json)
 
         {
-          "payload": null,
+          "payload": {
+            "id": 12345,
+            "accessState": 1
+          },
           "meta": {
-            "duration": "139.58",
-            "total_duration": 330,
             "code": "api.updated",
-            "message": "Job access was successfully change into open|closed|archived state."
+            "duration": 600,
+            "message": "Job access was successfully change into open state."
           }
         }
 
@@ -3206,7 +3209,7 @@ Popis jednotlivých listů, viz `lists` parametr:
                 "JobDescription": "Job description shortened to max 150 characters",
                 "DateCreated": "2020-05-13 08:17:57",
                 "DateClosed": "2020-06-13 08:17:57",
-                "StopDuration": 0,
+                "ClosedDuration": 0,
                 "AuthorID": null,
                 "AuthorName": "Petr Personalista",
                 "ContactName": "Petr Novák",
