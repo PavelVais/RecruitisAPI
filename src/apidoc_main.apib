@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.7.1**
-* Poslední aktualizace: **15.9.2020**
+* Verze systému: **1.7.2**
+* Poslední aktualizace: **22.9.2020**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -42,19 +42,20 @@ Pro volání API využijte url: https://api.recruitis.io/api2/
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.).
 
-| META parameter      | Note                                                                                  |
-|:--------------------|---------------------------------------------------------------------------------------|
-| `code`              | Kód výsledku. V případě chyby je to standardizované hlášení o chybě.                  |
-| `message`           | Zpráva, která popisuje dané volání.                                                   |
-| `duration`          | Uplynulá doba při zpracování požadavku.                                               |
-| `cached`            | Výsledek je cachován a nemusí být aktuální.                                           |
-| `cached_from`       | Čas vygenerování vráceného výsledku.                                                   |
-| `deprecated`        | Dané volání je označeno jako zastaralé a nemělo by se nadále používat.                |
-| `additional_output` | Viz samostatná sekce.                                                                  |
+| META parameter      | Note                                                                                    |
+|---------------------|-----------------------------------------------------------------------------------------|
+| `code`              | Kód výsledku. V případě chyby je to standardizované hlášení o chybě.                    |
+| `message`           | Zpráva, která popisuje dané volání.                                                     |
+| `duration`          | Uplynulá doba při zpracování požadavku.                                                 |
+| `cached`            | Výsledek je cachován a nemusí být aktuální.                                             |
+| `cached_from`       | Čas vygenerování vráceného výsledku.                                                    |
+| `deprecated`        | Dané volání je označeno jako zastaralé a nemělo by se nadále používat.                  |
+| `additional_output` | Viz samostatná sekce.                                                                   |
 | `entries_from`      | Pokud se vrací pole, udává, od kterého elementu dané pole je (*určeno pro stránkovač*). |
-| `entries_to`        | Pokud se vrací pole, udává, do kterého elementu dané pole je (*určeno pro stránkovač*).|
-| `entries_total`     | Pokud se vrací pole, udává celkové množství elementů (*určeno pro stránkovač*).        |
-| `entries_sum`       | Pokud se vrací pole, udává aktuální množství elementů (*určeno pro stránkovač*).      |
+| `entries_to`        | Pokud se vrací pole, udává, do kterého elementu dané pole je (*určeno pro stránkovač*). |
+| `entries_total`     | Pokud se vrací pole, udává celkové množství elementů (*určeno pro stránkovač*).         |
+| `entries_sum`       | Pokud se vrací pole, udává aktuální množství elementů (*určeno pro stránkovač*).        |
+
 
 
 ####Meta informace `additional_output`

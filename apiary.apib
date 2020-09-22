@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.7.1**
-* Poslední aktualizace: **15.9.2020**
+* Verze systému: **1.7.2**
+* Poslední aktualizace: **22.9.2020**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,6 +18,9 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **22.9.2020: branch v1 `1.7.2`**
+    * Přidáno volání `GET /enums/employments`, které vrací názvy typů pracovních poměrů a jejich ID.
+    
 * **15.9.2020: branch v1 `1.7.1`**
     * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
     * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 11.11.2020 odstraněn.
@@ -171,19 +174,20 @@ Pro volání API využijte url: https://api.recruitis.io/api2/
 Každá `response` má `meta` sekci, která dodává veškeré pomocné informace. Níže vypsané atributy **nemusí** vždy v meta sekci být a mohou být podmíněny 
 okolnostmi volání (`entries_*` údaje se v meta sekci zobrazí jen při vrácení pole payloadu apod.).
 
-| META parameter      | Note                                                                                  |
-|:--------------------|---------------------------------------------------------------------------------------|
-| `code`              | Kód výsledku. V případě chyby je to standardizované hlášení o chybě.                  |
-| `message`           | Zpráva, která popisuje dané volání.                                                   |
-| `duration`          | Uplynulá doba při zpracování požadavku.                                               |
-| `cached`            | Výsledek je cachován a nemusí být aktuální.                                           |
-| `cached_from`       | Čas vygenerování vráceného výsledku.                                                   |
-| `deprecated`        | Dané volání je označeno jako zastaralé a nemělo by se nadále používat.                |
-| `additional_output` | Viz samostatná sekce.                                                                  |
+| META parameter      | Note                                                                                    |
+|---------------------|-----------------------------------------------------------------------------------------|
+| `code`              | Kód výsledku. V případě chyby je to standardizované hlášení o chybě.                    |
+| `message`           | Zpráva, která popisuje dané volání.                                                     |
+| `duration`          | Uplynulá doba při zpracování požadavku.                                                 |
+| `cached`            | Výsledek je cachován a nemusí být aktuální.                                             |
+| `cached_from`       | Čas vygenerování vráceného výsledku.                                                    |
+| `deprecated`        | Dané volání je označeno jako zastaralé a nemělo by se nadále používat.                  |
+| `additional_output` | Viz samostatná sekce.                                                                   |
 | `entries_from`      | Pokud se vrací pole, udává, od kterého elementu dané pole je (*určeno pro stránkovač*). |
-| `entries_to`        | Pokud se vrací pole, udává, do kterého elementu dané pole je (*určeno pro stránkovač*).|
-| `entries_total`     | Pokud se vrací pole, udává celkové množství elementů (*určeno pro stránkovač*).        |
-| `entries_sum`       | Pokud se vrací pole, udává aktuální množství elementů (*určeno pro stránkovač*).      |
+| `entries_to`        | Pokud se vrací pole, udává, do kterého elementu dané pole je (*určeno pro stránkovač*). |
+| `entries_total`     | Pokud se vrací pole, udává celkové množství elementů (*určeno pro stránkovač*).         |
+| `entries_sum`       | Pokud se vrací pole, udává aktuální množství elementů (*určeno pro stránkovač*).        |
+
 
 
 ####Meta informace `additional_output`
@@ -1426,29 +1430,33 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
    + Authorization with token
    + token type: `public_access`
    
-| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                                           |
-|:-------------------------------------|----------|:----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`                               | Yes      |                 |                                                                                                                                                                                                                                |
-| `email`                              | No       |                 | Uchazeči se dle emailu slučují.                                                                                                                                                                                                |
-| `phone`                              | No       |                 | Uchazeči se dle telefonu slučují.                                                                                                                                                                                              |
-| `skype`                              | No       |                 |                                                                                                                                                                                                                                |
-| `linkedin`                           | No       |                 |                                                                                                                                                                                                                                |
-| `facebook`                           | No       |                 |                                                                                                                                                                                                                                |
-| `twitter`                            | No       |                 |                                                                                                                                                                                                                                |
-| `strict`                             | No       | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`). |
-| `im_author`                          | No       | false           | Pokud je true, potom je daný personalista určen jako autor odpovědi, včetně poznámek. V opačném případě nebudou mít poznámky žádného autora a budou tkz. systémové.                                                |
-| `gdpr_agreement`                     | Yes      |                 | GDPR souhlas uchazeče o správě jeho osobních informací. Bez souhlasu není možné uchazeče importovat.                                                                                                                           |
-| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | Formát YYYY-MM-DD                                                                                                                                                                                                              |
-| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                            |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                                         |
-| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                   |
-| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                     |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                    |
-| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                                       |
-| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                                     |
-| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                                             |
-| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                                       |
+| Request value                        | Required                  | Default Value   | Note                                                                                                                                                                                                                          |
+|--------------------------------------|---------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                               | Yes                       |                 |                                                                                                                                                                                                                               |
+| `email`                              | No                        |                 | Uchazeči se dle emailu slučují.                                                                                                                                                                                               |
+| `phone`                              | No                        |                 | Uchazeči se dle telefonu slučují.                                                                                                                                                                                             |
+| `skype`                              | No                        |                 |                                                                                                                                                                                                                               |
+| `linkedin`                           | No                        |                 |                                                                                                                                                                                                                               |
+| `facebook`                           | No                        |                 |                                                                                                                                                                                                                               |
+| `twitter`                            | No                        |                 |                                                                                                                                                                                                                               |
+| `strict`                             | No                        | false           | Pokud je uvedena hodnotou "1", poté se při nezdaru nahrávání přílohy zastaví celý proces a vrátí se chyba. V opačném případě se uchazeč nahraje s informací, že ne všechno se nahrálo správně (viz `meta.additional_output`). |
+| `im_author`                          | No                        | false           | Pokud je true, potom je daný personalista určen jako autor odpovědi, včetně poznámek. V opačném případě nebudou mít poznámky žádného autora a budou tkz. systémové.                                                           |
+| `gdpr_agreement`                     | No (strongly recommended) | false           | bool,object, GDPR souhlas uchazeče o správě jeho osobních informací. Více níže.                                                                                                                                               |
+| `gdpr_agreement` - `date_expiration` | No                        | 1 year from now | Formát YYYY-MM-DD                                                                                                                                                                                                             |
+| `gdpr_agreement` - `source`          | No                        | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                                           |
+| `attachments`                        | No                        |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                                       |
+| `attachment` - `path`                | Yes                       |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                                  |
+| `attachment` - `base64`              | Yes                       |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                                                                                                    |
+| `attachment` - `filename`            | Yes                       |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                                   |
+| `attachment` - `type`                | No                        | 1               | @see Enumeration section                                                                                                                                                                                                      |
+| `extra`                              | No                        |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                                     |
+| `extra` - `note`                     | Yes                       |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                                           |
+| `extra` - `tag`                      | Yes                       |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                                     |
 
+#### GDPR u přidání uchazeče
+Při vytvoření uchazeče bez odpovědi (To jest například získání uchazeče přes sběrný formulář k uložení do databáze uchazečů.) 
+velmi doporučujeme přikládat GDPR souhlas. Recruitis Vám v opačném případě nedovolí s uchazečem pracovat, dokud souhlas nezískáte. 
+Jako parametr můžete vložit pouhý boolean, který při "true" vloží souhlas automaticky, popřípadě můžete vložit objekt, viz tabulka výše.
 
 + Request (application/json)
     + Headers
@@ -3121,6 +3129,64 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
             "message": "Musíte být přihlášen"
           }
         }
+
+
+
+## Employment List [/enums/employments]
+### Get offices [GET]
+
+Vrací všechny naše pracovní poměry a jejich ID.
+
+#### Requirements
+
+   + No Authorization is needed
+   
++ Parameters
+   + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
+       
++ Response 200 (application/json)
+
+       {
+         "payload": [
+           {
+             "id": 0,
+             "name": "Práce na plný úvazek"
+           },
+           {
+             "id": 1,
+             "name": "Práce na zkrácený úvazek"
+           },
+           {
+             "id": 2,
+             "name": "Práce na živnost"
+           },
+           {
+             "id": 3,
+             "name": "Práce přes internet"
+           },
+           {
+             "id": 4,
+             "name": "Práce doma"
+           },
+           {
+             "id": 5,
+             "name": "Krátkodobá práce"
+           },
+           {
+             "id": 6,
+             "name": "Brigáda"
+           }
+         ],
+         "meta": {
+           "code": "api.found",
+           "duration": 1280,
+           "message": "Employments enumeration is returned",
+           "entries_from": 0,
+           "entries_to": 7,
+           "entries_total": 7,
+           "entries_sum": 7
+         }
+       }
 
 # Group Reports
 
