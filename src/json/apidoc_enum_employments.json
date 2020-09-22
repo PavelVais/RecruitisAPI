@@ -1,0 +1,41 @@
+{
+  "payload": [
+    {
+      "id": 0,
+      "name": "Práce na plný úvazek"
+    },
+    {
+      "id": 1,
+      "name": "Práce na zkrácený úvazek"
+    },
+    {
+      "id": 2,
+      "name": "Práce na živnost"
+    },
+    {
+      "id": 3,
+      "name": "Práce přes internet"
+    },
+    {
+      "id": 4,
+      "name": "Práce doma"
+    },
+    {
+      "id": 5,
+      "name": "Krátkodobá práce"
+    },
+    {
+      "id": 6,
+      "name": "Brigáda"
+    }
+  ],
+  "meta": {
+    "code": "api.found",
+    "duration": 1280,
+    "message": "Employments enumeration is returned",
+    "entries_from": 0,
+    "entries_to": 7,
+    "entries_total": 7,
+    "entries_sum": 7
+  }
+}

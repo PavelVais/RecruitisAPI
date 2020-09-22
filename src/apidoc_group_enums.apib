@@ -138,3 +138,21 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 + Response 401 (application/json)
 
         :[](json/apidoc_json_error_401.json)
+
+
+
+## Employment List [/enums/employments]
+### Get offices [GET]
+
+Vrací všechny naše pracovní poměry a jejich ID.
+
+#### Requirements
+
+   + No Authorization is needed
+   
++ Parameters
+   + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
+       
++ Response 200 (application/json)
+
+       :[](json/apidoc_enum_employments.json)
