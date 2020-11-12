@@ -11,6 +11,8 @@
       "closed_duration": 333454,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
+      "description" : "Popis inzerátu",
+      "text_language": "cs",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345
@@ -123,6 +125,8 @@
       "closed_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
+      "description" : "Popis inzerátu",
+      "text_language": "cs",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345
@@ -215,6 +219,8 @@
       "closed_duration": null,
       "last_update": "2020-08-19 10:53:07",
       "title": "Android Developer",
+      "description" : "Popis inzerátu",
+      "text_language": "cs",
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345

@@ -1,11 +1,16 @@
 ## Changelog
 
+* **12.11.2020: branch v1 `1.7.3`**
+    * U výsledku volání `GET jobs/` je nyní atrivut `text_language`.
+    * U volání `POST jobs/` přibyl parametr `text_language`.
+    * Odstranění deprecated parametrů bylo posunuto na 16.12.2020.
+    
 * **22.9.2020: branch v1 `1.7.2`**
     * Přidáno volání `GET /enums/employments`, které vrací názvy typů pracovních poměrů a jejich ID.
     
 * **15.9.2020: branch v1 `1.7.1`**
     * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
-    * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 11.11.2020 odstraněn.
+    * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 16.12.2020 odstraněn.
 
 * **5.9.2020: branch v1 `1.7.0`**
     * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`closed_duration`,`activity_state`.
@@ -28,7 +33,7 @@
     * Přidán chybový kód `api.error.job.disallowed_acess_type`.
     * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
 
-     * **Pozor: 11.11.2020 Dojde k těmto změnám:**
+     * **Pozor: 16.12.2020 Dojde k těmto změnám:**
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_closed` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
         * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
