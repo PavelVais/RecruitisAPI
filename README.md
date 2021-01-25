@@ -8,6 +8,10 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+* **25.1.2021: branch v1 `1.7.4`**
+    * U volání `POST answers/` přibyl parametr `send_notification`.
+    * Odstranění deprecated parametrů bylo posunuto na 1.4.2021.
+
 * **12.11.2020: branch v1 `1.7.3`**
     * U výsledku volání `GET jobs/` je nyní atrivut `text_language`.
     * U volání `POST jobs/` přibyl parametr `text_language`.
