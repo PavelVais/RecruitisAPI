@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.7.4**
-* Poslední aktualizace: **25.1.2021**
+* Verze systému: **1.7.5**
+* Poslední aktualizace: **20.5.2021**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,10 +18,12 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **20.5.2021: branch v1 `1.7.5`**
+    * U volání `GET jobs/` přibyl parametr `office` v `addresses`.
+    * Odstranění deprecated parametrů bylo posunuto na 1.9.2021.
 
 * **25.1.2021: branch v1 `1.7.4`**
     * U volání `POST answers/` přibyl parametr `send_notification`.
-    * Odstranění deprecated parametrů bylo posunuto na 1.4.2021.
 
 * **12.11.2020: branch v1 `1.7.3`**
     * U výsledku volání `GET jobs/` je nyní atrivut `text_language`.
@@ -579,6 +581,8 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
               },
               "addresses": [
                 {
+                  "id": 1234,
+                  "office_id": 1234,
                   "state": "CZ",
                   "region": "Královehradecký kraj",
                   "city": "Hradec Králové",
@@ -668,6 +672,8 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
               },
               "addresses": [
                 {
+                  "id": 1234,
+                  "office_id": 1234,
                   "state": "CZ",
                   "region": "Královehradecký kraj",
                   "city": "Hradec Králové",
@@ -770,6 +776,8 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
               },
               "addresses": [
                 {
+                  "id": 1234,
+                  "office_id": 1234,
                   "state": "CZ",
                   "region": "Královehradecký kraj",
                   "city": "Hradec Králové",
@@ -912,6 +920,7 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | `contact` - `phone`                 | `public_access`   | string             |                                                                                                                                                    |
 | `addresses`                         | `public_access`   | array(object)      |                                                                                                                                                    |
 | `addresses` - `id`                  | `public_access`   | int                |                                                                                                                                                    |
+| `addresses` - `office_id`           | `public_access`   | int                | návaznost na office, viz dotaz `GET enums/offices`                                                                                                 |
 | `addresses` - `city`                | `public_access`   | string             |                                                                                                                                                    |
 | `addresses` - `psc`                 | `public_access`   | string             |                                                                                                                                                    |
 | `addresses` - `street`              | `public_access`   | string             |                                                                                                                                                    |

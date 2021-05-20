@@ -8,6 +8,10 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
+* **20.5.2021: branch v1 `1.7.5`**
+    * U volání `GET jobs/` přibyl parametr `office` v `addresses`.
+    * Odstranění deprecated parametrů bylo posunuto na 1.9.2021.
+
 * **25.1.2021: branch v1 `1.7.4`**
     * U volání `POST answers/` přibyl parametr `send_notification`.
     * Odstranění deprecated parametrů bylo posunuto na 1.4.2021.

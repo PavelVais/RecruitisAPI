@@ -55,6 +55,8 @@
       },
       "addresses": [
         {
+          "id": 1234,
+          "office_id": 1234,
           "state": "CZ",
           "region": "Královehradecký kraj",
           "city": "Hradec Králové",
@@ -144,6 +146,8 @@
       },
       "addresses": [
         {
+          "id": 1234,
+          "office_id": 1234,
           "state": "CZ",
           "region": "Královehradecký kraj",
           "city": "Hradec Králové",
@@ -246,6 +250,8 @@
       },
       "addresses": [
         {
+          "id": 1234,
+          "office_id": 1234,
           "state": "CZ",
           "region": "Královehradecký kraj",
           "city": "Hradec Králové",
