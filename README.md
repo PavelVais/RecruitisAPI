@@ -9,7 +9,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 ## Changelog
 
 * **20.5.2021: branch v1 `1.7.5`**
-    * U volání `GET jobs/` přibyl parametr `office` v `addresses`.
+    * U volání `GET jobs/` přibyl parametr `office_id` v `addresses`.
     * Odstranění deprecated parametrů bylo posunuto na 1.9.2021.
 
 * **25.1.2021: branch v1 `1.7.4`**
@@ -17,7 +17,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
     * Odstranění deprecated parametrů bylo posunuto na 1.4.2021.
 
 * **12.11.2020: branch v1 `1.7.3`**
-    * U výsledku volání `GET jobs/` je nyní atrivut `text_language`.
+    * U výsledku volání `GET jobs/` je nyní atribut `text_language`.
     * U volání `POST jobs/` přibyl parametr `text_language`.
     * Odstranění deprecated parametrů bylo posunuto na 16.12.2020.
     
