@@ -2,6 +2,7 @@
   "employee_id": 123,
   "author_id": 456,
   "sender": "Pavel",
+  "sendType": "employee",
   "recipient": "Lukáš",
   "subject": "předmět",
   "content": "obsah komunikace, třeba pěkná pochvala",

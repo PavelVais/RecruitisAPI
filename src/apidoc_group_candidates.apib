@@ -93,14 +93,14 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
         :[](json/apidoc_json_error_general.json MSG:"Daily 'quota_candidates_delete quota' has been exceeded." CODE:"api.error.quota.exceeded")
         
 
-## Communication with candidate [/candidate/{id}(/{answer_id})/communication{?limit,page,author_id,direction,type}]
+## Communication with candidate [/candidate/{id}/{answer_id}/communication{?limit,page,author_id,direction,type}]
 
 ### List candidate communication [GET]
 
 Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše komunikaci vázanou přímo na kandidáta. Při vyplnění `answer_id` vypíše komunikaci vázanou na danou odpověď.
 
 | Parameter `type` | Note                                           |
-|-:----------------|------------------------------------------------|
+|------------------|------------------------------------------------|
 | linkedin         | Komunikace ze sociální sítě LinkedIn           |
 | email            | Komunikace z emailové schránky                 |
 | sms              | Komunikace ze sociální sítě LinkedIn           |
@@ -140,6 +140,8 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
 | `subject`                            | Yes      |                 | Předmět zprávy.                                                                                                                                 |
 | `content`                            | Yes      |                 | Obsah zprávy.                                                                                                                                   |
 | `direction`                          | Yes      |                 | Jedna z hodnot: in = příchozí, out = odchozí, váže se ke kandidátovi/odpovědi. Tj. příchozí ke kandidátovi a odchozí od kandidáta.              |
+| `senderType`                         | Yes      |                 | Říká, od koho pochází daná komunikace. Přípustné hodnoty: `candidate`,`employee`,`system`,`other`                                               |
+| `type`                               | Yes      |                 | Říká, o jaký typ komunikace se jedná. Přípustné hodnoty: `linkedin`,`call`,`email`,`sysemail`,`sms`,`note`,`call`                                               |
 | `strict`                             | No       | 1               | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách.            |
 | `date_action`                        | No       | now             | Datum vytvoření komunikace.                  |
 | `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                         |
