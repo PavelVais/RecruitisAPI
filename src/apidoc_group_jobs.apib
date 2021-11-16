@@ -62,9 +62,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
-   + token type: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
+* Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
+* Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -102,9 +103,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o interní inzerát.
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+* Token typ: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
 
@@ -205,8 +207,8 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
    
 | Request value                          | Required   | Default Value     | Note                                                                                                                                                                                                                           |
 | :------------------------------------- | ---------- | :---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -241,9 +243,9 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 Zobrazení všech kanálů, kde je inzerát publikován.
 
 #### Requirements
-        
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
    
 + Request (application/json)
     + Headers
@@ -268,8 +270,8 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
 | Request value                          | Required   | Type        | Default Value     | Note                                                                                                                  |
 | :------------------------------------- | ---------- | :---------- | ----------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -312,13 +314,13 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
-+ Request (application/json)
-    + Headers
+  + Request (application/json)
+      + Headers
     
-            Authorization: Bearer :[](apidoc_bearer_token.txt)
+              Authorization: Bearer :[](apidoc_bearer_token.txt)
             
 
 + Parameters
@@ -341,8 +343,8 @@ Stažení inzerátu z prezentačního kanálu.
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
    
 + Request (application/json)
     + Headers

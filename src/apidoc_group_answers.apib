@@ -17,9 +17,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o interní inzerát.    
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
+* Token typ: `full_access`: pokud se jedná o interní inzerát.
+* Kompatibilní s firemním tokenem.
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                                                                                           |
 |:-------------------------------------|----------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -139,8 +140,10 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+  + Volání musí být s autorizačním tokenem.
+  + Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+  + Kompatibilní s firemním tokenem.
+
 
 + Request
     + Headers
@@ -207,8 +210,9 @@ Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta co
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+   + Volání musí být s autorizačním tokenem.
+   +  Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+   + Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -232,8 +236,8 @@ Pro definici hodnot pooužijte bitmasku.
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`.    
+   + Kompatibilní s firemním tokenem.
+   + Token typ: `full_access`.    
    
 | Request value        | Required | Default Value   | Note                                                                                      |
 |:---------------------|----------|-----------------|-------------------------------------------------------------------------------------------|

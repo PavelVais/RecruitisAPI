@@ -22,8 +22,9 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 #### Requirements
 
-   + Authorization with token
-      + token type: `public_token` 
+   + Volání musí být s autorizačním tokenem.
+   + Kompatibilní s firemním tokenem.
+   + Token typ: `public_token`
 
 + Request
     + Headers
@@ -48,6 +49,18 @@ Vytvoření nového filtru.
 | `name`                | Yes      | string   | | Název filtru.
 | `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
++ Request
+  + Headers
+
+          Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
 + Response 200 (application/json)
 
         :[](json/apidoc_enum_filters.json)
@@ -62,6 +75,19 @@ Editace filtru dle ID v parametru URI.
 | `name`                | Yes      | string   | | Název filtru.
 | `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
+
++ Request
+  + Headers
+
+          Authorization: Bearer :[](apidoc_bearer_token.txt)
+
+
 + Parameters
     + id (required, number, `1`) - Filter ID
 
@@ -72,6 +98,13 @@ Editace filtru dle ID v parametru URI.
 ### Delete existing filter [DELETE]
         
 Smaže filtr dle ID v parametru URI.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
 
 + Parameters
     + id (required, number, `1`) - Filter ID

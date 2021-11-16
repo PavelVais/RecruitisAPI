@@ -35,10 +35,10 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
-   + Alespoň jeden typ tokenu je tedy vyžadován ve chvíli, kdy použijete parametr `channel_assignation`.
+   * Autorizace je vyžadována ve chvíli, kdy je použiž parametr `channel_assignation`.
+   * Kompatibilní s firemním tokenem.
+   * Token typ: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+   * Token typ: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
    
 + Request
     + Headers
@@ -66,8 +66,9 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access` 
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access` 
     
 + Response 200 (application/json)
 
@@ -85,9 +86,10 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotný
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token` 
-    
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         :[](json/apidoc_enum_sources.json)
@@ -108,9 +110,9 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`
-    
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         :[](json/apidoc_enum_filters.json)
@@ -128,9 +130,10 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`
-    
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         :[](json/apidoc_enum_offices.json)
@@ -141,7 +144,7 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 
 
-## Employment List [/enums/employments]
+## Employment List [/enums/employments{?lang}]
 ### Get offices [GET]
 
 Vrací všechny naše pracovní poměry a jejich ID.

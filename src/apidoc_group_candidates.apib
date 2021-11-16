@@ -20,8 +20,9 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`
+   * Volání musí být s autorizačním tokenem.
+   * Kompatibilní s firemním tokenem.
+   * Token typ: `public_access`
    
 | Request value                        | Required                  | Default Value   | Note                                                                                                                                                                                                                          |
 |--------------------------------------|---------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -76,6 +77,11 @@ Všechny jeho odpovědi, pohovory, poznámky, přílohy, GDPR souhlasy atd. **Ta
 
 Na toto volání se vztahuje denní kvóta. V případě překročení denní kvóty se vrátí odpověď `403 - forbidden` s `meta.code` `api.error.quota.exceeded`.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
+
 + Parameters
      + id (required, number, `1`) - ID kandidáta (user ID)
 
@@ -106,6 +112,10 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
 | sms              | Komunikace ze sociální sítě LinkedIn           |
 | note             | Komunikace s klientem proběhla na jiném místě. |
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
 
 + Request (application/json)
     + Headers
@@ -129,7 +139,8 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
 
 #### Requirements
 
-   + Authorization with token
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                            |
 |:-------------------------------------|----------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -166,6 +177,3 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
 + Response 400 (application/json)
         
         :[](json/apidoc_json_error_validation.json MSG:"Can't upload attachment." CODE:"api.error.generic" PROPERTY:"direction" VALIDATION:"Object property 'direction' has wrong value. Allowed enum values: in, out")
-
-
-:[group_answers](apidoc_group_answers.apib)

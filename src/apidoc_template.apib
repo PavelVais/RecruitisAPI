@@ -6,27 +6,28 @@
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access`
 
 #### Zobrazení parametru závislém na druhu tokenu
 
-| Parametr | token          | Poznámka |
-|:-------|----------------------|----------------------|
-| `stats`    | `full_access`          |
+| Parametr | token                  | Poznámka             |
+| :------- | ---------------------- | -------------------- |
+| `stats`  | `full_access`          |                      |
 
 ####Vysvětlení flow hodnot
 
-| Flow ID | Vysvětlení          | Poznámka |
-|:-------|----------------------|----------------------|
-| `0`    | Status "Nový"          |
-| `1`    | Status "Nepřiřazený"   |
-| `2`    | Status "Další kolo"    | Toto ID se momentálně nepoužívá. |
-| `3`    | Status "Telefon"        |
-| `4`    | Status "Pohovor"         |
-| `5`    | Status "Vybrán"          |
-| `6`    | Status "Přijat"          |
-| `8`    | Status "Smazán"          | Toto ID zapříčiní, že daný uchazeč z odpovědi zmizí. |
+| Flow ID  | Vysvětlení             | Poznámka                                             |
+| :------- | ---------------------- | --------------------                                 |
+| `0`      | Status "Nový           |                                                      |
+| `1`      | Status "Nepřiřazený    |                                                      |
+| `2`      | Status "Další kolo     | Toto ID se momentálně nepoužívá.                     |
+| `3`      | Status "Telefon        |                                                      |
+| `4`      | Status "Pohovor        |                                                      |
+| `5`      | Status "Vybrán         |                                                      |
+| `6`      | Status "Přijat         |                                                      |
+| `8`      | Status "Smazán         | Toto ID zapříčiní, že daný uchazeč z odpovědi zmizí. |
 
 Získání informací o mém účtu, za kterého jsem právě přihlášen.
 

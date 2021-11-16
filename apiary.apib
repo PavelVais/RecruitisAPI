@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.7.5**
-* Poslední aktualizace: **20.5.2021**
+* Verze systému: **1.8.0**
+* Poslední aktualizace: **16.11.2021**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,164 +18,212 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **16.11.2021: branch v1 `1.8.0`**
+  * Přibyl popis firemního typu tokenu vč. všech kompatibilních API volání.
+  * Volání `GET enums/...` je nyní možné s firemním tokenem.
+  * Volání `GET filters/...` je nyní možné s firemním tokenem.
+  * Volání `GET a POST candidates/communications` vyžaduje nyní `full_access` token.
+
+
 * **20.5.2021: branch v1 `1.7.5`**
-    * U volání `GET jobs/` přibyl parametr `office_id` v `addresses`.
-    * Odstranění deprecated parametrů bylo posunuto na 1.9.2021.
+  * U volání `GET jobs/` přibyl parametr `office_id` v `addresses`.
+  * Odstranění deprecated parametrů bylo posunuto na 1.9.2021.
+
 
 * **25.1.2021: branch v1 `1.7.4`**
-    * U volání `POST answers/` přibyl parametr `send_notification`.
+  * U volání `POST answers/` přibyl parametr `send_notification`.
+  * Odstranění deprecated parametrů bylo posunuto na 1.4.2021.
+
 
 * **12.11.2020: branch v1 `1.7.3`**
-    * U výsledku volání `GET jobs/` je nyní atribut `text_language`.
-    * U volání `POST jobs/` přibyl parametr `text_language`.
-    * Odstranění deprecated parametrů bylo posunuto na 16.12.2020.
-    
+  * U výsledku volání `GET jobs/` je nyní atribut `text_language`.
+  * U volání `POST jobs/` přibyl parametr `text_language`.
+  * Odstranění deprecated parametrů bylo posunuto na 16.12.2020.
+
+
 * **22.9.2020: branch v1 `1.7.2`**
-    * Přidáno volání `GET /enums/employments`, které vrací názvy typů pracovních poměrů a jejich ID.
-    
+  * Přidáno volání `GET /enums/employments`, které vrací názvy typů pracovních poměrů a jejich ID.
+
+
 * **15.9.2020: branch v1 `1.7.1`**
-    * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
-    * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 16.12.2020 odstraněn.
+  * U výsledku volání `GET jobs/` je nyní lepé popsán atribut `active`, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+  * U volání `GET reports/` přibyl parametr `closed_duration` a `date_closed`. Parametr `date_end` byl označen jako deprecated a bude 16.11.2020 odstraněn.
+
 
 * **5.9.2020: branch v1 `1.7.0`**
-    * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`closed_duration`,`activity_state`.
-    * U volání `GET jobs/` byly přidány tyto request parametry: `activity_state`,`access_state`
-        * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
-        * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony. 
-        * Podrobnější popis naleznete v přehledu parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
-     
-     * U volání `GET jobs/` jsou tyto parametry označeny jako deprecated a v budoucnu dojde k jejim vymazání: 
-        * `source_site`: Prvek byl zavádějící.
-        * `date_end`: Bude nahrazen argumentem `date_closed`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
-        * `only_deleted`: Vrátit smazané (resp. archivované pozice) bude možné přes parametr `access_state` s hodnotou 3.
-        * `include_inactive`: Neaktivní pozice (tj. pozice, které nejsou aktivní na žádném pulikačním kanálu)  se dají vrátit přes parametr `activity_state` s hodnotou 2, popř. 3 (bitmapa).
-        * `status` s hodnotou 4 (drafty) se nyní má volat přes parametr `access_state` s hodnotou 4.
-        * `status` s hodnotou 8 (smazané) se nyní má volat přes parametr `access_state` s hodnotou 3.
-        
-     * **Toerie:** Jedná se o zjednodušení filtračních možností pozic se zachováním všech možných stávajících variant. Zároveň bylo potřeba zakomponovat novou logiku otevřených a uzavřených pozic.
-     
-    * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
-    * Přidán chybový kód `api.error.job.disallowed_acess_type`.
-    * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
+  * U výsledku volání `GET jobs/` byly přidány tyto atributy: `date_closed`,`access_state`,`closed_duration`,`activity_state`.
+  * U volání `GET jobs/` byly přidány tyto request parametry: `activity_state`,`access_state`
+    * `activity_state` Je synonymum pro nynější parametr `status` obsahující aktivní a neaktivní inzeráty. Smazané inzráty jsou nyni označené jako archivované a přesunuty pod parametr `access_state` s hodnotou 3.
+    * `access_state` Je request parametr filtrující otevřené, uzavřené, archivované pozice, drafty a šablony.
+    * Podrobnější popis naleznete v přehledu parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
 
-     * **Pozor: 16.12.2020 Dojde k těmto změnám:**
-        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_closed` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
-        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`. 
-        * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
-        * Ve výpisu reportu (`GET reports/` ) dojde k odstranění položky `date_end`.
-        * pozn.: Do tohoto datumu bude dostupný veškerý starý i nový obsah.
- 
+  * U volání `GET jobs/` jsou tyto parametry označeny jako deprecated a v budoucnu dojde k jejim vymazání:
+    * `source_site`: Prvek byl zavádějící.
+    * `date_end`: Bude nahrazen argumentem `date_closed`. Důvodem je přesnější pojmenování parametru, které značí datum uzavření pozice.
+    * `only_deleted`: Vrátit smazané (resp. archivované pozice) bude možné přes parametr `access_state` s hodnotou 3.
+    * `include_inactive`: Neaktivní pozice (tj. pozice, které nejsou aktivní na žádném pulikačním kanálu)  se dají vrátit přes parametr `activity_state` s hodnotou 2, popř. 3 (bitmapa).
+    * `status` s hodnotou 4 (drafty) se nyní má volat přes parametr `access_state` s hodnotou 4.
+    * `status` s hodnotou 8 (smazané) se nyní má volat přes parametr `access_state` s hodnotou 3.
+
+  * **Toerie:** Jedná se o zjednodušení filtračních možností pozic se zachováním všech možných stávajících variant. Zároveň bylo potřeba zakomponovat novou logiku otevřených a uzavřených pozic.
+
+  * U volání `POST answers/` nelze přidat odpověď v případě, že směruje na archivovanou pozici. Tento požadavek vrací `code` `api.error.job.wrong_acess_type`.
+  * Přidán chybový kód `api.error.job.disallowed_acess_type`.
+  * Přidáno API volání `PUT jobs/(id)/access_state/(state)` pro vytvoření změnu uzavírání / otevírání a archivaci pozic.
+
+  * **Pozor: 16.12.2020 Dojde k těmto změnám:**
+    * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování parametru `date_end` na `date_closed` (Původní parametr `date_end` již nebude dostupný.), taktéž se odstraní request parametr `only_deleted` a `include_inactive`.
+    * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k odstranění filtrovacích request parametrů  `only_deleted` a `include_inactive`.
+    * Ve výpisu inzerátů (`GET jobs/` a `GET jobs/id`) dojde k přejmenování filtrovací položky `status` na `activity_state` s bitmap hodnotami 1 a 2, viz přehled parametrů https://ceskytrhpracesro.docs.apiary.io/#reference/jobs/job-lists/get-all-jobs .
+    * Ve výpisu reportu (`GET reports/` ) dojde k odstranění položky `date_end`.
+    * pozn.: Do tohoto datumu bude dostupný veškerý starý i nový obsah.
+
+
 * **19.8.2020: branch v1 `1.6.1`**
-     * U volání `GET jobs/` A `GET jobs/id` jsou v odpovědi navíc tyto parametry: `public_id`,`salary`,`education`,`last_update`,`draft`. Byl rozšíren parametr `details` o `facebook_picture_path` a `opening_reason`
+  * U volání `GET jobs/` A `GET jobs/id` jsou v odpovědi navíc tyto parametry: `public_id`,`salary`,`education`,`last_update`,`draft`. Byl rozšíren parametr `details` o `facebook_picture_path` a `opening_reason`
+
 
 * **1.6.2020: branch v1 `1.6.0`**
-     * Přidáno API pro vytvoření reportů ze systému. 
-     * Přibyla dokumentace na zobrazování konkrétní odpovědi (`GET answers/id`).
-     * U dotazu na seznam odpovědí nyní vracíme parametr `hash` v konkrétní příloze.
-     * U volání `GET answers/id` je možné volat parametr `im_author`.
-     
+  * Přidáno API pro vytvoření reportů ze systému.
+  * Přibyla dokumentace na zobrazování konkrétní odpovědi (`GET answers/id`).
+  * U dotazu na seznam odpovědí nyní vracíme parametr `hash` v konkrétní příloze.
+  * U volání `GET answers/id` je možné volat parametr `im_author`.
+
+
 * **19.2.2020: branch v1 `1.5.0`**
-     * Přidáno API pro vytváření komunikace s uchazečem. 
-     * U API s komunikací s uchazečem se nyní vypisují detailněji validační chyby (`meta`.`errors`). Postupně bude hlášení o chybách ve validaci ve všech volání.
+  * Přidáno API pro vytváření komunikace s uchazečem.
+  * U API s komunikací s uchazečem se nyní vypisují detailněji validační chyby (`meta`.`errors`). Postupně bude hlášení o chybách ve validaci ve všech volání.
+
 
 * **14.1.2020: branch v1 `1.4.2`**
-     * U volání `GET jobs/` je možné volat parametr `status` a filtrovat s ním i draft inzeráty.
-     * Přidáno volání `POST jobs/` které umí vytvořit draft inzerát. (následně je ho možné dokončit v Recruitisu)
+  * U volání `GET jobs/` je možné volat parametr `status` a filtrovat s ním i draft inzeráty.
+  * Přidáno volání `POST jobs/` které umí vytvořit draft inzerát. (následně je ho možné dokončit v Recruitisu)
 
- * **15.7.2019: branch v1 `1.4.1`**
-     * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
-     * Do dokumentace byl přidán popis s meta.code `api.error.response.too_big`.
-     * Do seznamu odpovědí přibyly parametry odpovědi `job_contact_name`,`job_contact_email`,`job_contact_phone`
-     
- * **11.7.2019: branch v1 `1.4`**
-     * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).
-     * Přibyla dokumentace na stahování příloh (`GET files/`).
- 
- * **3.12.2018: branch v1 `1.3.4`**
-     * V dokumentaci přibyl popis stavu při nedostupnosti API. 
-     * Přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items` 
- 
- * **22.10.2018: branch v1 `1.3.3`**
-     * Byla přidána nová sekce `referrals`, ve které je volání na přidání a výpis referralů. 
-     
- * **16.10.2018: branch v1 `1.3.2`**
-     * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education`.
- 
- * **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
 
- * **17.9.2018: branch v1 `1.3.1`**
-     * Bylo přidáno volání `DELETE /candidates`.
-     * Přibyl popis kvót.
-     * Přibyla kvóta `quota_candidates_delete`.
- 
- * **11.9.2018: branch v1 `1.3`**
-     * Bylo přidáno volání `POST /candidates`.
-     * Do dokumentace byl přidán popis tagů.
-     * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
-     * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+".
- 
- * **6.9.2018: branch v1 `1.2.3`**
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`.
-     * Do volání `GET /jobs` přibyl parametr `include_inactive`.
-     * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` namísto prázdné `200` odpovědi.
-     * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
+* **15.7.2019: branch v1 `1.4.1`**
+  * U volání `GET files/` je možné volat parametr `hash` jako pole. Součet všech příloh musí být menší, než 30MB.
+  * Do dokumentace byl přidán popis s meta.code `api.error.response.too_big`.
+  * Do seznamu odpovědí přibyly parametry odpovědi `job_contact_name`,`job_contact_email`,`job_contact_phone`
 
- * **5.9.2018: branch v1 `1.2.2`**
-     * Do odpovědi u volání `POST /Answers` přibyl parametr `source`.
-     * Do odpovědi u volání `GET /jobs` přibyl parametr `details`.
-     * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace.
-     * Aktualizace dokumentace o některé důležité informace.
 
- * **28.8.2018: branch v1 `1.2.1`**
-    * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče).
-    * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`.
- 
- * **6.8.2018: branch v1 `1.2`**
-    * Přidána sekce **Filters**
-    * Zprovozněn parametr filter_id u volání `GET /jobs`.
-    * U volání `POST /answer`  přibyl parametr `referral_id`, `channel_id` a `extra`, který dovoluje přidat k odpovědi poznámku nebo tag..
-    * U volání `POST /answer`  byl zprovozněn parametr `channel_id`.
-    * U volání `POST /answer`  byl upraven parametr `gppr_agreements` - nyní je rozšířen o další atributy.
-    * Volání `GET /enums/filters` je označeno jako deprecated. Namísto toho se doporučuje volat `GET /filters`.
- 
- * **19.7.2018: branch v1 `1.1.1`**
-    * Zprovozněn parametr channel_id u volání `GET /jobs`.
-    * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`.
-    * Opraven parametr channel_assignation u volání `GET /enums/workfields`.
-    * Přidáno vynucení správných typů tokenů u volání `GET /enums/workfields` a `GET /jobs`.
-    * Standardizovány některé kódové označení chyb + jsou zveřejněny a popsány v dokumentaci.
-    * V dokumentaci jsou připsány další dodatečné informace o API.
- 
- * **9.7.2018: branch v1 `1.1`**
-    * Zprovozněno volání nad reálnými daty na url adrese: `https://app.recruitis.io/api2/`.
-    * `GET /jobs` odstraněn parametr `regions`. Namísto něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejbližším plánu vývoje.
-    * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována).
-    * `GET /jobs` přidán parametr `office_id`.
-    * Přidáno volání `GET /enums/offices`.
-    * Volání `GET /enum/*` přejmenováno na `GET /enums/*`(zpětná kompatibilita je zachována: stále se dá volat `enums`).
-    * Zprovozněno volání na `https://api.recruitis.io/`(volání na https://app.recruitis.io/api2/ bude zachováno).
+* **11.7.2019: branch v1 `1.4`**
+  * Přibyla dokumentace na zobrazování seznamu odpovědí (`GET answers/`).
+  * Přibyla dokumentace na stahování příloh (`GET files/`).
 
- * **18.6.2018: branch v1 `1.0.1`**
-    * `POST /Answers` nyní přijímá parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
 
- * **4.5.2018: branch v1 `1.0.0`**
-    * Ustálená verze API volání `jobs` , `answers` a `login`.
-    * Počáteční verze.
+* **3.12.2018: branch v1 `1.3.4`**
+  * V dokumentaci přibyl popis stavu při nedostupnosti API.
+  * Přibyly nové kódy chyb: `api.error.system.unavailable`, `api.error.request.property.wrong_text_length`,`api.error.request.property.maximum_array_items`
+
+
+* **22.10.2018: branch v1 `1.3.3`**
+  * Byla přidána nová sekce `referrals`, ve které je volání na přidání a výpis referralů.
+
+
+* **16.10.2018: branch v1 `1.3.2`**
+  * Do odpovědi u volání `GET /jobs` přibyl nový prvek `employment` a `education`.
+
+
+* **Pozor: 18.9.2018 přijde změna ve volání konkrétního inzerátu (`GET /jobs/id`): Nebude se nadále vracet pole s jedním inzerátem, ale bude vracet přímo objekt s daným inzerátem. Připravte na to prosím svoje aplikace.**
+
+
+* **17.9.2018: branch v1 `1.3.1`**
+  * Bylo přidáno volání `DELETE /candidates`.
+  * Přibyl popis kvót.
+  * Přibyla kvóta `quota_candidates_delete`.
+
+
+* **11.9.2018: branch v1 `1.3`**
+  * Bylo přidáno volání `POST /candidates`.
+  * Do dokumentace byl přidán popis tagů.
+  * Validace telefonního kontaktu v requestu `POST /answers` nyní akceptuje správné české formáty.
+  * Validace emailu v requestu `POST /answers` nyní akceptuje znak "+".
+
+
+* **6.9.2018: branch v1 `1.2.3`**
+  * Do volání `GET /jobs` přibyl parametr `include_inactive`.
+  * Do volání `GET /jobs` přibyl parametr `include_inactive`.
+  * Volání u neexistujícího inzerátu (`GET /jobs/id`) končí s http_statusem `404` namísto prázdné `200` odpovědi.
+  * Aktualizace dokumentace o některé důležité informace (popis jednotlivých atributů u inzerátu).
+
+
+* **5.9.2018: branch v1 `1.2.2`**
+  * Do odpovědi u volání `POST /Answers` přibyl parametr `source`.
+  * Do odpovědi u volání `GET /jobs` přibyl parametr `details`.
+  * Server nyní vrací přesnější informace u volání `GET /jobs`, dle specifikace dokumentace.
+  * Aktualizace dokumentace o některé důležité informace.
+
+
+* **28.8.2018: branch v1 `1.2.1`**
+  * Do odpovědi u volání `POST /Answers` přibyly nové možnosti (přidání odkazů na sociální sítě uchazeče).
+  * Do odpovědi volání `POST /Answers` přibyl parametr `date_created` v objektu `gdpr_agreement`.
+
+
+* **6.8.2018: branch v1 `1.2`**
+  * Přidána sekce **Filters**
+  * Zprovozněn parametr filter_id u volání `GET /jobs`.
+  * U volání `POST /answer`  přibyl parametr `referral_id`, `channel_id` a `extra`, který dovoluje přidat k odpovědi poznámku nebo tag..
+  * U volání `POST /answer`  byl zprovozněn parametr `channel_id`.
+  * U volání `POST /answer`  byl upraven parametr `gppr_agreements` - nyní je rozšířen o další atributy.
+  * Volání `GET /enums/filters` je označeno jako deprecated. Namísto toho se doporučuje volat `GET /filters`.
+
+
+* **19.7.2018: branch v1 `1.1.1`**
+  * Zprovozněn parametr channel_id u volání `GET /jobs`.
+  * Do odpovědi `GET /jobs` přibyly tyto položky: `description` a `workfields`.
+  * Opraven parametr channel_assignation u volání `GET /enums/workfields`.
+  * Přidáno vynucení správných typů tokenů u volání `GET /enums/workfields` a `GET /jobs`.
+  * Standardizovány některé kódové označení chyb + jsou zveřejněny a popsány v dokumentaci.
+  * V dokumentaci jsou připsány další dodatečné informace o API.
+
+
+* **9.7.2018: branch v1 `1.1`**
+  * Zprovozněno volání nad reálnými daty na url adrese: `https://app.recruitis.io/api2/`.
+  * `GET /jobs` odstraněn parametr `regions`. Namísto něho se bude využívat parametr `office_id`. Filtrace podle lokality není v nejbližším plánu vývoje.
+  * `GET /jobs` parametr `workfields` přejmenován na `workfield_id` (zpětná kompatibilita je zachována).
+  * `GET /jobs` přidán parametr `office_id`.
+  * Přidáno volání `GET /enums/offices`.
+  * Volání `GET /enum/*` přejmenováno na `GET /enums/*`(zpětná kompatibilita je zachována: stále se dá volat `enums`).
+  * Zprovozněno volání na `https://api.recruitis.io/`(volání na https://app.recruitis.io/api2/ bude zachováno).
+
+
+* **18.6.2018: branch v1 `1.0.1`**
+  * `POST /Answers` nyní přijímá parametr `attachment` `base64`. V této návaznosti je nyní povinný atribut `attachment` `filename`.
+
+
+* **4.5.2018: branch v1 `1.0.0`**
+  * Ustálená verze API volání `jobs` , `answers` a `login`.
+  * Počáteční verze.
 
 
 ## Tokeny
-Autorizační tokeny mají dvě úrovně:
-+ `full_access`: Token, který má veškeré pravomoci a umožňuje upravovat data v systému dané firmy.
-Tento token nesmí být jakkoli zobrazen veřejnosti.
+Autorizační tokeny mají dvě skupiny po dvou úrovní:
+
+### Skupiny tokenů
+
+#### Firemní tokeny
+
+Tento typ tokenu má výhodu, že není limitován na konkrétní účet, tudíž nepřestane fungovat v případě smazání nebo deaktivování účtu.
+Zároveň s ním ale nelze používat všechny API volání. ( U každého API volání se dočtete, jestli podporuje firemní token.)
+Nekteré volání potřebují znát přesného autora (Kvůli reportům například.) a ty bohužel nelze volat s tímto firemním tokenem.
+
+#### Tokeny konkrétního účtu
+
+Každý účet si může vytvořit v recruitisu vlastní token. Díky němu může používat všechna API volání, to jest i volání, 
+která potřebují mít vazbu ke konkrétnímu účtu.
+
+### Dále se tokeny rozlišují dle údělených práv:
+
++ `full_access`: Token, který má veškeré pravomoci a umožňuje upravovat data v systému dané firmy. Tento token nesmí být jakkoli zobrazen veřejnosti.
 + `public_access`: Token, který má převážně zobrazovací pravomoci. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
 
 Na oba druhy tokenů lze uplatnit doménový whitelist (toto nastavení doporučujeme použít).
 
 Tokeny lze vytvořit po přihlášení v Recruitisu: *nastavení* > *api propojení* (https://app.recruitis.io/zadavatel/nastaveni).
 
-Samotná autorizace probíhá pomocí header informace `Authorization`, kde je slovní spojení `Bearer` a následně vložený token
+Samotná autorizace probíhá pomocí posláním headeru: `Authorization: Bearer <token>`
 
-`Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`.
+_Příklad:_ `Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`.
 
 ###API url
 
@@ -402,6 +450,11 @@ Tato funkce není třeba volat, pokud již máte Token vygenerovaný. **Tato fun
 
 Získání informací o právě přihlášeném účtu.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+
 + Request
     + Headers
     
@@ -501,9 +554,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
-   + token type: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
+* Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
+* Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -866,9 +920,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o interní inzerát.
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+* Token typ: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
 
@@ -1031,8 +1086,8 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
    
 | Request value                          | Required   | Default Value     | Note                                                                                                                                                                                                                           |
 | :------------------------------------- | ---------- | :---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1090,9 +1145,9 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 Zobrazení všech kanálů, kde je inzerát publikován.
 
 #### Requirements
-        
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
    
 + Request (application/json)
     + Headers
@@ -1150,8 +1205,8 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
 | Request value                          | Required   | Type        | Default Value     | Note                                                                                                                  |
 | :------------------------------------- | ---------- | :---------- | ----------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -1238,13 +1293,13 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
-+ Request (application/json)
-    + Headers
+  + Request (application/json)
+      + Headers
     
-            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+              Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
             
 
 + Parameters
@@ -1284,8 +1339,8 @@ Stažení inzerátu z prezentačního kanálu.
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: pro publikaci inzerátu je potřeba full access
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
    
 + Request (application/json)
     + Headers
@@ -1454,8 +1509,9 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`
+   * Volání musí být s autorizačním tokenem.
+   * Kompatibilní s firemním tokenem.
+   * Token typ: `public_access`
    
 | Request value                        | Required                  | Default Value   | Note                                                                                                                                                                                                                          |
 |--------------------------------------|---------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1566,6 +1622,11 @@ Všechny jeho odpovědi, pohovory, poznámky, přílohy, GDPR souhlasy atd. **Ta
 
 Na toto volání se vztahuje denní kvóta. V případě překročení denní kvóty se vrátí odpověď `403 - forbidden` s `meta.code` `api.error.quota.exceeded`.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
+
 + Parameters
      + id (required, number, `1`) - ID kandidáta (user ID)
 
@@ -1620,6 +1681,10 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
 | sms              | Komunikace ze sociální sítě LinkedIn           |
 | note             | Komunikace s klientem proběhla na jiném místě. |
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
 
 + Request (application/json)
     + Headers
@@ -1721,7 +1786,8 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
 
 #### Requirements
 
-   + Authorization with token
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                            |
 |:-------------------------------------|----------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1808,7 +1874,6 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
           }
         }
 
-
 ## Answer list [/answers{?limit,page,job_id,flow_id,search}]
 
 Odpověď patří pod entitu kandidáta. Pokud si to máme relačně představit, vztah mezi kandidátem a odpověďmi je 1:N. V této sekci se podíváme na získávání odpovědí a její vytvoření. 
@@ -1828,9 +1893,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o interní inzerát.    
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
+* Token typ: `full_access`: pokud se jedná o interní inzerát.
+* Kompatibilní s firemním tokenem.
    
 | Request value                        | Required | Default Value   | Note                                                                                                                                                                                                           |
 |:-------------------------------------|----------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -2005,8 +2071,10 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+  + Volání musí být s autorizačním tokenem.
+  + Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+  + Kompatibilní s firemním tokenem.
+
 
 + Request
     + Headers
@@ -2215,8 +2283,9 @@ Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta co
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+   + Volání musí být s autorizačním tokenem.
+   +  Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+   + Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -2294,8 +2363,8 @@ Pro definici hodnot pooužijte bitmasku.
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`.    
+   + Kompatibilní s firemním tokenem.
+   + Token typ: `full_access`.    
    
 | Request value        | Required | Default Value   | Note                                                                                      |
 |:---------------------|----------|-----------------|-------------------------------------------------------------------------------------------|
@@ -2357,8 +2426,8 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`
+   + Kompatibilní s firemním tokenem.
+   + Token typ: `full_access`
    
  | Request value     | Required | Note                                                                                                                        |
  |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
@@ -2543,8 +2612,9 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 #### Requirements
 
-   + Authorization with token
-      + token type: `public_token` 
+   + Volání musí být s autorizačním tokenem.
+   + Kompatibilní s firemním tokenem.
+   + Token typ: `public_token`
 
 + Request
     + Headers
@@ -2607,6 +2677,18 @@ Vytvoření nového filtru.
 | `name`                | Yes      | string   | | Název filtru.
 | `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
++ Request
+  + Headers
+
+          Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+
 + Response 200 (application/json)
 
         {
@@ -2659,6 +2741,19 @@ Editace filtru dle ID v parametru URI.
 | `name`                | Yes      | string   | | Název filtru.
 | `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
+
++ Request
+  + Headers
+
+          Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+
+
 + Parameters
     + id (required, number, `1`) - Filter ID
 
@@ -2677,6 +2772,13 @@ Editace filtru dle ID v parametru URI.
 ### Delete existing filter [DELETE]
         
 Smaže filtr dle ID v parametru URI.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_token`
+* Kompatibilní s firemním tokenem.
+
 
 + Parameters
     + id (required, number, `1`) - Filter ID
@@ -2719,8 +2821,8 @@ Parametr `hash` lze použít i jako pole (`?hash[]=xxxxx&hash[]=yyyyyy`). V tom 
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`.
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`.
 
 #### Response parameters
 
@@ -2853,10 +2955,10 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-   + token type: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
-   + Alespoň jeden typ tokenu je tedy vyžadován ve chvíli, kdy použijete parametr `channel_assignation`.
+   * Autorizace je vyžadována ve chvíli, kdy je použiž parametr `channel_assignation`.
+   * Kompatibilní s firemním tokenem.
+   * Token typ: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+   * Token typ: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
    
 + Request
     + Headers
@@ -2929,8 +3031,9 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access` 
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access` 
     
 + Response 200 (application/json)
 
@@ -2987,9 +3090,10 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotný
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token` 
-    
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         {
@@ -3050,9 +3154,9 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`
-    
+* Volání musí být s autorizačním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         {
@@ -3115,9 +3219,10 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `public_token`
-    
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Token typ: `public_access` a `full_access`
+
 + Response 200 (application/json)
 
         {
@@ -3176,7 +3281,7 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 
 
-## Employment List [/enums/employments]
+## Employment List [/enums/employments{?lang}]
 ### Get offices [GET]
 
 Vrací všechny naše pracovní poměry a jejich ID.
@@ -3255,10 +3360,10 @@ Popis jednotlivých listů, viz `lists` parametr:
 
 #### Requirements
 
-   + Authorization with token
-   + token type: `full_access`
-   
- | Request value     | Required | Type      | Note                                                                                                                                              |
+* Volání musí být s autorizačním tokenem.
+* Token typ: `full_access`
+
+| Request value     | Required | Type      | Note                                                                                                                                              |
  |-------------------|----------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
  | `version`         | Yes      | integer   | Verze reportu, dle číselníku, aktuálně pouze "1".                                                                                                 |
  | `date_from`       | No       | date      | Datum, od kdy se mají exportovat data. Pokud nebude vyplněno, použije se aktuální den.                                                            |
