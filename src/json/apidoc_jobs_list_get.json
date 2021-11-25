@@ -22,6 +22,10 @@
         "email": "foo@bar.cz",
         "phone": 123456
       },
+      "fte": {
+        "value": 10.5,
+        "active": true
+      },
       "filterlist": [
         {
           "id": "5",
@@ -139,6 +143,7 @@
           "name": "Personalistika a HR"
         }
       ],
+      "fte": null,
       "filterlist": [],
       "employment": {
         "id": 1,
@@ -244,6 +249,8 @@
         "facebook_picture_path": null,
         "opening_reason":  "Otevření nové pozice v nové provozovně"
       },
+      "fte": null,
+      "filterlist": [],
       "employment": {
         "id": 1,
         "name": "Práce doma"

@@ -18,6 +18,9 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **25.11.2021: branch v1 `1.8.1`**
+  * U volání `GET jobs/` přibyl parametr `fte`.
+
 * **16.11.2021: branch v1 `1.8.0`**
   * Přibyl popis firemního typu tokenu vč. všech kompatibilních API volání.
   * Volání `GET enums/...` je nyní možné s firemním tokenem.
@@ -602,6 +605,10 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
                 "email": "foo@bar.cz",
                 "phone": 123456
               },
+              "fte": {
+                "value": 10.5,
+                "active": true
+              },
               "filterlist": [
                 {
                   "id": "5",
@@ -719,6 +726,7 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
                   "name": "Personalistika a HR"
                 }
               ],
+              "fte": null,
               "filterlist": [],
               "employment": {
                 "id": 1,
@@ -824,6 +832,8 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
                 "facebook_picture_path": null,
                 "opening_reason":  "Otevření nové pozice v nové provozovně"
               },
+              "fte": null,
+              "filterlist": [],
               "employment": {
                 "id": 1,
                 "name": "Práce doma"
@@ -959,6 +969,9 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | `stats` - `flow_answers`            | `full_access`     | array(object)      | Pole jednotlivých stavů a jejich počtu odpovědí.                                                                                                   |
 | `stats` - `answers`                 | `full_access`     | int                |                                                                                                                                                    |
 | `stats` - `views`                   | `full_access`     | int                |                                                                                                                                                    |
+| `fte`                               | `full_access`     | object,null        | FTE (full time equivalent)                                                                                                                         |
+| `fte` - `value`                     | `full_access`     | double             | hodnota FTE                                                                                                                                        |
+| `fte` - `active`                    | `full_access`     | bool               | Označuje, jestli je FTE aktivní, či nikoli (řeší se u kontinuálního náboru, jinak je vždy true)                                                    |
 | `filterlist`                        | `public_access`   | array(object)      | Seznam filtračních položek.                                                                                                                        |
 | `filterlist` - `id`                 | `public_access`   | int                |                                                                                                                                                    |
 | `filterlist` - `name`               | `public_access`   | string             |                                                                                                                                                    |
