@@ -20,7 +20,16 @@
       "contact": {
         "name": "Radim Velezeba",
         "email": "foo@bar.cz",
-        "phone": 123456
+        "phone": 123456,
+        "employee": {
+          "id": 2053,
+          "name": "Radim",
+          "surname": "Velezeba",
+          "email": "velezeba@example.cz",
+          "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+          "phone": "123456789",
+          "linkedin": null
+        }
       },
       "fte": {
         "value": 10.5,
@@ -137,6 +146,20 @@
         "name": "Tomáš Krátký",
         "id": 12345
       },
+      "contact": {
+        "name": "Radim Velezeba",
+        "email": "foo@bar.cz",
+        "phone": 123456,
+        "employee": {
+          "id": 2053,
+          "name": "Radim",
+          "surname": "Velezeba",
+          "email": "velezeba@example.cz",
+          "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+          "phone": "123456789",
+          "linkedin": null
+        }
+      },
       "workfields": [
         {
           "id": 20,
@@ -233,6 +256,20 @@
       "personalist": {
         "name": "Tomáš Krátký",
         "id": 12345
+      },
+      "contact": {
+        "name": "Radim Velezeba",
+        "email": "foo@bar.cz",
+        "phone": 123456,
+        "employee": {
+          "id": 2053,
+          "name": "Radim",
+          "surname": "Velezeba",
+          "email": "velezeba@example.cz",
+          "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+          "phone": "123456789",
+          "linkedin": null
+        }
       },
       "workfields": [
         {

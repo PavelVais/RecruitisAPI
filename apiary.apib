@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.8.0**
-* Poslední aktualizace: **16.11.2021**
+* Verze systému: **1.8.1**
+* Poslední aktualizace: **10.1.2022**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -17,6 +17,9 @@ Postupem času budou přibývat jednotlivé funkcionality. Pokud by měla být n
 bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstupu o změně informováni.
 
 ## Changelog
+
+* **10.1.2022: branch v1 `1.8.1`**
+  * Přibyl object `contact - employee` v `GET jobs/` volání.
 
 * **25.11.2021: branch v1 `1.8.1`**
   * U volání `GET jobs/` přibyl parametr `fte`.
@@ -512,7 +515,7 @@ Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code 
  jako více hodnot za sebou (např. `&office_id[]=XXX&office_id[]=YYY`).
  
 | Parametr                        | Required | Default Value | Require `full_access` token | Note                                                                                                                                                                        |
-| :-------------------------------|----------|---------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:--------------------------------|----------|---------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `limit`                         | No       | 10            | No                          | Maximální limit pro stránkovač je 50. Pokud není určen, vrací 10 položek.                                                                                                   |
 | `page`                          | No       | 1             | No                          | Aktuální stránka.                                                                                                                                                           |
 | `workfield_id`                  | No       |               | No                          | Array. Filtrace podle ID oborů (profesí). Více v číselníku, viz Enumerations.                                                                                               |
@@ -603,7 +606,16 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
               "contact": {
                 "name": "Radim Velezeba",
                 "email": "foo@bar.cz",
-                "phone": 123456
+                "phone": 123456,
+                "employee": {
+                  "id": 2053,
+                  "name": "Radim",
+                  "surname": "Velezeba",
+                  "email": "velezeba@example.cz",
+                  "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+                  "phone": "123456789",
+                  "linkedin": null
+                }
               },
               "fte": {
                 "value": 10.5,
@@ -720,6 +732,20 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
                 "name": "Tomáš Krátký",
                 "id": 12345
               },
+              "contact": {
+                "name": "Radim Velezeba",
+                "email": "foo@bar.cz",
+                "phone": 123456,
+                "employee": {
+                  "id": 2053,
+                  "name": "Radim",
+                  "surname": "Velezeba",
+                  "email": "velezeba@example.cz",
+                  "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+                  "phone": "123456789",
+                  "linkedin": null
+                }
+              },
               "workfields": [
                 {
                   "id": 20,
@@ -816,6 +842,20 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
               "personalist": {
                 "name": "Tomáš Krátký",
                 "id": 12345
+              },
+              "contact": {
+                "name": "Radim Velezeba",
+                "email": "foo@bar.cz",
+                "phone": 123456,
+                "employee": {
+                  "id": 2053,
+                  "name": "Radim",
+                  "surname": "Velezeba",
+                  "email": "velezeba@example.cz",
+                  "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+                  "phone": "123456789",
+                  "linkedin": null
+                }
               },
               "workfields": [
                 {
@@ -937,64 +977,72 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 #### Response parameters
 
-| Parameter                           | token condition   | Type               | Note                                                                                                                                               |
-| ----------------------------------  | ----------------- | ---------------    | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `job_id`                            | `public_access`   | int                | ID inzerátu.                                                                                                                                       |
-| `public_id`                         | `public_access`   | string             | Interní označení inzerátu. Nemusí být vyplněné.                                                                                                    |
-| `access_state`                      | `public_access`   | int                | Značení o jaký typ pozice se jedná. Viz. access_state parametr.                                                                                    |
-| `draft`                             | `public_access`   | bool               | Značí, jestli je inzerát zveřejněný, nebo jen rozepsaný.                                                                                           |
-| `active`                            | `public_access`   | bool               | Viz popisek níže.                                                                                                                                  |
-| `title`                             | `public_access`   | string             |                                                                                                                                                    |
-| `description`                       | `public_access`   | string             |                                                                                                                                                    |
-| `date_closed`                       | `public_access`   | date,null          | Dřívější `date_end` signalizující datum, kdy byla pozice naposledy zavřena.                                                                        |
-| `closed_duration`                   | `public_access`   | timestamp (int)    | Čas, kdy byl inzerát ve stavu zavřený. Tato hodnota je kumulativní a sčítá veškerý čas i přes několikanásobné zavření a otevření pozice.           |
-| `last_update`                       | `public_access`   | datetime           | Datum, kdy byl inzerát naposledy upraven.                                                                                                          |
-| `date_created`                      | `public_access`   | datetime           |                                                                                                                                                    |
-| `workfields`                        | `public_access`   | array(object)      |                                                                                                                                                    |
-| `workfields` - `id`                 | `public_access`   | int                |                                                                                                                                                    |
-| `workfields` - `name`               | `public_access`   | string             |                                                                                                                                                    |
-| `education`                         | `public_access`   | array(object)      |                                                                                                                                                    |
-| `education`  - `id`                 | `public_access`   | int                |                                                                                                                                                    |
-| `education` - `name`                | `public_access`   | string             |                                                                                                                                                    |
-| `salary`                            | `public_access`   | array(object),null |                                                                                                                                                    |
-| `salary` - `min`                    | `public_access`   | double             | Platové ohodnocení - minimální částka                                                                                                              |
-| `salary` - `max`                    | `public_access`   | double             | Platové ohodnocení - maximální částka (Pokuď není určeno rozpětí, je uvedena pouze tato hodnota.                                                   |
-| `salary` - `currency`               | `public_access`   | string             | Měna ("CZK","EUR","USD")                                                                                                                           |
-| `salary` - `unit`                   | `public_access`   | string             | Typ platu ("month","hour","manday")                                                                                                                |
-| `salary` - `visible`                | `public_access`   | bool               | Určuje, jestli je tato informace veřejná.                                                                                                          |
-| `employment`                        | `public_access`   | array(object)      | Typ pracovního úvazku                                                                                                                              |
-| `employment`  - `id`                | `public_access`   | int                |                                                                                                                                                    |
-| `employment` - `name`               | `public_access`   | string             |                                                                                                                                                    |
-| `stats`                             | `full_access`     | object             | Statistiky k danému inzerátu. Ukazují počty.                                                                                                       |
-| `stats` - `flow_answers`            | `full_access`     | array(object)      | Pole jednotlivých stavů a jejich počtu odpovědí.                                                                                                   |
-| `stats` - `answers`                 | `full_access`     | int                |                                                                                                                                                    |
-| `stats` - `views`                   | `full_access`     | int                |                                                                                                                                                    |
-| `fte`                               | `full_access`     | object,null        | FTE (full time equivalent)                                                                                                                         |
-| `fte` - `value`                     | `full_access`     | double             | hodnota FTE                                                                                                                                        |
-| `fte` - `active`                    | `full_access`     | bool               | Označuje, jestli je FTE aktivní, či nikoli (řeší se u kontinuálního náboru, jinak je vždy true)                                                    |
-| `filterlist`                        | `public_access`   | array(object)      | Seznam filtračních položek.                                                                                                                        |
-| `filterlist` - `id`                 | `public_access`   | int                |                                                                                                                                                    |
-| `filterlist` - `name`               | `public_access`   | string             |                                                                                                                                                    |
-| `filterlist` - `group`              | `public_access`   | string             |                                                                                                                                                    |
-| `details`                           | `public_access`   | object             |                                                                                                                                                    |
-| `details` - `office_id`             | `public_access`   | int,null           | Pokud je inzerát propojený s pobočkou, tato položka obsahuje ID pobočky (podle ní se dá filtrovat). Pokud není propojená, položka se nezobrazuje.  |
-| `details` - `facebook_picture_path` | `public_access`   | string,null        | Odkaz na obrázek vhodný jako "og:image" parametr.                                                                                                  |
-| `details` - `opening_reson`         | `public_access`   | string,null        | Textový důvod říkající, proč byl inzerát vytvořen.                                                                                                 |
-| `personalist`                       | `public_access`   | object             |                                                                                                                                                    |
-| `personalist` - `id`                | `public_access`   | int                |                                                                                                                                                    |
-| `personalist` - `name`              | `public_access`   | string             |                                                                                                                                                    |
-| `contact` - `name`                  | `public_access`   | string             |                                                                                                                                                    |
-| `contact` - `email`                 | `public_access`   | string             |                                                                                                                                                    |
-| `contact` - `phone`                 | `public_access`   | string             |                                                                                                                                                    |
-| `addresses`                         | `public_access`   | array(object)      |                                                                                                                                                    |
-| `addresses` - `id`                  | `public_access`   | int                |                                                                                                                                                    |
-| `addresses` - `office_id`           | `public_access`   | int                | návaznost na office, viz dotaz `GET enums/offices`                                                                                                 |
-| `addresses` - `city`                | `public_access`   | string             |                                                                                                                                                    |
-| `addresses` - `psc`                 | `public_access`   | string             |                                                                                                                                                    |
-| `addresses` - `street`              | `public_access`   | string             |                                                                                                                                                    |
-| `addresses` - `region`              | `public_access`   | string             |                                                                                                                                                    |
-| `addresses` - `state`               | `public_access`   | string             |                                                                                                                                                    |
-| `draft`                             | `public_access`   | bool               | Značí, jestli je Inzerát draft.                                                                                                                    |
+| Parameter                            | token condition | Type               | Note                                                                                                                                              |
+|--------------------------------------|-----------------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `job_id`                             | `public_access` | int                | ID inzerátu.                                                                                                                                      |
+| `public_id`                          | `public_access` | string             | Interní označení inzerátu. Nemusí být vyplněné.                                                                                                   |
+| `access_state`                       | `public_access` | int                | Značení o jaký typ pozice se jedná. Viz. access_state parametr.                                                                                   |
+| `draft`                              | `public_access` | bool               | Značí, jestli je inzerát zveřejněný, nebo jen rozepsaný.                                                                                          |
+| `active`                             | `public_access` | bool               | Viz popisek níže.                                                                                                                                 |
+| `title`                              | `public_access` | string             |                                                                                                                                                   |
+| `description`                        | `public_access` | string             |                                                                                                                                                   |
+| `date_closed`                        | `public_access` | date,null          | Dřívější `date_end` signalizující datum, kdy byla pozice naposledy zavřena.                                                                       |
+| `closed_duration`                    | `public_access` | timestamp (int)    | Čas, kdy byl inzerát ve stavu zavřený. Tato hodnota je kumulativní a sčítá veškerý čas i přes několikanásobné zavření a otevření pozice.          |
+| `last_update`                        | `public_access` | datetime           | Datum, kdy byl inzerát naposledy upraven.                                                                                                         |
+| `date_created`                       | `public_access` | datetime           |                                                                                                                                                   |
+| `workfields`                         | `public_access` | array(object)      |                                                                                                                                                   |
+| `workfields` - `id`                  | `public_access` | int                |                                                                                                                                                   |
+| `workfields` - `name`                | `public_access` | string             |                                                                                                                                                   |
+| `education`                          | `public_access` | array(object)      |                                                                                                                                                   |
+| `education`  - `id`                  | `public_access` | int                |                                                                                                                                                   |
+| `education` - `name`                 | `public_access` | string             |                                                                                                                                                   |
+| `salary`                             | `public_access` | array(object),null |                                                                                                                                                   |
+| `salary` - `min`                     | `public_access` | double             | Platové ohodnocení - minimální částka                                                                                                             |
+| `salary` - `max`                     | `public_access` | double             | Platové ohodnocení - maximální částka (Pokuď není určeno rozpětí, je uvedena pouze tato hodnota.                                                  |
+| `salary` - `currency`                | `public_access` | string             | Měna ("CZK","EUR","USD")                                                                                                                          |
+| `salary` - `unit`                    | `public_access` | string             | Typ platu ("month","hour","manday")                                                                                                               |
+| `salary` - `visible`                 | `public_access` | bool               | Určuje, jestli je tato informace veřejná.                                                                                                         |
+| `employment`                         | `public_access` | array(object)      | Typ pracovního úvazku                                                                                                                             |
+| `employment`  - `id`                 | `public_access` | int                |                                                                                                                                                   |
+| `employment` - `name`                | `public_access` | string             |                                                                                                                                                   |
+| `stats`                              | `full_access`   | object             | Statistiky k danému inzerátu. Ukazují počty.                                                                                                      |
+| `stats` - `flow_answers`             | `full_access`   | array(object)      | Pole jednotlivých stavů a jejich počtu odpovědí.                                                                                                  |
+| `stats` - `answers`                  | `full_access`   | int                |                                                                                                                                                   |
+| `stats` - `views`                    | `full_access`   | int                |                                                                                                                                                   |
+| `fte`                                | `full_access`   | object,null        | FTE (full time equivalent)                                                                                                                        |
+| `fte` - `value`                      | `full_access`   | double             | hodnota FTE                                                                                                                                       |
+| `fte` - `active`                     | `full_access`   | bool               | Označuje, jestli je FTE aktivní, či nikoli (řeší se u kontinuálního náboru, jinak je vždy true)                                                   |
+| `filterlist`                         | `public_access` | array(object)      | Seznam filtračních položek.                                                                                                                       |
+| `filterlist` - `id`                  | `public_access` | int                |                                                                                                                                                   |
+| `filterlist` - `name`                | `public_access` | string             |                                                                                                                                                   |
+| `filterlist` - `group`               | `public_access` | string             |                                                                                                                                                   |
+| `details`                            | `public_access` | object             |                                                                                                                                                   |
+| `details` - `office_id`              | `public_access` | int,null           | Pokud je inzerát propojený s pobočkou, tato položka obsahuje ID pobočky (podle ní se dá filtrovat). Pokud není propojená, položka se nezobrazuje. |
+| `details` - `facebook_picture_path`  | `public_access` | string,null        | Odkaz na obrázek vhodný jako "og:image" parametr.                                                                                                 |
+| `details` - `opening_reson`          | `public_access` | string,null        | Textový důvod říkající, proč byl inzerát vytvořen.                                                                                                |
+| `personalist`                        | `public_access` | object             |                                                                                                                                                   |
+| `personalist` - `id`                 | `public_access` | int                |                                                                                                                                                   |
+| `personalist` - `name`               | `public_access` | string             |                                                                                                                                                   |
+| `contact` - `name`                   | `public_access` | string             |                                                                                                                                                   |
+| `contact` - `email`                  | `public_access` | string             |                                                                                                                                                   |
+| `contact` - `phone`                  | `public_access` | string             |                                                                                                                                                   |
+| `contact` - `employee`               | `public_access` | object,null        |                                                                                                                                                   |
+| `contact` - `employee` - `id`        | `public_access` | string             | Id zaměstnance, ke kterému se vztahují kontaktní údaje.                                                                                           |
+| `contact` - `employee` - `name`      | `public_access` | string             | Jméno zaměstnance                                                                                                                                 |
+| `contact` - `employee` - `surname`   | `public_access` | string,null        | Přijmení                                                                                                                                          |
+| `contact` - `employee` - `email`     | `public_access` | string             |                                                                                                                                                   |
+| `contact` - `employee` - `photo_url` | `public_access` | string             | Jeho avatar v systému                                                                                                                             |
+| `contact` - `employee` - `phone`     | `public_access` | string,null        | Jeho telefonní číslo                                                                                                                              |
+| `contact` - `employee` - `linkedin`  | `public_access` | string,null        | Odkaz na jeho linkedin                                                                                                                            |
+| `addresses`                          | `public_access` | array(object)      | Pole adres výkonu práce. Pole může být prázdné.                                                                                                   |
+| `addresses` - `id`                   | `public_access` | int                |                                                                                                                                                   |
+| `addresses` - `office_id`            | `public_access` | int                | návaznost na office, viz dotaz `GET enums/offices`                                                                                                |
+| `addresses` - `city`                 | `public_access` | string             |                                                                                                                                                   |
+| `addresses` - `psc`                  | `public_access` | string             |                                                                                                                                                   |
+| `addresses` - `street`               | `public_access` | string             |                                                                                                                                                   |
+| `addresses` - `region`               | `public_access` | string             |                                                                                                                                                   |
+| `addresses` - `state`                | `public_access` | string             |                                                                                                                                                   |
+| `draft`                              | `public_access` | bool               | Značí, jestli je inzerát draft.                                                                                                                   |
 
 #### Atribut active
 
@@ -1032,7 +1080,16 @@ Atribut `active` ve výpisu inzerátů značí, jestli je daný inzerát aktivn�
             "contact": {
               "name": "Radim Velezeba",
               "email": "foo@bar.cz",
-              "phone": 123456
+              "phone": 123456,
+              "employee": {
+                "id": 2053,
+                "name": "Radim",
+                "surname": "Velezeba",
+                "email": "velezeba@example.cz",
+                "photo_url": "https:\/\/recruitis.io\/images\/no-avatar_thumb.png",
+                "phone": "123456789",
+                "linkedin": null
+              }
             },
             "workfields": [
               {
@@ -1102,12 +1159,12 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 * Volání musí být s autorizačním tokenem.
 * Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
    
-| Request value                          | Required   | Default Value     | Note                                                                                                                                                                                                                           |
-| :------------------------------------- | ---------- | :---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`                                | Yes        |                   | Název pozice.                                                                                                                                                                                                                  |
-| `description`                          | Yes        |                   | Popis pozice.                                                                                                                                                                                                                  |
-| `text_language`                        | No         | cs                | Určuje, v jakém jazyce je psaný popisek pozice. Povolené hodnoty jsou cs,sk,en,de.                                                                                                                                             |
-| `author_id`                            | No         |                   | ID zaměstnance, pod kterým se inzerát založí (pokud není vyplněno, využije se ten, pod kterým je přihlášeno API).                                                                                                              |
+| Request value   | Required | Default Value | Note                                                                                                              |
+|:----------------|----------|:--------------|-------------------------------------------------------------------------------------------------------------------|
+| `title`         | Yes      |               | Název pozice.                                                                                                     |
+| `description`   | Yes      |               | Popis pozice.                                                                                                     |
+| `text_language` | No       | cs            | Určuje, v jakém jazyce je psaný popisek pozice. Povolené hodnoty jsou cs,sk,en,de.                                |
+| `author_id`     | No       |               | ID zaměstnance, pod kterým se inzerát založí (pokud není vyplněno, využije se ten, pod kterým je přihlášeno API). |
 
 
 + Request (application/json)
@@ -1221,10 +1278,10 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 * Volání musí být s autorizačním tokenem.
 * Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
-| Request value                          | Required   | Type        | Default Value     | Note                                                                                                                  |
-| :------------------------------------- | ---------- | :---------- | ----------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `date_from`                            | Yes        | datetime    |                   | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas.          |
-| `date_to`                              | Yes        | datetime    |                   | Datum, do kdy má být inzerát na daném kanále vystaven.                                                                |
+| Request value | Required | Type     | Default Value | Note                                                                                                         |
+|:--------------|----------|:---------|---------------|--------------------------------------------------------------------------------------------------------------|
+| `date_from`   | Yes      | datetime |               | Datum, od kdy má být inzerát na daném kanále vystaven. Pokud není vyplněno, použije se aktuální datum a čas. |
+| `date_to`     | Yes      | datetime |               | Datum, do kdy má být inzerát na daném kanále vystaven.                                                       |
 
 
 + Request (application/json)
@@ -2685,10 +2742,10 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 Vytvoření nového filtru.
 
-| Request value         | Required | Type     | Default Value   | Note               |
-|:----------------------|----------|----------|:-------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru.
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
+| Request value | Required | Type   | Default Value | Note                                                 |
+|:--------------|----------|--------|:-------------:|------------------------------------------------------|
+| `name`        | Yes      | string |               | Název filtru.                                        |
+| `group`       | Yes      | string |               | Název skupiny, do které se filtr automaticky zařadí. |
 
 #### Requirements
 
@@ -2749,10 +2806,10 @@ Vytvoření nového filtru.
 
 Editace filtru dle ID v parametru URI.
 
-| Request value         | Required | Type     | Default Value  | Note               |
-|:----------------------|----------|----------|:--------------:|----------------------|
-| `name`                | Yes      | string   | | Název filtru.
-| `group`               | Yes      | string   | | Název skupiny, do které se filtr automaticky zařadí.
+| Request value | Required | Type   | Default Value | Note                                                 |
+|:--------------|----------|--------|:-------------:|------------------------------------------------------|
+| `name`        | Yes      | string |               | Název filtru.                                        |
+| `group`       | Yes      | string |               | Název skupiny, do které se filtr automaticky zařadí. |
 
 #### Requirements
 
