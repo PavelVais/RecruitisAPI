@@ -374,6 +374,47 @@ Stažení inzerátu z prezentačního kanálu.
         
         :[](json/apidoc_json_error_404.json)
 
+## Job views measurement [/jobs/access/{id}/]
+
+### Adding new visit count [PUT]
+
+Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může vědět, kolikrát se zobrazil inzerát například na vašich intranetových stránkách.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+
+| Request value | Required | Default Value | Note                                                                                                                            |
+|:--------------|----------|:--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `ip`          | Yes      |               | IP adresy, která inzerát navštívila.                                                                                            |
+| `useragent`   | No       |               |                                                                                                                                 |
+| `token`       | Yes      |               | Náhodný hash, který je jednou vygenerován a poté by měl být uložen v cookies stránky a posílat se vždy s ostatními informacemi. |
+| `referrer`    | No       |               | Url adresa, z které návštěvník přišel                                                                                           |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer :[](apidoc_bearer_token.txt)
+  
+    + Body
+
+            :[](json/apidoc_jobs_access_request.json)
+  
+
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+  
++ Response 200 (application/json)
+
+                :[](json/apidoc_json_response_empty_general.json MSG:"Job ad access marked.." CODE:"api.ok")
+
++ Response 404 (application/json)
+        
+        :[](json/apidoc_json_error_404.json)
+
+
 
 ## Communication with candidate [/jobs/{id}/communication{?limit,page,candidate_id,direction,type}]      
         

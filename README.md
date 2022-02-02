@@ -8,8 +8,11 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
-* **10.1.2022: branch v1 `1.8.1`**
-    * Přibyl object `contact - employee` v `GET jobs/` volání.
+* **2.2.2022: branch v1 `1.8.3`**
+  * Přidáno volání `PUT jobs/access/id`
+
+* **10.1.2022: branch v1 `1.8.2`**
+  * Přibyl object `contact - employee` v `GET jobs/` volání.
 
 * **25.11.2021: branch v1 `1.8.1`**
   * U volání `GET jobs/` přibyl parametr `fte`.

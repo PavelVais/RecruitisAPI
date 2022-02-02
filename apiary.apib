@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.8.1**
-* Poslední aktualizace: **10.1.2022**
+* Verze systému: **1.8.3**
+* Poslední aktualizace: **2.2.2022**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,7 +18,10 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
-* **10.1.2022: branch v1 `1.8.1`**
+* **2.2.2022: branch v1 `1.8.3`**
+  * Přidáno volání `PUT jobs/access/id`
+  
+* **10.1.2022: branch v1 `1.8.2`**
   * Přibyl object `contact - employee` v `GET jobs/` volání.
 
 * **25.11.2021: branch v1 `1.8.1`**
@@ -1260,9 +1263,9 @@ Zobrazení všech kanálů, kde je inzerát publikován.
         {
           "payload": null,
           "meta": {
-            "duration": 139.58,
+            "duration": 139.10,
             "code": "api.error.not_found",
-            "message": "Attachment does not exists."
+            "message": "That thing you are looking for does not exists."
           }
         }
          
@@ -1347,9 +1350,9 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
         {
           "payload": null,
           "meta": {
-            "duration": 139.58,
+            "duration": 139.10,
             "code": "api.error.not_found",
-            "message": "Attachment does not exists."
+            "message": "That thing you are looking for does not exists."
           }
         }
         
@@ -1396,9 +1399,9 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
         {
           "payload": null,
           "meta": {
-            "duration": 139.58,
+            "duration": 139.10,
             "code": "api.error.not_found",
-            "message": "Attachment does not exists."
+            "message": "That thing you are looking for does not exists."
           }
         }
         
@@ -1457,11 +1460,72 @@ Stažení inzerátu z prezentačního kanálu.
         {
           "payload": null,
           "meta": {
-            "duration": 139.58,
+            "duration": 139.10,
             "code": "api.error.not_found",
-            "message": "Attachment does not exists."
+            "message": "That thing you are looking for does not exists."
           }
         }
+
+## Job views measurement [/jobs/access/{id}/]
+
+### Adding new visit count [PUT]
+
+Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může vědět, kolikrát se zobrazil inzerát například na vašich intranetových stránkách.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+
+| Request value | Required | Default Value | Note                                                                                                                            |
+|:--------------|----------|:--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `ip`          | Yes      |               | IP adresy, která inzerát navštívila.                                                                                            |
+| `useragent`   | No       |               |                                                                                                                                 |
+| `token`       | Yes      |               | Náhodný hash, který je jednou vygenerován a poté by měl být uložen v cookies stránky a posílat se vždy s ostatními informacemi. |
+| `referrer`    | No       |               | Url adresa, z které návštěvník přišel                                                                                           |
+
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+  
+    + Body
+
+            {
+              "ip": "192.168.0.1",
+              "useragent": "Mozilla/5.0 (Linux; Android 9; LLD-L31) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36",
+              "token": "MjOshDciF3Gr46qI9K0wAeeEt7OqVBCkjHk9yQZT5zE",
+              "referrer": "https://facebook.com/"
+            }
+  
+
++ Parameters
+    + id (numeric,`123456`) - Id inzerátu.
+  
++ Response 200 (application/json)
+
+                {
+                  "payload": null,
+                  "meta": {
+                    "duration": "139.58",
+                    "total_duration": 330,
+                    "code": "api.ok",
+                    "message": "Job ad access marked.."
+                  }
+                }
+
++ Response 404 (application/json)
+        
+        {
+          "payload": null,
+          "meta": {
+            "duration": 139.10,
+            "code": "api.error.not_found",
+            "message": "That thing you are looking for does not exists."
+          }
+        }
+
 
 
 ## Communication with candidate [/jobs/{id}/communication{?limit,page,candidate_id,direction,type}]      
@@ -2935,9 +2999,9 @@ příloh větší, API vrátí http stav `413` s meta kódem `api.error.response
         {
           "payload": null,
           "meta": {
-            "duration": 139.58,
+            "duration": 139.10,
             "code": "api.error.not_found",
-            "message": "Attachment does not exists."
+            "message": "That thing you are looking for does not exists."
           }
         }
         
