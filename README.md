@@ -8,8 +8,15 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 ## Changelog
 
-* **31.1.2022: branch v1 `1.8.1`**
-    * U výsledku volání `GET answer/` a `GET answers/` je nyní atribut `reject_reason` - důvod zamítnutí kandidáta.
+* **9.2.2022: branch v1 `1.8.4`**
+  * Přidány parametry `suitable_for` a `remote_work` do výpisu inzerátů. Viz enum sekce.
+  * U výsledku volání `GET answer/` a `GET answers/` je nyní atribut `reject_reason` - důvod zamítnutí kandidáta.
+
+* **2.2.2022: branch v1 `1.8.3`**
+  * Přidáno volání `PUT jobs/access/id`
+
+* **10.1.2022: branch v1 `1.8.2`**
+  * Přibyl object `contact - employee` v `GET jobs/` volání.
 
 * **10.1.2022: branch v1 `1.8.1`**
     * Přibyl object `contact - employee` v `GET jobs/` volání.
