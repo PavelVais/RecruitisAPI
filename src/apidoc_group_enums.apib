@@ -2,6 +2,32 @@
 
 Sekce, která má za úkol vracet různé druhy číselníků. Na všechny číselníky se nevztahuje stránkování.
 
+#### suitable_for parameter
+
+Tento parametr posíláme v detailech jednotlivých inzerátů. Pokud není parametr určen, v payloadu se nenachází.
+
+| ID  | Hodnota                    |
+|-----|----------------------------|
+| 1   | Absolvent                  |
+| 2   | Důchodce                   |
+| 3   | Na rodičovské dovolené     |
+| 4   | Nezaměstnaný               |
+| 5   | vojenské služby: NVS, ZVS  |
+| 6   | OSVČ                       |
+| 7   | Student                    |
+| 8   | Zaměstnaný                 |
+| 10  | Není vhodná pro absolventy |
+
+#### remote_work parameter
+
+Tento parametr posíláme v detailech jednotlivých inzerátů. Pokud není parametr určen, v payloadu se nenachází.
+
+| Hodnota | Popis                        |
+|---------|------------------------------|
+| full    | Povolená 100% práce z domova |
+| partial | Částečná práce z domova      |
+
+
 ## Workfields Lists [/enums/workfields{?lang}]
 
 Workfields neboli obory a profese používané v Recruitis.io systému.

@@ -30,7 +30,14 @@
       }
     ],
     "details": {
-      "office_id": null
+      "office_id": null,
+      "facebook_picture_path": null,
+      "opening_reason": "Otevření nové pozice v nové provozovně",
+      "remote_work": "full",
+      "suitable_for": {
+        "id": 1,
+        "name": "Absolvent"
+      }
     },
     "addresses": [
       {
