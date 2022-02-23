@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.8.3**
-* Poslední aktualizace: **2.2.2022**
+* Verze systému: **1.8.4**
+* Poslední aktualizace: **9.2.2022**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,14 +18,21 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
-* **2.2.2022: branch v1 `1.8.3`**
-  * Přidáno volání `PUT jobs/access/id`
+* **9.2.2022: branch v1 `1.8.4`**
+  * Přidány parametry `suitable_for` a `remote_work` do výpisu inzerátů. Viz enum sekce.
+  * U výsledku volání `GET answer/` a `GET answers/` je nyní atribut `reject_reason` - důvod zamítnutí kandidáta.
   
+* **2.2.2022: branch v1 `1.8.3`**
+  * Přidáno volání `PUT jobs/id/access`
+ 
+ 
 * **10.1.2022: branch v1 `1.8.2`**
   * Přibyl object `contact - employee` v `GET jobs/` volání.
 
+
 * **25.11.2021: branch v1 `1.8.1`**
   * U volání `GET jobs/` přibyl parametr `fte`.
+
 
 * **16.11.2021: branch v1 `1.8.0`**
   * Přibyl popis firemního typu tokenu vč. všech kompatibilních API volání.
@@ -1490,7 +1497,7 @@ Stažení inzerátu z prezentačního kanálu.
           }
         }
 
-## Job views measurement [/jobs/access/{id}/]
+## Job views measurement [/jobs/{id}/access/]
 
 ### Adding new visit count [PUT]
 
@@ -2215,6 +2222,9 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 | `share_status`                     | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
 | `share_status_detail`              | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
 | `rejected`                         | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
+| `reject_reason`                    | `full_access`   | array(object) | Důvod zamítnutí kandidáta, pouze, pokud je rejected = true                                                                                                            |
+| `reject_reason` - `type`           | `full_access`   | string        | Typ důvodu zamítnutí (candidate - na straně kandidáta, company - firemní důvod, agency - agenturní důvod                                                              |
+| `reject_reason` - `name`           | `full_access`   | string        | Důvod zamítnutí kandidáta                                                                                                                                             |
 | `text_language`                    | `full_access`   | string        | Značí, jazyk inzerátu.                                                                                                                                                |
 | `source`                           | `full_access`   | object        |                                                                                                                                                                       |
 | `source` - `name`                  | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
@@ -2378,7 +2388,11 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
                 "type": "Nepřiřazený"
               },
               "attachment_list": [],
-              "rejected": false
+              "rejected": true,
+              "reject_reason": {
+                "type": "company",
+                "name": "3. kandidátův"
+              }
             }
           ],
           "meta": {
@@ -2421,13 +2435,16 @@ Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta co
 | `rating`                           | `full_access`   | int           | 0-5, hodnocení uchazeče.                                                                                                                                              |
 | `sign_job`                         | `full_access`   | object        |                                                                                                                                                                       |
 | `sign_job` - `job_title`           | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
-| `sign_job` - `job_source_site`     | `full_access`   | string        | DEPRECATED: portál, na kterém byl inzerát vytvořen.                                                                                                                     |
+| `sign_job` - `job_source_site`     | `full_access`   | string        | DEPRECATED: portál, na kterém byl inzerát vytvořen.                                                                                                                   |
 | `phone`                            | `full_access`   | string        |                                                                                                                                                                       |
 | `email`                            | `full_access`   | string        |                                                                                                                                                                       |
 | `flow_id`                          | `full_access`   | int           | ID flow, ve které se odpověď zrovna nachází. (Dokumentaci k flow zatím připravujeme.)                                                                                 |
 | `share_status`                     | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
 | `share_status_detail`              | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
 | `rejected`                         | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
+| `reject_reason`                    | `full_access`   | array(object) | Důvod zamítnutí kandidáta, pouze, pokud je rejected = true, analogicky jako v GET answers                                                                             |
+| `reject_reason` - `type`           | `full_access`   | string        | Typ důvodu zamítnutí (candidate - na straně kandidáta, company - firemní důvod, agency - agenturní důvod                                                              |
+| `reject_reason` - `name`           | `full_access`   | string        | Důvod zamítnutí kandidáta                                                                                                                                             |
 | `source`                           | `full_access`   | object        |                                                                                                                                                                       |
 | `source` - `name`                  | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
 | `source` - `type`                  | `full_access`   | string        | Typ zdroje. Například jestli je to systémový email, api aj.                                                                                                           |

@@ -13,7 +13,7 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
   * U výsledku volání `GET answer/` a `GET answers/` je nyní atribut `reject_reason` - důvod zamítnutí kandidáta.
 
 * **2.2.2022: branch v1 `1.8.3`**
-  * Přidáno volání `PUT jobs/access/id`
+  * Přidáno volání `PUT jobs/id/access`
 
 * **10.1.2022: branch v1 `1.8.2`**
   * Přibyl object `contact - employee` v `GET jobs/` volání.
