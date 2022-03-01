@@ -99,7 +99,7 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
         :[](json/apidoc_json_error_general.json MSG:"Daily 'quota_candidates_delete quota' has been exceeded." CODE:"api.error.quota.exceeded")
         
 
-## Communication with candidate [/candidate/{id}/{answer_id}/communication{?limit,page,author_id,direction,type}]
+## Communication with candidate [/candidates/{id}/{answer_id}/communication{?limit,page,author_id,direction,type}]
 
 ### List candidate communication [GET]
 
@@ -134,7 +134,7 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
         :[](json/apidoc_candidates_communication_get.json)
 
 
-### Create new communication record [POST /candidate/{id}(/{answer_id})/communication]
+### Create new communication record [POST /candidates/{id}(/{answer_id})/communication]
 Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id` funguje stejně jako u GET volání.
 
 #### Requirements
