@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.8.4**
-* Poslední aktualizace: **9.2.2022**
+* Verze systému: **1.9.0**
+* Poslední aktualizace: **9.3.2022**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,6 +18,10 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 ## Changelog
 
+* **9.3.2022: branch v1 `1.9.0`**
+  * V dokumentaci jsou nyní popsány nové oprávnění tokenů.
+  * Bylo odstraněno deprecated volání `GET enums/filters`
+ 
 * **9.2.2022: branch v1 `1.8.4`**
   * Přidány parametry `suitable_for` a `remote_work` do výpisu inzerátů. Viz enum sekce.
   * U výsledku volání `GET answer/` a `GET answers/` je nyní atribut `reject_reason` - důvod zamítnutí kandidáta.
@@ -211,11 +215,13 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
   * Ustálená verze API volání `jobs` , `answers` a `login`.
   * Počáteční verze.
 
+### API url
+
+Pro volání API využijte url: https://api.recruitis.io/api2/
+
 
 ## Tokeny
-Autorizační tokeny mají dvě skupiny po dvou úrovní:
-
-### Skupiny tokenů
+Autorizační tokeny mohou být buď firemní nebo se vztahovat ke konkrétnímu zaměstnanci:
 
 #### Firemní tokeny
 
@@ -228,12 +234,23 @@ Nekteré volání potřebují znát přesného autora (Kvůli reportům napřík
 Každý účet si může vytvořit v recruitisu vlastní token. Díky němu může používat všechna API volání, to jest i volání, 
 která potřebují mít vazbu ke konkrétnímu účtu.
 
-### Dále se tokeny rozlišují dle údělených práv:
+### Autorizační práva tokenů
 
-+ `full_access`: Token, který má veškeré pravomoci a umožňuje upravovat data v systému dané firmy. Tento token nesmí být jakkoli zobrazen veřejnosti.
-+ `public_access`: Token, který má převážně zobrazovací pravomoci. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
+Abychom maximálně zabezpečili možnosti jednotlivých tokenů, každý z nich má udělená práva na volání jednotlivých skupin endpointů.
+V případě, že zavoláte tokenem endpoint, na který nemá oprávnění, systém vrátí status kód `401`.
 
-Na oba druhy tokenů lze uplatnit doménový whitelist (toto nastavení doporučujeme použít).
+| Název oprávnění                          | Popis                                                                                                             |
+|------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `api.device.read`                        | Dovoluje přistupovat k endpointů na vracení osobních informací.                                                   |
+| `api.position.read`,`api.position.write` | Dovoluje přistupovat k vypisování pozic a k jejím úpravám.                                                        |
+| `api.candidates.read`                    | Dovoluje přistupovat k výpisu uchazečů a jejich odpovědí. Dále pak k přidáváním komunikace a přidáváním odpovědí. |
+| `api.candidates.write`                   | Základní oprávnění, které dovoluje vytvářet nové odpovědi, popř. upravovat stávající.                             |
+| `api.referral.read`,`api.referral.write` | Dovoluje přidávat a vypisovat referraly.                                                                          |
+| `api.filters.read`,`api.filters.write`   | Dovoluje přidávat a vypisovat filtrační položky k inzerátům.                                                      |
+| `api.reporty.read`                       | Dovoluje vytvářet reporty.                                                                                        |
+| `api.enums.read`                         | Dovoluje stahovat číselníky.                                                                                      |
+
+ > Tokeny vytvořené ještě před zavedením těchto oprávnění mohou přistupovat ke všem endpointům dle původní logiky plného a částečného oprávnění. 
 
 Tokeny lze vytvořit po přihlášení v Recruitisu: *nastavení* > *api propojení* (https://app.recruitis.io/zadavatel/nastaveni).
 
@@ -241,9 +258,7 @@ Samotná autorizace probíhá pomocí posláním headeru: `Authorization: Bearer
 
 _Příklad:_ `Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6`.
 
-###API url
 
-Pro volání API využijte url: https://api.recruitis.io/api2/
 
 ###Meta informace
 
@@ -303,43 +318,43 @@ entitou stalo, viz příklad níže. Zároveň se tento stav zaloguje u nás na 
 
 Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popi
 
-| CODE parameter                                   | Note
-|:-------------------------------------------------|--------------------------------|
-| `api.ok`                                         | Dotaz proběhl úspěšně. 
-| `api.found`                                      | Dotaz našel výsledek a poslal zpět.
-| `api.created`                                    | Dotaz vytvořil entitu.
-| `api.deleted`                                    | Dotaz smazal entitu.
-| `api.modified`                                   | Dotaz upravil entitu.
-| `api.unmodified`                                 | Dotaz nic nového neprovedl, vrátil již existující entitu.
-| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek. 
-| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.
-| `api.error.system.unavailable`                   | API systém je nedostupný.
-| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.
-| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.
-| `api.error.request.property.wrong_value`         | V požadavku nabývá proměnná špatnou hodnotu. 
-| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší než povolená hodnota.
-| `api.error.request.property.maximum_array_items` | Počet prvků v poli je větší, než je povoleno.
-| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek. 
-| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.
-| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.
-| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častěji špatnými údaji. 
-| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.
-| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
-| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, přihlášení se nezdařilo. 
-| `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.
-| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání viz. samostatná sekce
-| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
-| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
-| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
-| `api.error.upload.size`                          | Příloha má více, než 3 MB.
-| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
-| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
-| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
-| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.
-| `api.error.response.too_big`                     | Odpověď je příliš velká.
-| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.
-| `api.error.referral.already_created`             | Daný referral byl již vytvořen.
-| `api.error.job.disallowed_acess_type`            | Tento typ inzerátu nepřijímá žádné odpovědi, popř. nelze nijak upravovat.
+| CODE parameter                                   | Note                                                                                                    |
+|:-------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `api.ok`                                         | Dotaz proběhl úspěšně.                                                                                  |
+| `api.found`                                      | Dotaz našel výsledek a poslal zpět.                                                                     |
+| `api.created`                                    | Dotaz vytvořil entitu.                                                                                  |
+| `api.deleted`                                    | Dotaz smazal entitu.                                                                                    |
+| `api.modified`                                   | Dotaz upravil entitu.                                                                                   |
+| `api.unmodified`                                 | Dotaz nic nového neprovedl, vrátil již existující entitu.                                               |
+| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek.                                                 |
+| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.                                                                       |
+| `api.error.system.unavailable`                   | API systém je nedostupný.                                                                               |
+| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.                                                                            |
+| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.                                                                   |
+| `api.error.request.property.wrong_value`         | V požadavku nabývá proměnná špatnou hodnotu.                                                            |
+| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší než povolená hodnota.                                       |
+| `api.error.request.property.maximum_array_items` | Počet prvků v poli je větší, než je povoleno.                                                           |
+| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek.                                                                |
+| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.                                                                              |
+| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.                                                     |
+| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častěji špatnými údaji. |
+| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.                                                                       |
+| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje.                                                                           |
+| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, přihlášení se nezdařilo.                                                     |
+| `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.                                                                      |
+| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání viz. samostatná sekce                                           |
+| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán.                                                        |
+| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale).                                           |
+| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy.                                                                  |
+| `api.error.upload.size`                          | Příloha má více, než 3 MB.                                                                              |
+| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.                          |
+| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje.                                                         |
+| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje.                                                         |
+| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.                                                                  |
+| `api.error.response.too_big`                     | Odpověď je příliš velká.                                                                                |
+| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.                                                    |
+| `api.error.referral.already_created`             | Daný referral byl již vytvořen.                                                                         |
+| `api.error.job.disallowed_acess_type`            | Tento typ inzerátu nepřijímá žádné odpovědi, popř. nelze nijak upravovat.                               |
 
 V případě nedostupnosti API server vrací `503` s kódem `api.error.system.unavailable`.
 
@@ -370,21 +385,21 @@ nebo jako pole (`foo[]=bar&foo[]=baz`).
 
 Typy příloh se využívají při vytváření odpovědi, popřípadě kandidáta.
 
-| Value  |  Note                             |
-|:-------|-----------------------------------|
-| `1`    | Příloha bez zaměření       
-| `2`    | CV příloha       
-| `3`    | Emailová korespondence (obsolete)       
-| `4`    | Fotografie       
-| `5`    | GDPR souhlas       
+| Value | Note                              |
+|:------|-----------------------------------|
+| `1`   | Příloha bez zaměření              |
+| `2`   | CV příloha                        |
+| `3`   | Emailová korespondence (obsolete) |
+| `4`   | Fotografie                        |
+| `5`   | GDPR souhlas                      |
 
 #### Speciální typy tagů
 
 Pokud místo svého znění tagu vložíte níže uvedený tag, má to hlubší vliv na fungování uchazeče, viz poznámka.
 
-| Value        |  Note                             |
-|:-------------|-----------------------------------|
-| `tag.hot`    | Tento tag přidaný k uchazeči (přes přidání odpovědi / uchazeče) zaručí, že se kandidát zařadí do sekce "žhavý kandidát"  
+| Value     | Note                                                                                                                    |
+|:----------|-------------------------------------------------------------------------------------------------------------------------|
+| `tag.hot` | Tento tag přidaný k uchazeči (přes přidání odpovědi / uchazeče) zaručí, že se kandidát zařadí do sekce "žhavý kandidát" |
 
 ### Vysvětlení hodnot jednotlivých parametrů
 
@@ -408,16 +423,16 @@ jak se device_name zapíše, nelze přes API volání změnit.
 
 Tato funkce není třeba volat, pokud již máte Token vygenerovaný. **Tato funkce vrací token s vlastností `full_access`.**
 
-| Request value        | Required | Note |
-|:----------------------|--------|----------------------|
-| `password`            | Yes    |
-| `username`            | Yes    |
-| `device_id`           | No     |
-| `device_name`         | No     |
+| Request value | Required | Note |
+|:--------------|----------|------|
+| `password`    | Yes      |      |
+| `username`    | Yes      |      |
+| `device_id`   | No       |      |
+| `device_name` | No       |      |
 
 #### Requirements
 
-   + No Authorization is needed
+   + Není potřeba žádná autorizace.
 
 + Request 
 
@@ -470,6 +485,8 @@ Získání informací o právě přihlášeném účtu.
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.device.read`.
 
 + Request
     + Headers
@@ -519,6 +536,17 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
 Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code `api.response.null`.
 
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).
+  * Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id).
+
 #### Parameters info
 
  Poznámka: Všechny array parametry udávejte buď jako je dnu hodnotu (např. `&office_id=XXX`) nebo 
@@ -566,14 +594,6 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | Archivovaná pozice | 3     | Archivovaná pozice (dříve smazaná) je pozice určená ke znovu otevření, popř. úplnému smazání. Nepřijímá nové odpovědi a neumožňuje editaci svávajících. Při Archivaci dochází k odosobnění uchazečů bez GDPR souhlasu. Vrací pouze seznam ID pozic. |
 | Draft              | 4     | Rozepsaná pozice právě přihlášeného personalisty.                                                                                                                                                                                                   |
 | Šablona            | 5     | Pozice určená jako šablona. Může být buď právě přihlášeného personalisty nebo celé firmy.                                                                                                                                                           |
-
-
-#### Requirements
-
-* Volání musí být s autorizačním tokenem.
-* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
-* Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
-* Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -997,8 +1017,11 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
-* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-* Token typ: `full_access`: pokud se jedná o interní inzerát.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+  * Token typ: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
 
@@ -1191,7 +1214,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
    
 | Request value   | Required | Default Value | Note                                                                                                              |
 |:----------------|----------|:--------------|-------------------------------------------------------------------------------------------------------------------|
@@ -1251,7 +1277,10 @@ Zobrazení všech kanálů, kde je inzerát publikován.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
 + Request (application/json)
     + Headers
@@ -1310,7 +1339,10 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
 | Request value | Required | Type     | Default Value | Note                                                                                                         |
 |:--------------|----------|:---------|---------------|--------------------------------------------------------------------------------------------------------------|
@@ -1398,7 +1430,11 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
+
 
   + Request (application/json)
       + Headers
@@ -1444,7 +1480,10 @@ Stažení inzerátu z prezentačního kanálu.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
 + Request (application/json)
     + Headers
@@ -1507,6 +1546,10 @@ Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může v
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+    * Token typ: `public_access`, `full_access`
 
 | Request value | Required | Default Value | Note                                                                                                                            |
 |:--------------|----------|:--------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -1564,6 +1607,15 @@ Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může v
 ### List communication with candidates [GET]
 
 Výpis komunikace s kandidáty na konkrétní pozici.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+    * Token typ:  `public_access`,`full_access`
+
 
 + Request (application/json)
     + Headers
@@ -1676,7 +1728,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
    * Volání musí být s autorizačním tokenem.
    * Kompatibilní s firemním tokenem.
-   * Token typ: `public_access`
+   * Nový typ tokenů:
+     * Token musí mít oprávnění `api.candidates.write`.
+   * Starý typ tokenů:
+     * Token typ: `public_access`
    
 | Request value                        | Required                  | Default Value   | Note                                                                                                                                                                                                                          |
 |--------------------------------------|---------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1791,6 +1846,10 @@ Na toto volání se vztahuje denní kvóta. V případě překročení denní kv
 
 * Volání musí být s autorizačním tokenem.
 * Token typ: `full_access`
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.candidates.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 + Parameters
      + id (required, number, `1`) - ID kandidáta (user ID)
@@ -1849,7 +1908,11 @@ Výpis komunikace s kandidátem. Bez vyplněného parametru `answer_id` vypíše
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.candidates.read`.
+* Starý typ tokenů:
+    * Token typ: `public_access`
+
 
 + Request (application/json)
     + Headers
@@ -1954,23 +2017,23 @@ Založení nového záznamu komunikace (zprávy) s klientem. Parametr `answer_id
 * Volání musí být s autorizačním tokenem.
 * Token typ: `full_access`
    
-| Request value                        | Required | Default Value   | Note                                                                                                                                            |
-|:-------------------------------------|----------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| `employee_id`                        | Yes      |                 | ID uživatele, který zprávu posílá.                                                                                                              |
-| `author_id`                          | No       | employee_id     | ID uživatele, vyplťte, pokud je autor jiný uživatel, než ten, který zprávu posílá. Pokud nevyplněno, použije se employee_i                      |
-| `sender`                             | No       |                 | Textová podoba odesílatele (jméno, email, telefoní číslo (SMS)), pokud nebude vyplněno, použijí se data vázaná na author_id.                    |
-| `recipient`                          | No       |                 | Dtto. sender.                                                                                                                                   |
-| `subject`                            | Yes      |                 | Předmět zprávy.                                                                                                                                 |
-| `content`                            | Yes      |                 | Obsah zprávy.                                                                                                                                   |
-| `direction`                          | Yes      |                 | Jedna z hodnot: in = příchozí, out = odchozí, váže se ke kandidátovi/odpovědi. Tj. příchozí ke kandidátovi a odchozí od kandidáta.              |
-| `senderType`                         | Yes      |                 | Říká, od koho pochází daná komunikace. Přípustné hodnoty: `candidate`,`employee`,`system`,`other`                                               |
-| `type`                               | Yes      |                 | Říká, o jaký typ komunikace se jedná. Přípustné hodnoty: `linkedin`,`call`,`email`,`sysemail`,`sms`,`note`,`call`                                               |
-| `strict`                             | No       | 1               | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách.            |
-| `date_action`                        | No       | now             | Datum vytvoření komunikace.                  |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                         |
-| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                    |
-| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                                      |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                     |
+| Request value             | Required | Default Value | Note                                                                                                                                 |
+|:--------------------------|----------|---------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| `employee_id`             | Yes      |               | ID uživatele, který zprávu posílá.                                                                                                   |
+| `author_id`               | No       | employee_id   | ID uživatele, vyplťte, pokud je autor jiný uživatel, než ten, který zprávu posílá. Pokud nevyplněno, použije se employee_i           |
+| `sender`                  | No       |               | Textová podoba odesílatele (jméno, email, telefoní číslo (SMS)), pokud nebude vyplněno, použijí se data vázaná na author_id.         |
+| `recipient`               | No       |               | Dtto. sender.                                                                                                                        |
+| `subject`                 | Yes      |               | Předmět zprávy.                                                                                                                      |
+| `content`                 | Yes      |               | Obsah zprávy.                                                                                                                        |
+| `direction`               | Yes      |               | Jedna z hodnot: in = příchozí, out = odchozí, váže se ke kandidátovi/odpovědi. Tj. příchozí ke kandidátovi a odchozí od kandidáta.   |
+| `senderType`              | Yes      |               | Říká, od koho pochází daná komunikace. Přípustné hodnoty: `candidate`,`employee`,`system`,`other`                                    |
+| `type`                    | Yes      |               | Říká, o jaký typ komunikace se jedná. Přípustné hodnoty: `linkedin`,`call`,`email`,`sysemail`,`sms`,`note`,`call`                    |
+| `strict`                  | No       | 1             | Určuje chování uploadu při chybě, pokud 1, tak se uloží vše, nebo nic. Pokud 0, v meta tagu budou informace o neuložených přílohách. |
+| `date_action`             | No       | now           | Datum vytvoření komunikace.                                                                                                          |
+| `attachments`             | No       |               | Velikost souboru nesmí přesáhnout 3 MB.                                                                                              |
+| `attachment` - `path`     | Yes      |               | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                         |
+| `attachment` - `base64`   | Yes      |               | Atribut `path` nebo `base64` je vyžadován. Data souboru vs base64 formátu.                                                           |
+| `attachment` - `filename` | Yes      |               | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                          |
 
 
 + Request (application/json)
@@ -2059,37 +2122,40 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
-* Token typ: `full_access`: pokud se jedná o interní inzerát.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.candidates.write`.
+* Původní typ tokenů:
+  * Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystaven na firemních stránkách, xml nebo na pracovních portálech).
+  * Token typ: `full_access`: pokud se jedná o interní inzerát.
 * Kompatibilní s firemním tokenem.
    
-| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                           |
-|:-------------------------------------|----------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `job_id`                             | Yes      |                 |                                                                                                                                                                                                                |
-| `name`                               | Yes      |                 |                                                                                                                                                                                                                |
-| `email`                              | No       |                 |                                                                                                                                                                                                                |
-| `phone`                              | No       |                 |                                                                                                                                                                                                                |
-| `skype`                              | No       |                 | Odkaz na Skype uchazeče.                                                                                                                                                                                       |
-| `linkedin`                           | No       |                 | Odkaz na LinkedIn uchazeče.                                                                                                                                                                                    |
-| `facebook`                           | No       |                 | Odkaz na Facebook uchazeče.                                                                                                                                                                                    |
-| `twitter`                            | No       |                 | Odkaz na Twitter uchazeče.                                                                                                                                                                                     |
-| `source_id`                          | No       | -1              | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`.                                                                                                                                               |
-| `source`                             | No       |                 | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud zdroj již existuje, přiřadí se k existujícímu. Tato položka je **ignorována**, pokud je udána hodnota `source_id`.|
-| `referral_id`                        | No       |                 | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu).                                                                                                                          |
-| `cover_letter`                       | No       |                 |                                                                                                                                                                                                                |
-| `gdpr_agreement`                     | No       |                 | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas se zařazením do databáze uchazečů pro danou firmu.                                                                                                  |
-| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                              |
-| `gdpr_agreement` - `date_created`    | No       | now             | formát YYYY-MM-DD HH:MM:SS                                                                                                                                                                                     |
-| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                            |
-| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                        |
-| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                   |
-| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs. base64 formátu.                                                                                                                                    |
-| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                    |
-| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                       |
-| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                      |
-| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                            |
-| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                      |
-| `send_notification`                  | No       | false           | Pokud je zapnuto, při přidání nové odpovědi se pošle zpráva o novém kandidátovi na všechny přidružené emailové adresy.                                                                                         |
+| Request value                        | Required | Default Value   | Note                                                                                                                                                                                                             |
+|:-------------------------------------|----------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `job_id`                             | Yes      |                 |                                                                                                                                                                                                                  |
+| `name`                               | Yes      |                 |                                                                                                                                                                                                                  |
+| `email`                              | No       |                 |                                                                                                                                                                                                                  |
+| `phone`                              | No       |                 |                                                                                                                                                                                                                  |
+| `skype`                              | No       |                 | Odkaz na Skype uchazeče.                                                                                                                                                                                         |
+| `linkedin`                           | No       |                 | Odkaz na LinkedIn uchazeče.                                                                                                                                                                                      |
+| `facebook`                           | No       |                 | Odkaz na Facebook uchazeče.                                                                                                                                                                                      |
+| `twitter`                            | No       |                 | Odkaz na Twitter uchazeče.                                                                                                                                                                                       |
+| `source_id`                          | No       | -1              | Zdroj, odkud odpověď přišla. Více u volání `GET \enums\sources`.                                                                                                                                                 |
+| `source`                             | No       |                 | String. Zdroj odpovědi, který se automaticky vytvoří (tudíž není potřeba znát jeho ID.) Pokud zdroj již existuje, přiřadí se k existujícímu. Tato položka je **ignorována**, pokud je udána hodnota `source_id`. |
+| `referral_id`                        | No       |                 | ID referrala (ID získané z Recruitis referral stránky, API pro referraly je v plánu).                                                                                                                            |
+| `cover_letter`                       | No       |                 |                                                                                                                                                                                                                  |
+| `gdpr_agreement`                     | No       |                 | Pokud je objekt uveden, k odpovědi se přidá i GDPR souhlas se zařazením do databáze uchazečů pro danou firmu.                                                                                                    |
+| `gdpr_agreement` - `date_expiration` | No       | 1 year from now | formát YYYY-MM-DD                                                                                                                                                                                                |
+| `gdpr_agreement` - `date_created`    | No       | now             | formát YYYY-MM-DD HH:MM:SS                                                                                                                                                                                       |
+| `gdpr_agreement` - `source`          | No       | "manual"        | Stringové označení, odkud byl GDPR souhlas pořízen.                                                                                                                                                              |
+| `attachments`                        | No       |                 | Velikost souboru nesmí přesáhnout 3 MB.                                                                                                                                                                          |
+| `attachment` - `path`                | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Ujistěte se, že je soubor dostupný z jiné domény.                                                                                                                     |
+| `attachment` - `base64`              | Yes      |                 | Atribut `path` nebo `base64` je vyžadován. Data souboru vs. base64 formátu.                                                                                                                                      |
+| `attachment` - `filename`            | Yes      |                 | Název souboru. Musí obsahovat koncovku a čitelné znaky. Mezery budou nahrazeny podtržítkem.                                                                                                                      |
+| `attachment` - `type`                | No       | 1               | @see Enumeration section                                                                                                                                                                                         |
+| `extra`                              | No       |                 | Pole objektů, které přiřadí k odpovědi poznámku nebo tag.                                                                                                                                                        |
+| `extra` - `note`                     | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako poznámka. **Maximální délka poznámky je 800 znaků.**                                                                              |
+| `extra` - `tag`                      | Yes      |                 | Atribut `note` nebo `tag` je vyžadován. Pokud je určeno, uloží se hodnota jako tag k uchazeči. **Maximální délka poznámky je 100 znaků.**                                                                        |
+| `send_notification`                  | No       | false           | Pokud je zapnuto, při přidání nové odpovědi se pošle zpráva o novém kandidátovi na všechny přidružené emailové adresy.                                                                                           |
 
 **GDPR a souhlas se zpracováním osobních údajů k dané pozici:**
 Pokud není určen GDPR souhlas, tak souhlas se zpracováním os. údajů dostává uchazeč k dané pozici vždy automaticky na rok, popř. do skončení pozice. Jako zdroj souhlasu se uvádí "api". 
@@ -2173,6 +2239,16 @@ Tento dotaz vrací seznam všech odpovědí. Dají se filtrovat dle konkrétníc
 
 Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `200` s meta code `api.response.null`.
 
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.candidates.read`.
+* Původní typ tokenů:
+    * Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
+
 #### Parameters info
 
  Poznámka: Všechny array parametry udávejte buď jako jednu hodnotu (např. `&job_id=XXX`) nebo 
@@ -2192,56 +2268,49 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 
 #### Response parameters
    
-| Parameter                          | token condition | Type          | Note                                                                                                                                                                  |
-|------------------------------------|-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `candidate_id`                     | `full_access`   | int           | ID kandidáta, ke kterému se odpověd vztahuje.                                                                                                                         |
-| `answer_id`                        | `full_access`   | int           | ID odpovědi.                                                                                                                                                          |
-| `name`                             | `full_access`   | object        |                                                                                                                                                                       |
-| `name` - `first_name`              | `full_access`   | int           |                                                                                                                                                                       |
-| `name` - `last_name`               | `full_access`   | string        |                                                                                                                                                                       |
-| `name` - `initials`                | `full_access`   | string        | Iniciály jména                                                                                                                                                        |
-| `title`                            | `full_access`   | object        |                                                                                                                                                                       |
-| `title` - `before`                 | `full_access`   | string        | Titul před jménem.                                                                                                                                                    |
-| `title` - `after`                  | `full_access`   | string        | Titul za jménem.                                                                                                                                                      |
-| `salutation`                       | `full_access`   | object        |                                                                                                                                                                       |
-| `salutation` - `first_name`        | `full_access`   | string        | Oslovení kandidáta - jméno.                                                                                                                                           |
-| `salutation` - `last_name`         | `full_access`   | string        | Oslovení kandidáta - příjmení.                                                                                                                                        |
-| `gender`                           | `full_access`   | string        | Pohlaví kandidáta - M / F.                                                                                                                                            |
-| `user_img`                         | `full_access`   | string        | Cesta k obrázku uchazeče.                                                                                                                                             |
-| `rating`                           | `full_access`   | int           | 0-5, hodnocení uchazeče.                                                                                                                                              |
-| `job_details`                      | `full_access`   | object        |                                                                                                                                                                       |
-| `job_details` - `job_title`        | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
-| `job_details` - `job_id`           | `full_access`   | int           | ID inzerátu, ke kterému se odpověd vztahuje.                                                                                                                          |
-| `job_details` - `job_contact_name` | `full_access`   | string        | Jméno konktatní osoby, přidružené k inzerátu                                                                                                                          |
-| `job_details` - `job_contact_email`| `full_access`   | string        | Email kontaktní osoby.                                                                                                                                                |
-| `job_details` - `job_contact_phone`| `full_access`   | string        | Telefon kontaktní osoby.                                                                                                                                              |
-| `answer_created`                   | `full_access`   | datetime      | Datum vytvoření odpovědi.                                                                                                                                             |
-| `phone`                            | `full_access`   | string        |                                                                                                                                                                       |
-| `email`                            | `full_access`   | string        |                                                                                                                                                                       |
-| `flow_id`                          | `full_access`   | int           | ID flow, ve které se odpověď zrovna nachází. (Dokumentaci k flow zatím připravujeme.)                                                                                 |
-| `share_status`                     | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
-| `share_status_detail`              | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
-| `rejected`                         | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
-| `reject_reason`                    | `full_access`   | array(object) | Důvod zamítnutí kandidáta, pouze, pokud je rejected = true                                                                                                            |
-| `reject_reason` - `type`           | `full_access`   | string        | Typ důvodu zamítnutí (candidate - na straně kandidáta, company - firemní důvod, agency - agenturní důvod                                                              |
-| `reject_reason` - `name`           | `full_access`   | string        | Důvod zamítnutí kandidáta                                                                                                                                             |
-| `text_language`                    | `full_access`   | string        | Značí, jazyk inzerátu.                                                                                                                                                |
-| `source`                           | `full_access`   | object        |                                                                                                                                                                       |
-| `source` - `name`                  | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
-| `source` - `type`                  | `full_access`   | string        | Typ zdroje. Například jestli je to systémový email, api aj.                                                                                                           |
-| `attachment_list`                  | `full_access`   | array(object) |                                                                                                                                                                       |
-| `attachment_list` - `name`         | `full_access`   | string        | Název souboru.                                                                                                                                                        |
-| `attachment_list` - `size`         | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
-| `attachment_list` - `hash`         | `full_access`   | string        | ID (hash) souboru.                                                                                                                                                    |
-| `attachment_list` - `download_url` | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
-| `custom_data`                      | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
-
-
-#### Requirements
-
-  + Volání musí být s autorizačním tokenem.
-  + Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
-  + Kompatibilní s firemním tokenem.
+| Parameter                           | token condition | Type          | Note                                                                                                                                                                  |
+|-------------------------------------|-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `candidate_id`                      | `full_access`   | int           | ID kandidáta, ke kterému se odpověd vztahuje.                                                                                                                         |
+| `answer_id`                         | `full_access`   | int           | ID odpovědi.                                                                                                                                                          |
+| `name`                              | `full_access`   | object        |                                                                                                                                                                       |
+| `name` - `first_name`               | `full_access`   | int           |                                                                                                                                                                       |
+| `name` - `last_name`                | `full_access`   | string        |                                                                                                                                                                       |
+| `name` - `initials`                 | `full_access`   | string        | Iniciály jména                                                                                                                                                        |
+| `title`                             | `full_access`   | object        |                                                                                                                                                                       |
+| `title` - `before`                  | `full_access`   | string        | Titul před jménem.                                                                                                                                                    |
+| `title` - `after`                   | `full_access`   | string        | Titul za jménem.                                                                                                                                                      |
+| `salutation`                        | `full_access`   | object        |                                                                                                                                                                       |
+| `salutation` - `first_name`         | `full_access`   | string        | Oslovení kandidáta - jméno.                                                                                                                                           |
+| `salutation` - `last_name`          | `full_access`   | string        | Oslovení kandidáta - příjmení.                                                                                                                                        |
+| `gender`                            | `full_access`   | string        | Pohlaví kandidáta - M / F.                                                                                                                                            |
+| `user_img`                          | `full_access`   | string        | Cesta k obrázku uchazeče.                                                                                                                                             |
+| `rating`                            | `full_access`   | int           | 0-5, hodnocení uchazeče.                                                                                                                                              |
+| `job_details`                       | `full_access`   | object        |                                                                                                                                                                       |
+| `job_details` - `job_title`         | `full_access`   | string        | Název inzerátu, ke kterému je odpověď přiřazena.                                                                                                                      |
+| `job_details` - `job_id`            | `full_access`   | int           | ID inzerátu, ke kterému se odpověd vztahuje.                                                                                                                          |
+| `job_details` - `job_contact_name`  | `full_access`   | string        | Jméno konktatní osoby, přidružené k inzerátu                                                                                                                          |
+| `job_details` - `job_contact_email` | `full_access`   | string        | Email kontaktní osoby.                                                                                                                                                |
+| `job_details` - `job_contact_phone` | `full_access`   | string        | Telefon kontaktní osoby.                                                                                                                                              |
+| `answer_created`                    | `full_access`   | datetime      | Datum vytvoření odpovědi.                                                                                                                                             |
+| `phone`                             | `full_access`   | string        |                                                                                                                                                                       |
+| `email`                             | `full_access`   | string        |                                                                                                                                                                       |
+| `flow_id`                           | `full_access`   | int           | ID flow, ve které se odpověď zrovna nachází. (Dokumentaci k flow zatím připravujeme.)                                                                                 |
+| `share_status`                      | `full_access`   | int,null      | Pokud je odpověď zrecyklovaná (zkopírovaná z jiného inzerátu) čekáme na odpověď uchazeče. NULL: není odpověď, 1: Uchazeč odpověď schválil, 0: Uchazeč odpověd zamítl. |
+| `share_status_detail`               | `full_access`   | string        | Důvod zamítnutí zrecyklované odpovědi.                                                                                                                                |
+| `rejected`                          | `full_access`   | null,boolean  | Značí, jestli je odpověď zamítnutá.                                                                                                                                   |
+| `reject_reason`                     | `full_access`   | array(object) | Důvod zamítnutí kandidáta, pouze, pokud je rejected = true                                                                                                            |
+| `reject_reason` - `type`            | `full_access`   | string        | Typ důvodu zamítnutí (candidate - na straně kandidáta, company - firemní důvod, agency - agenturní důvod                                                              |
+| `reject_reason` - `name`            | `full_access`   | string        | Důvod zamítnutí kandidáta                                                                                                                                             |
+| `text_language`                     | `full_access`   | string        | Značí, jazyk inzerátu.                                                                                                                                                |
+| `source`                            | `full_access`   | object        |                                                                                                                                                                       |
+| `source` - `name`                   | `full_access`   | string        | Název zdroje, ke kterému se odpověď vztahuje.                                                                                                                         |
+| `source` - `type`                   | `full_access`   | string        | Typ zdroje. Například jestli je to systémový email, api aj.                                                                                                           |
+| `attachment_list`                   | `full_access`   | array(object) |                                                                                                                                                                       |
+| `attachment_list` - `name`          | `full_access`   | string        | Název souboru.                                                                                                                                                        |
+| `attachment_list` - `size`          | `full_access`   | int           | Velikost souboru.                                                                                                                                                     |
+| `attachment_list` - `hash`          | `full_access`   | string        | ID (hash) souboru.                                                                                                                                                    |
+| `attachment_list` - `download_url`  | `full_access`   | string        | REST API url adresa na stáhnutí souboru. Při volání musíte být autorizováni `full_access` tokenem. Viz files sekce.                                                   |
+| `custom_data`                       | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
 
 
 + Request
@@ -2412,6 +2481,16 @@ Pokud dotaz nenajde žádné odpovídající odpovědi, vrací se http status `2
 
 Tento dotaz vrací konkrétní odpověď. Oproti seznamu odpovědí není payload pole, ale rovnou kokrétní objekt odpovědi s nepatrně jinou strukturou (detailnější).
 Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta code `api.error.not_found`.
+
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.candidates.read`.
+* Původní typ tokenů:
+    * Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
  
 #### Response parameters
    
@@ -2456,11 +2535,6 @@ Pokud dotaz nenajde konkrétní odpověď, vrací se http status `404` s meta co
 | `custom_data`                      | `full_access`   | array(object) | Závislé na společnosti a vnitřní implementaci společnosti - toto pole nemusí být v payloadu přítomno.                                                                 |
 
 
-#### Requirements
-
-   + Volání musí být s autorizačním tokenem.
-   +  Token typ: `full_access`: Práce s výpisem odpovědí vyžaduje `full_access` token.
-   + Kompatibilní s firemním tokenem.
 
 + Request
     + Headers
@@ -2538,8 +2612,13 @@ Pro definici hodnot pooužijte bitmasku.
 
 #### Requirements
 
-   + Kompatibilní s firemním tokenem.
-   + Token typ: `full_access`.    
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.candidates.write`.
+* Původní typ tokenů:
+    * Token typ: `full_access`.
+
    
 | Request value        | Required | Default Value   | Note                                                                                      |
 |:---------------------|----------|-----------------|-------------------------------------------------------------------------------------------|
@@ -2601,15 +2680,19 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Kompatibilní s firemním tokenem.
-   + Token typ: `full_access`
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.referral.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
- | Request value     | Required | Note                                                                                                                        |
- |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
- | `name`            | Yes      | Jméno referrala.                                                                                                             |
- | `email`           | No       | Email referrala.                                                                                                                  |
- | `phone`           | No       | Telefon referrala.                                                                                                             |
- | `email_text`      | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+ | Request value | Required | Note                                                                                                                                      |
+|:--------------|----------|:------------------------------------------------------------------------------------------------------------------------------------------|
+ | `name`        | Yes      | Jméno referrala.                                                                                                                          |
+ | `email`       | No       | Email referrala.                                                                                                                          |
+ | `phone`       | No       | Telefon referrala.                                                                                                                        |
+ | `email_text`  | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
 + Request (application/json)
     + Headers
@@ -2662,18 +2745,26 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 Zavolání vrátí veškeré referraly přidružené k dané firmě. Na výpis se vztahuje stránkovač, kde maximum entit na jednu stránku je 100.
 V případě, že neodpovídá filtru žádný referral (nebo firma žádného referrala nemá), systém vrací header status `200` s `meta.code` `api.response.null`.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.referral.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
+
 #### Response parameters
 
-| Parameter      | Type     | Note                                                                             |
-|----------------|----------|----------------------------------------------------------------------------------|
-| `id`           | string   | ID referrala.                                                                    |
-| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr.|
-| `name`         | string   | Jméno referrala.                                                                  |
-| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                       |
-| `date_created` | datetime | Datum vzniku referrala.                                                           |
-| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                            |
-| `email`        | string   | Email referrala.                                                              |
-| `url`          | string   | Odkaz na adresu stránky referrrala.                                              |
+| Parameter      | Type     | Note                                                                               |
+|----------------|----------|------------------------------------------------------------------------------------|
+| `id`           | string   | ID referrala.                                                                      |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr. |
+| `name`         | string   | Jméno referrala.                                                                   |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                              |
+| `date_created` | datetime | Datum vzniku referrala.                                                            |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                             |
+| `email`        | string   | Email referrala.                                                                   |
+| `url`          | string   | Odkaz na adresu stránky referrrala.                                                |
                             
                             
 + Parameters
@@ -2718,6 +2809,14 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
 
 Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita, tzn. payload nebude obsahovat pole.
 V případě, že daný referral neexistuje, vrací se `404` odpověď. 
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.referral.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
 
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.
@@ -2787,17 +2886,20 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 #### Requirements
 
-   + Volání musí být s autorizačním tokenem.
-   + Kompatibilní s firemním tokenem.
-   + Token typ: `public_token`
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
-+ Request
-    + Headers
+   + Request
+       + Headers
     
-            Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
+               Authorization: Bearer 30bcaf299e100318906fef2f442505216fa28af1.11196.99382ec77e2a79ac2af2671730817ec6
 
-+ Parameters
-    + group (optional,array[string]) - Vyfiltruje pouze seznam filtrů k dané skupině.
+   + Parameters
+       + group (optional,array[string]) - Vyfiltruje pouze seznam filtrů k dané skupině.
     
 
 + Response 200 (application/json)
@@ -2855,8 +2957,11 @@ Vytvoření nového filtru.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 + Request
   + Headers
@@ -2919,8 +3024,11 @@ Editace filtru dle ID v parametru URI.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 
 + Request
@@ -2951,8 +3059,11 @@ Smaže filtr dle ID v parametru URI.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 
 + Parameters
@@ -2986,22 +3097,26 @@ Daný hash nyní vrací funkce [`GET`] `answers/`, který vrací celou url adres
 
 Pokud soubor neexistuje, nebo nepatří Vaší firmě, vrací se http status `404` s meta code `api.error.not_found`.
 
-#### Parameters info
-
-| Parametr | Required | Default Value | Require `full_access` token | Note                                                                                   |
-|-----------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------|
-| `hash`    | Yes      |               | Yes                         | string,array. Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit. |
-
-Parametr `hash` lze použít i jako pole (`?hash[]=xxxxx&hash[]=yyyyyy`). V tom případě se i **payload vrací jako pole**.
-
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.files.read`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
+
+#### Parameters info
+
+| Parametr | Required | Default Value | Require `full_access` token | Note                                                                                   |
+|----------|----------|---------------|-----------------------------|----------------------------------------------------------------------------------------|
+| `hash`   | Yes      |               | Yes                         | string,array. Hash je rozpoznávací string, díky kterému systém ví, jaký soubor vrátit. |
+
+Parametr `hash` lze použít i jako pole (`?hash[]=xxxxx&hash[]=yyyyyy`). V tom případě se i **payload vrací jako pole**.
+
 
 #### Response parameters
 
-| Parametr | token condition | Type   | Note                                                                      |
+| Parametr  | token condition | Type   | Note                                                                      |
 |-----------|-----------------|--------|---------------------------------------------------------------------------|
 | `name`    | `full_access`   | string | Název souboru i příponou.                                                 |
 | `size`    | `full_access`   | double | Velikost souboru v KB (dvě desetinná místa).                              |
@@ -3098,7 +3213,7 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 #### Requirements
 
-   + No Authorization is needed
+   + Není potřeba žádná autorizace.
 
 + Parameters
     + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
@@ -3156,11 +3271,14 @@ součtu `count` podřadných profesí. Je to tím, že mohou mít inzeráty náv
 
 #### Requirements
 
-   * Autorizace je vyžadována ve chvíli, kdy je použiž parametr `channel_assignation`.
-   * Kompatibilní s firemním tokenem.
-   * Token typ: `public_token`: pokud se jedná o dotaz na veřejné inzeráty (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-   * Token typ: `full_access`: pokud se jedná o dotaz na získání oborů pro interní inzeráty. 
-   
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.enums.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`, `full_access`   
+
+
 + Request
     + Headers
     
@@ -3234,8 +3352,11 @@ Získá všechny publikační kanály, na kterých může daná firma publikovat
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
-* Token typ: `public_access` a `full_access` 
-    
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.enums.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`, `full_access`
+
 + Response 200 (application/json)
 
         {
@@ -3293,7 +3414,10 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotný
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
-* Token typ: `public_access` a `full_access`
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.enums.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`, `full_access`
 
 + Response 200 (application/json)
 
@@ -3344,74 +3468,6 @@ Vrátí veškeré zdroje a jejich ID. Zdroje mohou být definovány jak samotný
         }
         
  
-## Filter List  [/enums/filters]
-
-**Deprecated**: Namísto toho používejte volání `GET` `filters/`.
-
-### Get filters [GET]
-
-Vrací veškeré filtry, které jsou definované pro filtraci inzerátů. 
-ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs` s parametrem `filter_id`).
-
-#### Requirements
-
-* Volání musí být s autorizačním tokenem.
-* Token typ: `public_access` a `full_access`
-
-+ Response 200 (application/json)
-
-        {
-          "payload": [
-            {
-              "id": "6",
-              "name": "Ošetřovna",
-              "group": "oddělení"
-            },
-            {
-              "id": "7",
-              "name": "Gynekologie",
-              "group": "oddělení"
-            },
-            {
-              "id": "8",
-              "name": "ORL",
-              "group": "oddělení"
-            },
-            {
-              "id": "5",
-              "name": "Jednosměný",
-              "group": "Smanný provoz"
-            },
-            {
-              "id": "9",
-              "name": "Dvousměnný",
-              "group": "Smanný provoz"
-            },
-            {
-              "id": "12",
-              "name": "Nepřetržitý",
-              "group": "Smanný provoz"
-            }
-          ],
-          "meta": {
-            "duration": 320,
-            "code": "api.found",
-            "message": "Filter enumeration is returned."
-          }
-        }
-
-+ Response 401 (application/json)
-
-        {
-          "payload": null,
-          "meta": {
-            "duration": 139.58,
-            "code": "api.error.unauthorized",
-            "message": "Musíte být přihlášen"
-          }
-        }
-
-
 ## Office List [/enums/offices]
 ### Get offices [GET]
 
@@ -3422,7 +3478,10 @@ ID tohoto prvku se následně použije při filtraci inzerátů (volání `jobs`
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
-* Token typ: `public_access` a `full_access`
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.enums.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`, `full_access`
 
 + Response 200 (application/json)
 
@@ -3489,7 +3548,7 @@ Vrací všechny naše pracovní poměry a jejich ID.
 
 #### Requirements
 
-   + No Authorization is needed
+   + Není potřeba žádná autorizace.
    
 + Parameters
    + lang (optional,string,`cs`) - Jazyk, ve kterém se mají obory vrátit (momentálně je podporována pouze čeština).
@@ -3562,7 +3621,11 @@ Popis jednotlivých listů, viz `lists` parametr:
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.reports.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
+
 
 | Request value | Required | Type    | Note                                                                                                                                                             |
 |---------------|----------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|

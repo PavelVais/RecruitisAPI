@@ -15,15 +15,19 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 
 #### Requirements
 
-   + Kompatibilní s firemním tokenem.
-   + Token typ: `full_access`
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.referral.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
- | Request value     | Required | Note                                                                                                                        |
- |-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
- | `name`            | Yes      | Jméno referrala.                                                                                                             |
- | `email`           | No       | Email referrala.                                                                                                                  |
- | `phone`           | No       | Telefon referrala.                                                                                                             |
- | `email_text`      | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
+ | Request value | Required | Note                                                                                                                                      |
+|:--------------|----------|:------------------------------------------------------------------------------------------------------------------------------------------|
+ | `name`        | Yes      | Jméno referrala.                                                                                                                          |
+ | `email`       | No       | Email referrala.                                                                                                                          |
+ | `phone`       | No       | Telefon referrala.                                                                                                                        |
+ | `email_text`  | No       | Pokud je zadáno, pak se tento email rovnou při vytvoření referrala pošle na určený email. Podporuje i proměnné, viz šablony v Recruitisu. |
 
 + Request (application/json)
     + Headers
@@ -48,18 +52,26 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 Zavolání vrátí veškeré referraly přidružené k dané firmě. Na výpis se vztahuje stránkovač, kde maximum entit na jednu stránku je 100.
 V případě, že neodpovídá filtru žádný referral (nebo firma žádného referrala nemá), systém vrací header status `200` s `meta.code` `api.response.null`.
 
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.referral.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
+
 #### Response parameters
 
-| Parameter      | Type     | Note                                                                             |
-|----------------|----------|----------------------------------------------------------------------------------|
-| `id`           | string   | ID referrala.                                                                    |
-| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr.|
-| `name`         | string   | Jméno referrala.                                                                  |
-| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                       |
-| `date_created` | datetime | Datum vzniku referrala.                                                           |
-| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                            |
-| `email`        | string   | Email referrala.                                                              |
-| `url`          | string   | Odkaz na adresu stránky referrrala.                                              |
+| Parameter      | Type     | Note                                                                               |
+|----------------|----------|------------------------------------------------------------------------------------|
+| `id`           | string   | ID referrala.                                                                      |
+| `access_id`    | string   | Veřejné ID referrala, přes který má přístup ke svému portálu, viz  `url` parametr. |
+| `name`         | string   | Jméno referrala.                                                                   |
+| `photo`        | date     | Pokud je zadáno, tak je zde odkaz na fotku referrala.                              |
+| `date_created` | datetime | Datum vzniku referrala.                                                            |
+| `date_visited` | datetime | Datum, kdy naposledy referral navštívil svojí stránku.                             |
+| `email`        | string   | Email referrala.                                                                   |
+| `url`          | string   | Odkaz na adresu stránky referrrala.                                                |
                             
                             
 + Parameters
@@ -82,6 +94,14 @@ V případě, že neodpovídá filtru žádný referral (nebo firma žádného r
 
 Vrátí konkrétního referrala. Pokud je zadáno jedno ID a není zadáno jako pole v GET parametrech, poté se vrátí jako jedna entita, tzn. payload nebude obsahovat pole.
 V případě, že daný referral neexistuje, vrací se `404` odpověď. 
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.referral.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
 
 + Parameters
      + id (required, string, `xseo35fe`) - ID referrala, popř. access_id referrala.

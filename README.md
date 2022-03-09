@@ -1,5 +1,5 @@
 # RecruitisAPI
-Dokumentace k API pro službu Recruitis.io vytvořená společností Český Trh Práce s.r.o.
+Dokumentace k API pro službu Recruitis.io vytvořená společností Recruitis.io s.r.o.
 API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá volání.
 
 # Odkazy
@@ -7,6 +7,10 @@ API je napsána v Oracle Apiary, kde se nachází i mock server na jednotlivá v
 
 
 ## Changelog
+
+* **9.3.2022: branch v1 `1.9.0`**
+  * V dokumentaci jsou nyní popsány nové oprávnění tokenů.
+  * Bylo odstraněno deprecated volání `GET enums/filters`
 
 * **9.2.2022: branch v1 `1.8.4`**
   * Přidány parametry `suitable_for` a `remote_work` do výpisu inzerátů. Viz enum sekce.

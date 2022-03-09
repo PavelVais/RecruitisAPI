@@ -22,7 +22,11 @@ Popis jednotlivých listů, viz `lists` parametr:
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.reports.read`.
+* Starý typ tokenů:
+    * Token typ: `full_access`
+
 
 | Request value | Required | Type    | Note                                                                                                                                                             |
 |---------------|----------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|

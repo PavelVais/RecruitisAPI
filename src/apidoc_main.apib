@@ -5,8 +5,8 @@ FORMAT: 1A
 HOST: https://app.recruitis.io/api2/
 
 # Recruitis.io
-* Verze systému: **1.8.4**
-* Poslední aktualizace: **9.2.2022**
+* Verze systému: **1.9.0**
+* Poslední aktualizace: **3.3.2022**
 
 API dokumentace pro systém Recruitis.io (https://recruitis.io).
 Dokumentace je založena na autorizaci pomocí tokenu, který je vygenerován buď samotným systémem nebo uživatelem v systému Recruitis.
@@ -18,11 +18,13 @@ bude založen nový branch (v2 atd.) nebo budete v dostatečném časovém odstu
 
 :[group_changelog](apidoc_changelog.apib)
 
+### API url
+
+Pro volání API využijte url: https://api.recruitis.io/api2/
+
 
 ## Tokeny
-Autorizační tokeny mají dvě skupiny po dvou úrovní:
-
-### Skupiny tokenů
+Autorizační tokeny mohou být buď firemní nebo se vztahovat ke konkrétnímu zaměstnanci:
 
 #### Firemní tokeny
 
@@ -35,12 +37,23 @@ Nekteré volání potřebují znát přesného autora (Kvůli reportům napřík
 Každý účet si může vytvořit v recruitisu vlastní token. Díky němu může používat všechna API volání, to jest i volání, 
 která potřebují mít vazbu ke konkrétnímu účtu.
 
-### Dále se tokeny rozlišují dle údělených práv:
+### Autorizační práva tokenů
 
-+ `full_access`: Token, který má veškeré pravomoci a umožňuje upravovat data v systému dané firmy. Tento token nesmí být jakkoli zobrazen veřejnosti.
-+ `public_access`: Token, který má převážně zobrazovací pravomoci. Tento token může být veřejnosti zobrazen. Například při použití Javascriptu.
+Abychom maximálně zabezpečili možnosti jednotlivých tokenů, každý z nich má udělená práva na volání jednotlivých skupin endpointů.
+V případě, že zavoláte tokenem endpoint, na který nemá oprávnění, systém vrátí status kód `401`.
 
-Na oba druhy tokenů lze uplatnit doménový whitelist (toto nastavení doporučujeme použít).
+| Název oprávnění                          | Popis                                                                                                             |
+|------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `api.device.read`                        | Dovoluje přistupovat k endpointů na vracení osobních informací.                                                   |
+| `api.position.read`,`api.position.write` | Dovoluje přistupovat k vypisování pozic a k jejím úpravám.                                                        |
+| `api.candidates.read`                    | Dovoluje přistupovat k výpisu uchazečů a jejich odpovědí. Dále pak k přidáváním komunikace a přidáváním odpovědí. |
+| `api.candidates.write`                   | Základní oprávnění, které dovoluje vytvářet nové odpovědi, popř. upravovat stávající.                             |
+| `api.referral.read`,`api.referral.write` | Dovoluje přidávat a vypisovat referraly.                                                                          |
+| `api.filters.read`,`api.filters.write`   | Dovoluje přidávat a vypisovat filtrační položky k inzerátům.                                                      |
+| `api.reporty.read`                       | Dovoluje vytvářet reporty.                                                                                        |
+| `api.enums.read`                         | Dovoluje stahovat číselníky.                                                                                      |
+
+ > Tokeny vytvořené ještě před zavedením těchto oprávnění mohou přistupovat ke všem endpointům dle původní logiky plného a částečného oprávnění. 
 
 Tokeny lze vytvořit po přihlášení v Recruitisu: *nastavení* > *api propojení* (https://app.recruitis.io/zadavatel/nastaveni).
 
@@ -48,9 +61,7 @@ Samotná autorizace probíhá pomocí posláním headeru: `Authorization: Bearer
 
 _Příklad:_ `Authorization: Bearer :[](apidoc_bearer_token.txt)`.
 
-###API url
 
-Pro volání API využijte url: https://api.recruitis.io/api2/
 
 ###Meta informace
 
@@ -87,43 +98,43 @@ entitou stalo, viz příklad níže. Zároveň se tento stav zaloguje u nás na 
 
 Každá odpověď má nějaký kód. Zde je jejich výčet a jejich popi
 
-| CODE parameter                                   | Note
-|:-------------------------------------------------|--------------------------------|
-| `api.ok`                                         | Dotaz proběhl úspěšně. 
-| `api.found`                                      | Dotaz našel výsledek a poslal zpět.
-| `api.created`                                    | Dotaz vytvořil entitu.
-| `api.deleted`                                    | Dotaz smazal entitu.
-| `api.modified`                                   | Dotaz upravil entitu.
-| `api.unmodified`                                 | Dotaz nic nového neprovedl, vrátil již existující entitu.
-| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek. 
-| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.
-| `api.error.system.unavailable`                   | API systém je nedostupný.
-| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.
-| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.
-| `api.error.request.property.wrong_value`         | V požadavku nabývá proměnná špatnou hodnotu. 
-| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší než povolená hodnota.
-| `api.error.request.property.maximum_array_items` | Počet prvků v poli je větší, než je povoleno.
-| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek. 
-| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.
-| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.
-| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častěji špatnými údaji. 
-| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.
-| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje. 
-| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, přihlášení se nezdařilo. 
-| `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.
-| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání viz. samostatná sekce
-| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán. 
-| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale). 
-| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy. 
-| `api.error.upload.size`                          | Příloha má více, než 3 MB.
-| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.
-| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje. 
-| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje. 
-| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.
-| `api.error.response.too_big`                     | Odpověď je příliš velká.
-| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.
-| `api.error.referral.already_created`             | Daný referral byl již vytvořen.
-| `api.error.job.disallowed_acess_type`            | Tento typ inzerátu nepřijímá žádné odpovědi, popř. nelze nijak upravovat.
+| CODE parameter                                   | Note                                                                                                    |
+|:-------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `api.ok`                                         | Dotaz proběhl úspěšně.                                                                                  |
+| `api.found`                                      | Dotaz našel výsledek a poslal zpět.                                                                     |
+| `api.created`                                    | Dotaz vytvořil entitu.                                                                                  |
+| `api.deleted`                                    | Dotaz smazal entitu.                                                                                    |
+| `api.modified`                                   | Dotaz upravil entitu.                                                                                   |
+| `api.unmodified`                                 | Dotaz nic nového neprovedl, vrátil již existující entitu.                                               |
+| `api.response.null`                              | Dotaz proběhl úspěšně, ale nebyl vrácen žádný výsledek.                                                 |
+| `api.error.generic`                              | Obecná chyba. Nespecifikovatelná.                                                                       |
+| `api.error.system.unavailable`                   | API systém je nedostupný.                                                                               |
+| `api.error.request.wrong_format`                 | Špatný JSON formát requestu.                                                                            |
+| `api.error.request.property.missing`             | V požadavku chybí vyžadovaná hodnota.                                                                   |
+| `api.error.request.property.wrong_value`         | V požadavku nabývá proměnná špatnou hodnotu.                                                            |
+| `api.error.request.property.wrong_text_length`   | Délka textu v konkrétním požadavku je větší než povolená hodnota.                                       |
+| `api.error.request.property.maximum_array_items` | Počet prvků v poli je větší, než je povoleno.                                                           |
+| `api.error.not_found`                            | Dotaz směřuje na neexistující požadavek.                                                                |
+| `api.error.unauthorized`                         | Dotaz vyžaduje přihlášení.                                                                              |
+| `api.error.authorization.low_privileges`         | Dotaz vyžaduje přihlášení přes `full_access` token.                                                     |
+| `api.error.authorization.blocked`                | Přihlášení je na nějakou dobu zablokováno. Je možné, že se uživatel přihlašoval častěji špatnými údaji. |
+| `api.error.authorization.wrong_token_format`     | Bearer token je špatného formátu.                                                                       |
+| `api.error.authorization.token.doesnt_exists`    | Daný bearer token neexistuje.                                                                           |
+| `api.error.authorization.wrong_credentials`      | Vložené údaje jsou špatné, přihlášení se nezdařilo.                                                     |
+| `api.error.authorization.bad_domain`             | API je voláno z nepovolené domény.                                                                      |
+| `api.error.quota.exceeded`                       | Byl dosažen denní/minutový limit volání viz. samostatná sekce                                           |
+| `api.error.account.deleted`                      | Účet, na který se snažíte přihlásit, byl smazán.                                                        |
+| `api.error.account.banned`                       | Účet, na který se snažíte přihlásit, byl zablokován (trvale).                                           |
+| `api.error.upload.generic`                       | Nastala chyba při uploadování přílohy.                                                                  |
+| `api.error.upload.size`                          | Příloha má více, než 3 MB.                                                                              |
+| `api.error.upload.timeout`                       | Vypršela doba pro stáhnutí souboru z externího uložiště. Soubor není dostupný.                          |
+| `api.error.upload.bad_host`                      | Snažíte se uploadovat soubor, který neexistuje.                                                         |
+| `api.error.upload.no_data`                       | Snažíte se uploadovat soubor, který neexistuje.                                                         |
+| `api.error.user.already_answered`                | Daný uchazeč již na inzerát odpověděl.                                                                  |
+| `api.error.response.too_big`                     | Odpověď je příliš velká.                                                                                |
+| `api.error.export.bad_request`                   | Obecná chyba při exportu inzerátu do jiného systému.                                                    |
+| `api.error.referral.already_created`             | Daný referral byl již vytvořen.                                                                         |
+| `api.error.job.disallowed_acess_type`            | Tento typ inzerátu nepřijímá žádné odpovědi, popř. nelze nijak upravovat.                               |
 
 V případě nedostupnosti API server vrací `503` s kódem `api.error.system.unavailable`.
 
