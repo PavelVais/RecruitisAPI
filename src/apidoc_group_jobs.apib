@@ -11,6 +11,17 @@ Získání všech inzerátů. Ty se dají filtrovat podle oborů (profesí), fil
 
 Pokud se nevrátí žádné inzeráty, vrátí se http status `200` s meta code `api.response.null`.
 
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).
+  * Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id).
+
 #### Parameters info
 
  Poznámka: Všechny array parametry udávejte buď jako je dnu hodnotu (např. `&office_id=XXX`) nebo 
@@ -59,14 +70,6 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 | Draft              | 4     | Rozepsaná pozice právě přihlášeného personalisty.                                                                                                                                                                                                   |
 | Šablona            | 5     | Pozice určená jako šablona. Může být buď právě přihlášeného personalisty nebo celé firmy.                                                                                                                                                           |
 
-
-#### Requirements
-
-* Volání musí být s autorizačním tokenem.
-* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech) - (určení dle channel_id).  
-* Token typ: `full_access`: pokud se jedná o interní inzerát. (určení dle channel_id). 
-* Kompatibilní s firemním tokenem.
-
 + Request
     + Headers
     
@@ -105,8 +108,11 @@ Parametr filtruje inzeráty podle logiky otevřených a uzavřených pozic. Na r
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
-* Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
-* Token typ: `full_access`: pokud se jedná o interní inzerát.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`: pokud se jedná o veřejný inzerát (vystavený na firemních stránkách, xml nebo na pracovních portálech).
+  * Token typ: `full_access`: pokud se jedná o interní inzerát.
 
 #### Response parameters
 
@@ -221,7 +227,10 @@ Neposílejte tedy své osobní údaje přes tento token, popřípadě si token z
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`: pro vytvoření inzerátu potřebujeme vždy full access.
    
 | Request value   | Required | Default Value | Note                                                                                                              |
 |:----------------|----------|:--------------|-------------------------------------------------------------------------------------------------------------------|
@@ -258,7 +267,10 @@ Zobrazení všech kanálů, kde je inzerát publikován.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.read`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
 + Request (application/json)
     + Headers
@@ -284,7 +296,10 @@ Vystavení aktivního inzerátu na nějakém z prezentačních kanálů. V pří
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
 
 | Request value | Required | Type     | Default Value | Note                                                                                                         |
 |:--------------|----------|:---------|---------------|--------------------------------------------------------------------------------------------------------------|
@@ -328,7 +343,11 @@ Změna přístupu k pozici. Jedná se o uzavírání, otevírání a archivaci p
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
+
 
   + Request (application/json)
       + Headers
@@ -357,7 +376,10 @@ Stažení inzerátu z prezentačního kanálu.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `full_access`: pro publikaci inzerátu je potřeba full access
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+  * Token typ: `full_access`
    
 + Request (application/json)
     + Headers
@@ -386,6 +408,10 @@ Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může v
 
 * Volání musí být s autorizačním tokenem.
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+    * Token typ: `public_access`, `full_access`
 
 | Request value | Required | Default Value | Note                                                                                                                            |
 |:--------------|----------|:--------------|---------------------------------------------------------------------------------------------------------------------------------|
@@ -423,6 +449,15 @@ Endpoint připočítá nové zobrazení inzerátu. Díky tomu Recruitis může v
 ### List communication with candidates [GET]
 
 Výpis komunikace s kandidáty na konkrétní pozici.
+
+#### Requirements
+
+* Volání musí být s autorizačním tokenem.
+* Nový typ tokenů:
+    * Token musí mít oprávnění `api.position.write`.
+* Starý typ tokenů:
+    * Token typ:  `public_access`,`full_access`
+
 
 + Request (application/json)
     + Headers

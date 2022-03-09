@@ -22,17 +22,20 @@ Získá všechny naše profese a obory včetně jejich ID.
 
 #### Requirements
 
-   + Volání musí být s autorizačním tokenem.
-   + Kompatibilní s firemním tokenem.
-   + Token typ: `public_token`
+* Volání musí být s autorizačním tokenem.
+* Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.read`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
-+ Request
-    + Headers
+   + Request
+       + Headers
     
-            Authorization: Bearer :[](apidoc_bearer_token.txt)
+               Authorization: Bearer :[](apidoc_bearer_token.txt)
 
-+ Parameters
-    + group (optional,array[string]) - Vyfiltruje pouze seznam filtrů k dané skupině.
+   + Parameters
+       + group (optional,array[string]) - Vyfiltruje pouze seznam filtrů k dané skupině.
     
 
 + Response 200 (application/json)
@@ -52,8 +55,11 @@ Vytvoření nového filtru.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 + Request
   + Headers
@@ -78,8 +84,11 @@ Editace filtru dle ID v parametru URI.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 
 + Request
@@ -102,8 +111,11 @@ Smaže filtr dle ID v parametru URI.
 #### Requirements
 
 * Volání musí být s autorizačním tokenem.
-* Token typ: `public_token`
 * Kompatibilní s firemním tokenem.
+* Nový typ tokenů:
+  * Token musí mít oprávnění `api.filters.write`.
+* Starý typ tokenů:
+  * Token typ: `public_access`
 
 
 + Parameters
